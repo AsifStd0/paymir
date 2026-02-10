@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
-import '../util/AlertDialogueClass.dart';
-import '../util/Constants.dart';
-import '../util/MyValidation.dart';
-import '../util/NetworkHelperClass.dart';
+import '../../util/AlertDialogueClass.dart';
+import '../../util/Constants.dart';
+import '../../util/MyValidation.dart';
+import '../../util/NetworkHelperClass.dart';
 
 class MobilePageNew extends StatefulWidget {
   final dynamic values; //if you have multiple values add here

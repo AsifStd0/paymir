@@ -1,55 +1,52 @@
-class SignupModel {
-  final String fullName;
-  final String emailAddress;
+class SignupRequest {
   final String cnic;
   final String password;
+  final String fullName;
+  final String mobileNo;
+  final String emailAddress;
+  final String userType;
+  final int roleId;
   final String category;
 
-  SignupModel({
-    required this.fullName,
-    required this.emailAddress,
+  SignupRequest({
     required this.cnic,
     required this.password,
+    required this.fullName,
+    required this.mobileNo,
+    required this.emailAddress,
+    this.userType = "NormalUser",
+    this.roleId = 1,
     this.category = "PAYMIR",
   });
 
-  Map<String, String> toJson() {
+  Map<String, dynamic> toJson() {
     return {
-      'fullname': fullName,
-      'emailAddress': emailAddress,
-      'cnic': cnic,
-      'password': password,
-      'Category': category,
+      "CNIC": cnic,
+      "Password": password,
+      "FullName": fullName,
+      "MobileNo": mobileNo,
+      "EmailAddress": emailAddress,
+      "UserType": userType,
+      "RoleId": roleId,
+      "Category": category,
     };
-  }
-
-  factory SignupModel.fromJson(Map<String, dynamic> json) {
-    return SignupModel(
-      fullName: json['fullname'] ?? '',
-      emailAddress: json['emailAddress'] ?? '',
-      cnic: json['cnic'] ?? '',
-      password: json['password'] ?? '',
-      category: json['Category'] ?? 'PAYMIR',
-    );
   }
 }
 
-class CheckUserResponse {
-  final String statusCode;
-  final String responseMessage;
-  final bool responseStatus;
+class SignupResponse {
+  final String? statusCode;
+  final String? responseMessage;
+  final dynamic data;
 
-  CheckUserResponse({
-    required this.statusCode,
-    required this.responseMessage,
-    required this.responseStatus,
-  });
+  SignupResponse({this.statusCode, this.responseMessage, this.data});
 
-  factory CheckUserResponse.fromJson(Map<String, dynamic> json) {
-    return CheckUserResponse(
-      statusCode: json['statusCode']?.toString() ?? '',
-      responseMessage: json['responseMessage'] ?? '',
-      responseStatus: json['responseStatus'] ?? false,
+  factory SignupResponse.fromJson(Map<String, dynamic> json) {
+    return SignupResponse(
+      statusCode: json["statusCode"]?.toString(),
+      responseMessage: json["responseMessage"],
+      data: json["data"],
     );
   }
+
+  bool get isSuccess => statusCode == "200" || statusCode == 200;
 }
