@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="31.976" height="40" viewBox="0 0 31.976 40">
+  <defs>
+    <linearGradient id="linear-gradient" x1="1.099" y1="-0.428" x2="-0.039" y2="1.448" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#4b2a7a"/>
+      <stop offset="1" stop-color="#08a1a7"/>
+    </linearGradient>
+  </defs>
+  <g id="bxs-user-badge" transform="translate(-8 -4)">
+    <path id="Path_3249" data-name="Path 3249" d="M35.976,44a4,4,0,0,0,4-4V8a4,4,0,0,0-4-4H12A4,4,0,0,0,8,8V40a4,4,0,0,0,4,4H35.976ZM18,10H30v4H18ZM28.5,22.5A4.5,4.5,0,1,1,24,18,4.52,4.52,0,0,1,28.5,22.5ZM15,36.376c0-3.328,4.056-6.75,9-6.75s9,3.422,9,6.75V37.5H15Z" fill="url(#linear-gradient)"/>
+  </g>
+</svg>
