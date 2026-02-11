@@ -1,13 +1,15 @@
 import 'dart:async';
 import 'dart:io';
+
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
+
 import '../util/Constants.dart';
 import '../util/SecureStorage.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
-
 
 class MoreServicesPageNew extends StatefulWidget {
   const MoreServicesPageNew({super.key});
@@ -17,7 +19,6 @@ class MoreServicesPageNew extends StatefulWidget {
 }
 
 class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
-
   int _selectedIndex = 0;
 
   File? _image;
@@ -28,11 +29,8 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
     });
   }
 
-
-
   TextEditingController textEditingController = TextEditingController();
   String currentText = "";
-
 
   final List<Map<String, String>> _list = [
     {
@@ -125,108 +123,129 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
 
   final SecureStorage _secureStorage = SecureStorage();
 
-   List<dynamic> pendingDues = [];//[{"arcid":77,"applicationTrackingNo":"RED-LRB-20220727-00002","cnic":"11111-1111111-1","serviceName":"Land Record and Boundary Identification (HadBarari)","serviceTypeName":"New Hadbarari Application","departmentName":"Revenue and Estate Department","feeAmount":1000.00,"status":"Pending","applicationGenerationDateTime":"2023-04-16T00:00:00","entryDateTime":"2023-04-17T00:00:00","responseStatus":true,"responseMessage":"Request entertained successfully"}];
-   List<dynamic> doneTransactions = [];//[{"arcid":77,"applicationTrackingNo":"RED-LRB-20220727-00002","cnic":"11111-1111111-1","serviceName":"Land Record and Boundary Identification (HadBarari)","serviceTypeName":"New Hadbarari Application","departmentName":"Revenue and Estate Department","feeAmount":1000.00,"status":"Pending","applicationGenerationDateTime":"2023-04-16T00:00:00","entryDateTime":"2023-04-17T00:00:00","responseStatus":true,"responseMessage":"Request entertained successfully"}];
+  List<dynamic> pendingDues =
+      []; //[{"arcid":77,"applicationTrackingNo":"RED-LRB-20220727-00002","cnic":"11111-1111111-1","serviceName":"Land Record and Boundary Identification (HadBarari)","serviceTypeName":"New Hadbarari Application","departmentName":"Revenue and Estate Department","feeAmount":1000.00,"status":"Pending","applicationGenerationDateTime":"2023-04-16T00:00:00","entryDateTime":"2023-04-17T00:00:00","responseStatus":true,"responseMessage":"Request entertained successfully"}];
+  List<dynamic> doneTransactions =
+      []; //[{"arcid":77,"applicationTrackingNo":"RED-LRB-20220727-00002","cnic":"11111-1111111-1","serviceName":"Land Record and Boundary Identification (HadBarari)","serviceTypeName":"New Hadbarari Application","departmentName":"Revenue and Estate Department","feeAmount":1000.00,"status":"Pending","applicationGenerationDateTime":"2023-04-16T00:00:00","entryDateTime":"2023-04-17T00:00:00","responseStatus":true,"responseMessage":"Request entertained successfully"}];
 
-  Map<String, dynamic> cardDataJsonObject ={};
-  Map<String, dynamic> profileDataJsonObject ={};
+  Map<String, dynamic> cardDataJsonObject = {};
+  Map<String, dynamic> profileDataJsonObject = {};
 
-  String strCardHolderName ="Name";
+  String strCardHolderName = "Name";
   DateTime now = DateTime.now();
 
-  String strExpiryDate = DateFormat('MM/yyyy').format(DateTime(DateTime.now().year + 5, DateTime.now().month, DateTime.now().day)).toString().replaceRange(0, 2, DateFormat('MM').format(DateTime(DateTime.now().year + 5, DateTime.now().month, DateTime.now().day)).toString());
+  String strExpiryDate = DateFormat('MM/yyyy')
+      .format(
+        DateTime(
+          DateTime.now().year + 5,
+          DateTime.now().month,
+          DateTime.now().day,
+        ),
+      )
+      .toString()
+      .replaceRange(
+        0,
+        2,
+        DateFormat('MM')
+            .format(
+              DateTime(
+                DateTime.now().year + 5,
+                DateTime.now().month,
+                DateTime.now().day,
+              ),
+            )
+            .toString(),
+      );
 
+  String strCardNumber = "****  ****  ****  ****";
 
-  String strCardNumber ="****  ****  ****  ****";
+  List<dynamic> serviceCharges = [
+    {
+      "serviceProviderId": 1,
+      "serviceProviderTitle": "Jazz Cash",
+      "paymentServiceCharges": [
+        {
+          "paymentChargesId": 1,
+          "serviceProviderId": 1,
+          "paymentModeId": 1,
+          "paymentModeTitle": "MobileApp",
+          "paymentChargesPercentage": 0.70,
+          "platformChargesPercentage": 0.0,
+          "totalTaxPercentage": 2.32,
+        },
+        {
+          "paymentChargesId": 2,
+          "serviceProviderId": 1,
+          "paymentModeId": 2,
+          "paymentModeTitle": "OTC",
+          "paymentChargesPercentage": 1.50,
+          "platformChargesPercentage": 0.0,
+          "totalTaxPercentage": 2.32,
+        },
+        {
+          "paymentChargesId": 3,
+          "serviceProviderId": 1,
+          "paymentModeId": 3,
+          "paymentModeTitle": "CreditCard/DebitCard",
+          "paymentChargesPercentage": 2.00,
+          "platformChargesPercentage": 0.0,
+          "totalTaxPercentage": 2.32,
+        },
+      ],
+    },
+    {
+      "serviceProviderId": 2,
+      "serviceProviderTitle": "EasyPaisa",
+      "paymentServiceCharges": [
+        {
+          "paymentChargesId": 4,
+          "serviceProviderId": 2,
+          "paymentModeId": 1,
+          "paymentModeTitle": "MobileApp",
+          "paymentChargesPercentage": 0.70,
+          "platformChargesPercentage": 0.0,
+          "totalTaxPercentage": 2.32,
+        },
+      ],
+    },
+    {
+      "serviceProviderId": 3,
+      "serviceProviderTitle": "UBL Omni",
+      "paymentServiceCharges": [
+        {
+          "paymentChargesId": 5,
+          "serviceProviderId": 3,
+          "paymentModeId": 1,
+          "paymentModeTitle": "MobileApp",
+          "paymentChargesPercentage": 0.50,
+          "platformChargesPercentage": 0.0,
+          "totalTaxPercentage": 2.32,
+        },
+        {
+          "paymentChargesId": 6,
+          "serviceProviderId": 3,
+          "paymentModeId": 2,
+          "paymentModeTitle": "OTC",
+          "paymentChargesPercentage": 1.00,
+          "platformChargesPercentage": 0.0,
+          "totalTaxPercentage": 2.32,
+        },
+        {
+          "paymentChargesId": 7,
+          "serviceProviderId": 3,
+          "paymentModeId": 3,
+          "paymentModeTitle": "CreditCard/DebitCard",
+          "paymentChargesPercentage": 1.50,
+          "platformChargesPercentage": 0.0,
+          "totalTaxPercentage": 3.50,
+        },
+      ],
+    },
+  ];
 
-  List<dynamic> serviceCharges =
-   [
-     {
-       "serviceProviderId": 1,
-       "serviceProviderTitle": "Jazz Cash",
-       "paymentServiceCharges": [
-         {
-           "paymentChargesId": 1,
-           "serviceProviderId": 1,
-           "paymentModeId": 1,
-           "paymentModeTitle": "MobileApp",
-           "paymentChargesPercentage": 0.70,
-           "platformChargesPercentage": 0.0,
-           "totalTaxPercentage": 2.32
-         },
-         {
-           "paymentChargesId": 2,
-           "serviceProviderId": 1,
-           "paymentModeId": 2,
-           "paymentModeTitle": "OTC",
-           "paymentChargesPercentage": 1.50,
-           "platformChargesPercentage": 0.0,
-           "totalTaxPercentage": 2.32
-         },
-         {
-           "paymentChargesId": 3,
-           "serviceProviderId": 1,
-           "paymentModeId": 3,
-           "paymentModeTitle": "CreditCard/DebitCard",
-           "paymentChargesPercentage": 2.00,
-           "platformChargesPercentage": 0.0,
-           "totalTaxPercentage": 2.32
-         }
-       ]
-     },
-     {
-       "serviceProviderId": 2,
-       "serviceProviderTitle": "EasyPaisa",
-       "paymentServiceCharges": [
-         {
-           "paymentChargesId": 4,
-           "serviceProviderId": 2,
-           "paymentModeId": 1,
-           "paymentModeTitle": "MobileApp",
-           "paymentChargesPercentage": 0.70,
-           "platformChargesPercentage": 0.0,
-           "totalTaxPercentage": 2.32
-         }
-       ]
-     },
-     {
-       "serviceProviderId": 3,
-       "serviceProviderTitle": "UBL Omni",
-       "paymentServiceCharges": [
-         {
-           "paymentChargesId": 5,
-           "serviceProviderId": 3,
-           "paymentModeId": 1,
-           "paymentModeTitle": "MobileApp",
-           "paymentChargesPercentage": 0.50,
-           "platformChargesPercentage": 0.0,
-           "totalTaxPercentage": 2.32
-         },
-         {
-           "paymentChargesId": 6,
-           "serviceProviderId": 3,
-           "paymentModeId": 2,
-           "paymentModeTitle": "OTC",
-           "paymentChargesPercentage": 1.00,
-           "platformChargesPercentage": 0.0,
-           "totalTaxPercentage": 2.32
-         },
-         {
-           "paymentChargesId": 7,
-           "serviceProviderId": 3,
-           "paymentModeId": 3,
-           "paymentModeTitle": "CreditCard/DebitCard",
-           "paymentChargesPercentage": 1.50,
-           "platformChargesPercentage": 0.0,
-           "totalTaxPercentage": 3.50
-         }
-       ]
-     }
-   ];
-
-  String strToken="";
-  String strTokenExpiry="";
-  String strCNIC="";
+  String strToken = "";
+  String strTokenExpiry = "";
+  String strCNIC = "";
 
   Future<void> fetchSecureStorageData() async {
     strToken = await _secureStorage.getToken() ?? '';
@@ -236,13 +255,11 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
     // _passwordController.text = await _secureStorage.getPassWord() ?? '';
   }
 
-
   @override
   void initState() {
     super.initState();
     fetchSecureStorageData();
-    Future.delayed(const Duration(milliseconds: 2900), () {
-    });
+    Future.delayed(const Duration(milliseconds: 2900), () {});
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final appDir = await getApplicationDocumentsDirectory();
@@ -258,51 +275,62 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
 
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       onWillPop: () async {
-        return true;//(await ShowAlertDialogueClass.exitAppDialog(context));
+        return true; //(await ShowAlertDialogueClass.exitAppDialog(context));
       },
       child: Scaffold(
         backgroundColor: const Color(0xffFAFCFF),
         body: SafeArea(
           child: SingleChildScrollView(
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // First Row
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top:Constants.getVerticalGapBetweenTwoTextformfields(context)*40,
-                          left: Constants.getHomePageMainTextLeftPadding(context)*2.3,
-                          right: Constants.getVerticalGapBetweenTwoTextformfields(context),
-                          bottom: Constants.getVerticalGapBetweenTwoTextformfields(context)*9,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // First Row
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top:
+                          Constants.getVerticalGapBetweenTwoTextformfields(
+                            context,
+                          ) *
+                          40,
+                      left:
+                          Constants.getHomePageMainTextLeftPadding(context) *
+                          2.3,
+                      right: Constants.getVerticalGapBetweenTwoTextformfields(
+                        context,
                       ),
+                      bottom:
+                          Constants.getVerticalGapBetweenTwoTextformfields(
+                            context,
+                          ) *
+                          9,
+                    ),
 
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                                'More Services',
-                                style: TextStyle(
-                                  color: const Color(0xff3F3F3F),
-                                  fontFamily: 'Metropolis',
-                                  fontWeight: FontWeight.w700,
-                                  fontSize:Constants.getServiceFontSize(context),
-                                )
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'More Services',
+                            style: TextStyle(
+                              color: const Color(0xff3F3F3F),
+                              fontFamily: 'Metropolis',
+                              fontWeight: FontWeight.w700,
+                              fontSize: Constants.getServiceFontSize(context),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
                         children: [
                           InkWell(
                             onTap: () {
@@ -310,38 +338,58 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                               showMyGeneraDialog();
 
                               //Navigator.push(context, MaterialPageRoute(builder: (_)=>DastakPageNew()));
-
                             },
                             child: Container(
-                              width: MediaQuery.sizeOf(context).width *0.2,
-                              height: MediaQuery.sizeOf(context).width *0.22,
+                              width: MediaQuery.sizeOf(context).width * 0.2,
+                              height: MediaQuery.sizeOf(context).width * 0.22,
                               decoration: BoxDecoration(
                                 shape: BoxShape.rectangle,
                                 color: const Color(0xffF4F6F9),
-                                borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).width *0.03),
+                                borderRadius: BorderRadius.circular(
+                                  MediaQuery.sizeOf(context).width * 0.03,
+                                ),
                                 border: Border.all(
                                   color: const Color(0xffEBEBEB),
                                 ),
                               ),
                               child: Padding(
-                                padding:  EdgeInsets.all(MediaQuery.sizeOf(context).width *0.015),
+                                padding: EdgeInsets.all(
+                                  MediaQuery.sizeOf(context).width * 0.015,
+                                ),
                                 child: Column(
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.all(Constants.getVerticalGapBetweenTwoTextformfields(context)*10),
+                                      padding: EdgeInsets.all(
+                                        Constants.getVerticalGapBetweenTwoTextformfields(
+                                              context,
+                                            ) *
+                                            10,
+                                      ),
                                       child: SvgPicture.asset(
                                         'assets/images/feelogo.svg',
-                                        height: Constants.getSmallFontSize(context) * 2,
+                                        height:
+                                            Constants.getSmallFontSize(
+                                              context,
+                                            ) *
+                                            2,
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(top:Constants.getVerticalGapBetweenTwoTextformfields(context)*2),
+                                      padding: EdgeInsets.only(
+                                        top:
+                                            Constants.getVerticalGapBetweenTwoTextformfields(
+                                              context,
+                                            ) *
+                                            2,
+                                      ),
                                       child: Text(
                                         'Fee',
                                         style: TextStyle(
                                           color: const Color(0xff3F3F3F),
                                           fontFamily: 'Metropolis',
-                                          fontSize: Constants.getSmallFontSize(context),
+                                          fontSize: Constants.getSmallFontSize(
+                                            context,
+                                          ),
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
@@ -353,130 +401,172 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                           ),
                         ],
                       ),
-                    Column(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            // your code here
+                      Column(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              // your code here
 
-                            showMyGeneraDialog();
-
-                          },
-                          child: Container(
-                            width: MediaQuery.sizeOf(context).width *0.2,
-                            height: MediaQuery.sizeOf(context).width *0.22,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              color: const Color(0xffF4F6F9),
-                              borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).width *0.03),
-                              border: Border.all(
-                                color: const Color(0xffEBEBEB),
+                              showMyGeneraDialog();
+                            },
+                            child: Container(
+                              width: MediaQuery.sizeOf(context).width * 0.2,
+                              height: MediaQuery.sizeOf(context).width * 0.22,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: const Color(0xffF4F6F9),
+                                borderRadius: BorderRadius.circular(
+                                  MediaQuery.sizeOf(context).width * 0.03,
+                                ),
+                                border: Border.all(
+                                  color: const Color(0xffEBEBEB),
+                                ),
                               ),
-                            ),
-                            child: Padding(
-                              padding:  EdgeInsets.all(MediaQuery.sizeOf(context).width *0.015),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(Constants.getVerticalGapBetweenTwoTextformfields(context)*10),
-                                    child: SvgPicture.asset(
-                                      'assets/images/carlogo.svg',
-                                      height: Constants.getSmallFontSize(context) * 2,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top:Constants.getVerticalGapBetweenTwoTextformfields(context)*2),
-                                    child: Text(
-                                      'MTag',
-                                      style: TextStyle(
-                                        color: const Color(0xff3F3F3F),
-                                        fontFamily: 'Metropolis',
-                                        fontSize: Constants.getSmallFontSize(context),
-                                        fontWeight: FontWeight.w600,
+                              child: Padding(
+                                padding: EdgeInsets.all(
+                                  MediaQuery.sizeOf(context).width * 0.015,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(
+                                        Constants.getVerticalGapBetweenTwoTextformfields(
+                                              context,
+                                            ) *
+                                            10,
+                                      ),
+                                      child: SvgPicture.asset(
+                                        'assets/images/carlogo.svg',
+                                        height:
+                                            Constants.getSmallFontSize(
+                                              context,
+                                            ) *
+                                            2,
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        top:
+                                            Constants.getVerticalGapBetweenTwoTextformfields(
+                                              context,
+                                            ) *
+                                            2,
+                                      ),
+                                      child: Text(
+                                        'MTag',
+                                        style: TextStyle(
+                                          color: const Color(0xff3F3F3F),
+                                          fontFamily: 'Metropolis',
+                                          fontSize: Constants.getSmallFontSize(
+                                            context,
+                                          ),
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            // your code here
-                            showMyGeneraDialog();
-                          },
-                          child: Container(
-                            width: MediaQuery.sizeOf(context).width *0.2,
-                            height: MediaQuery.sizeOf(context).width *0.22,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              color: const Color(0xffF4F6F9),
-                              borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).width *0.03),
-                              border: Border.all(
-                                color: const Color(0xffEBEBEB),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              // your code here
+                              showMyGeneraDialog();
+                            },
+                            child: Container(
+                              width: MediaQuery.sizeOf(context).width * 0.2,
+                              height: MediaQuery.sizeOf(context).width * 0.22,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: const Color(0xffF4F6F9),
+                                borderRadius: BorderRadius.circular(
+                                  MediaQuery.sizeOf(context).width * 0.03,
+                                ),
+                                border: Border.all(
+                                  color: const Color(0xffEBEBEB),
+                                ),
                               ),
-                            ),
-                            child: Padding(
-                              padding:  EdgeInsets.all(MediaQuery.sizeOf(context).width *0.015),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(Constants.getVerticalGapBetweenTwoTextformfields(context)*10),
-                                    child: SvgPicture.asset(
-                                      'assets/images/utilitieslogo.svg',
-                                      height: Constants.getSmallFontSize(context) * 2,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top:Constants.getVerticalGapBetweenTwoTextformfields(context)*2),
-                                    child: Text(
-                                      'Utilities',
-                                      style: TextStyle(
-                                        color: const Color(0xff3F3F3F),
-                                        fontFamily: 'Metropolis',
-                                        fontSize: Constants.getSmallFontSize(context),
-                                        fontWeight: FontWeight.w600,
+                              child: Padding(
+                                padding: EdgeInsets.all(
+                                  MediaQuery.sizeOf(context).width * 0.015,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(
+                                        Constants.getVerticalGapBetweenTwoTextformfields(
+                                              context,
+                                            ) *
+                                            10,
+                                      ),
+                                      child: SvgPicture.asset(
+                                        'assets/images/utilitieslogo.svg',
+                                        height:
+                                            Constants.getSmallFontSize(
+                                              context,
+                                            ) *
+                                            2,
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        top:
+                                            Constants.getVerticalGapBetweenTwoTextformfields(
+                                              context,
+                                            ) *
+                                            2,
+                                      ),
+                                      child: Text(
+                                        'Utilities',
+                                        style: TextStyle(
+                                          color: const Color(0xff3F3F3F),
+                                          fontFamily: 'Metropolis',
+                                          fontSize: Constants.getSmallFontSize(
+                                            context,
+                                          ),
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-
-                  ],
-                ),
-                    SizedBox(height: Constants.getVerticalGapBetweenTwoTextformfields(context)*15),
-
-                  ],
-                ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height:
+                        Constants.getVerticalGapBetweenTwoTextformfields(
+                          context,
+                        ) *
+                        15,
+                  ),
+                ],
               ),
+            ),
           ),
         ),
-
-
       ),
     );
   }
 
   showAlertDialog(BuildContext context, String strResponse) {
-
     // set up the button
     Widget okButton = TextButton(
       child: const Text("OK"),
       onPressed: () {
-        if(strResponse.contains("successfully")) {
+        if (strResponse.contains("successfully")) {
           Navigator.of(context, rootNavigator: true).pop();
           //Navigator.push(context, MaterialPageRoute(builder: (_)=>VerificationCodePage(cnicString)));
-        }else {
+        } else {
           Navigator.of(context, rootNavigator: true).pop();
         }
       },
@@ -486,11 +576,7 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
     AlertDialog alert = AlertDialog(
       title: const Text("Response"),
       content: Text(strResponse),
-      actions: [
-        okButton,
-
-      ],
-
+      actions: [okButton],
     );
 
     // show the dialog
@@ -501,6 +587,7 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
       },
     );
   }
+
   String? validateEmail(String? value) {
     String pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -511,9 +598,9 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
       return null;
     }
   }
+
   String? validateName(String? value) {
-    String pattern =
-        r"^([a-zA-Z]{3})+$";
+    String pattern = r"^([a-zA-Z]{3})+$";
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(value!)) {
       return 'Invalid Name!';
@@ -521,6 +608,7 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
       return null;
     }
   }
+
   String? validatePassword(String? value) {
     if (value!.length < 8) {
       return 'Password must be at least 8 characters!';
@@ -529,17 +617,18 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
     }
   }
 
-
-
-
-  void showMyGeneraDialog(){
+  void showMyGeneraDialog() {
     showGeneralDialog(
       context: context,
       barrierDismissible: true,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       barrierColor: Colors.black.withOpacity(0.5),
       transitionDuration: const Duration(milliseconds: 200),
-      pageBuilder: (BuildContext buildContext, Animation animation, Animation secondaryAnimation) {
+      pageBuilder: (
+        BuildContext buildContext,
+        Animation animation,
+        Animation secondaryAnimation,
+      ) {
         return Center(
           child: Container(
             width: MediaQuery.of(context).size.width - 50,
@@ -571,12 +660,15 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                   },
                   child: Container(
                     height: Constants.getButtonHeight(context),
-                    width: Constants.getButtonHeight(context)*2,
+                    width: Constants.getButtonHeight(context) * 2,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Constants.gradientColor1(),
+                      color: AppColors.gradientColor1(),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
                     child: const Center(
                       child: Text(
                         'Okay',

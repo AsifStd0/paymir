@@ -1,21 +1,23 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
-import '../view/UpdatePasswordPageNew.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
+
 import '../util/Constants.dart';
 import '../util/NetworkHelperClass.dart';
 import '../util/SecureStorage.dart';
+import '../view/UpdatePasswordPageNew.dart';
 import 'CustomerSupportPageNew.dart';
 import 'EditProfilePageNew.dart';
-import 'package:path_provider/path_provider.dart';
-import 'HomePageNew.dart';
-import 'login/LoginPageNew.dart';
-import 'package:http/http.dart' as http;
+import 'home_page/home_screen.dart';
+import 'login/login_screen.dart';
 
 class ProfilePageNew extends StatefulWidget {
   String strCNIC;
@@ -184,7 +186,7 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
                     Text(
                       'Settings',
                       style: TextStyle(
-                        color: Constants.primaryColor(),
+                        color: AppColors.primaryColor(),
                         fontFamily: 'Visby',
                         fontWeight: FontWeight.bold,
                         fontSize: Constants.getMainFontSize(context),
@@ -236,8 +238,8 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
                       begin: Alignment.bottomLeft,
                       end: Alignment.topRight,
                       colors: [
-                        Constants.gradientColor1(),
-                        Constants.gradientColor2(),
+                        AppColors.gradientColor1(),
+                        AppColors.gradientColor2(),
                       ],
                     ),
                   ),
@@ -821,8 +823,7 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
                                         Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
-                                            builder:
-                                                (_) => const LoginPageNew(),
+                                            builder: (_) => const LoginScreen(),
                                           ),
                                         );
                                       },

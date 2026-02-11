@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class Constants {
@@ -22,7 +21,9 @@ class Constants {
     return MediaQuery.of(context).size.height * 0.002;
   }
 
-  static double getVerticalGapBetweenForgotPasswordAndSignInButton(BuildContext context) {
+  static double getVerticalGapBetweenForgotPasswordAndSignInButton(
+    BuildContext context,
+  ) {
     return MediaQuery.of(context).size.height * 0.03;
   }
 
@@ -30,35 +31,33 @@ class Constants {
     return MediaQuery.of(context).size.height * 0.17;
   }
 
-
   static double getButtonFont(BuildContext context) {
     return MediaQuery.of(context).size.height * 0.022;
   }
 
   static double getVerticalGapBetweenSmallfontAndTextfield(
-      BuildContext context) {
+    BuildContext context,
+  ) {
     return MediaQuery.of(context).size.height * 0.04;
   }
 
-  static double getHomePageGapAboveCard(
-      BuildContext context) {
+  static double getHomePageGapAboveCard(BuildContext context) {
     return MediaQuery.of(context).size.height * 0.04;
   }
 
-  static double getHomePageMainTextTopPadding(
-      BuildContext context) {
+  static double getHomePageMainTextTopPadding(BuildContext context) {
     return MediaQuery.of(context).size.height * 0.025;
   }
-  static double getHomePageMainTextLeftPadding(
-      BuildContext context) {
+
+  static double getHomePageMainTextLeftPadding(BuildContext context) {
     return MediaQuery.of(context).size.height * 0.02;
   }
-  static double getHomePageMainTextRightPadding(
-      BuildContext context) {
+
+  static double getHomePageMainTextRightPadding(BuildContext context) {
     return MediaQuery.of(context).size.height * 0.02;
   }
-  static double getHomePageMainTextBottomPadding(
-      BuildContext context) {
+
+  static double getHomePageMainTextBottomPadding(BuildContext context) {
     return MediaQuery.of(context).size.height * 0.025;
   }
 
@@ -79,7 +78,7 @@ class Constants {
   }
 
   static double getGeneralFontSize(BuildContext context) {
-    return MediaQuery.of(context).size.height *1;
+    return MediaQuery.of(context).size.height * 1;
   }
 
   static double getTabViewHeight(BuildContext context) {
@@ -138,7 +137,6 @@ class Constants {
     return MediaQuery.of(context).size.height * 0.015;
   }
 
-
   static double getCardMediumFontSize(BuildContext context) {
     return MediaQuery.of(context).size.height * 0.02;
   }
@@ -195,53 +193,16 @@ class Constants {
     return MediaQuery.of(context).size.height * 0.01;
   }
 
-  static double getHorizontalGapBetweenTwoTextformfields(
-      BuildContext context) {
+  static double getHorizontalGapBetweenTwoTextformfields(BuildContext context) {
     return MediaQuery.of(context).size.height * 0.02;
   }
 
-  static double getVerticalGapBetweenTwoTextformfields(
-      BuildContext context) {
+  static double getVerticalGapBetweenTwoTextformfields(BuildContext context) {
     return MediaQuery.of(context).size.height * .001;
   }
 
   static String baseUrl() {
     return 'http://apipaymir.kp.gov.pk/';
-  }
-
-
-  static Color primaryColor() {
-    return Color(0xff03110A);
-  }
-
-  static Color signInLinkColor() {
-    return Color(0xff21BF73);
-  }
-
-
-  static Color signUpLinkColor() {
-    return Color(0xff21BF73);
-  }
-
-  static Color gradientColor1() {
-    return Color(0xff08A1A7);
-  }
-
-  static Color gradientColor2() {
-    return Color(0xff4B2A7A);
-  }
-
-  static Color secondaryColor() {
-    return Color(0xff949494);
-  }
-
-  static Color tertiaryColor() {
-    return Color(0xff21BF73);
-  }
-
-
-  static Color forgotPasswordColor() {
-    return Color(0xff7472DE);
   }
 
   static double getTextFormFieldHeight(BuildContext context) {

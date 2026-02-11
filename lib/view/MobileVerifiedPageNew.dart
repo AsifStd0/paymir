@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'login/LoginPageNew.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
+
 import '../util/Constants.dart';
+import 'login/login_screen.dart';
 
 class MobileVerifiedPageNew extends StatefulWidget {
   const MobileVerifiedPageNew({super.key});
@@ -26,7 +28,7 @@ class _MobileVerifiedPageNewState extends State<MobileVerifiedPageNew> {
       onWillPop: () async {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const LoginPageNew()),
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
         );
         return false;
       },
@@ -51,7 +53,7 @@ class _MobileVerifiedPageNewState extends State<MobileVerifiedPageNew> {
                             () => Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const LoginPageNew(),
+                                builder: (_) => const LoginScreen(),
                               ),
                             ),
                       ),
@@ -96,7 +98,7 @@ class _MobileVerifiedPageNewState extends State<MobileVerifiedPageNew> {
                         style: TextStyle(
                           color: const Color(
                             0xff03110A,
-                          ), //Constants.primaryColor(),
+                          ), //AppColors.primaryColor(),
                           fontFamily: 'Visby',
                           fontWeight: FontWeight.bold,
                           fontSize: Constants.getMainFontSize(context),
@@ -120,7 +122,7 @@ class _MobileVerifiedPageNewState extends State<MobileVerifiedPageNew> {
                       child: Text(
                         'You have successfully been verified\n                   and registered',
                         style: TextStyle(
-                          color: Constants.secondaryColor(),
+                          color: AppColors.secondaryColor(),
                           fontFamily: 'Visby',
                           fontWeight: FontWeight.normal,
                           fontSize: Constants.getSmallFontSize(context),
@@ -156,7 +158,7 @@ class _MobileVerifiedPageNewState extends State<MobileVerifiedPageNew> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => const LoginPageNew(),
+                              builder: (_) => const LoginScreen(),
                             ),
                           );
                         },
@@ -175,8 +177,8 @@ class _MobileVerifiedPageNewState extends State<MobileVerifiedPageNew> {
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
                               colors: [
-                                Constants.gradientColor1(),
-                                Constants.gradientColor2(),
+                                AppColors.gradientColor1(),
+                                AppColors.gradientColor2(),
                               ],
                             ),
                           ),

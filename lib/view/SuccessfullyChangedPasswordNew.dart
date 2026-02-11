@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
 
 import '../util/Constants.dart';
-import 'login/LoginPageNew.dart';
+import 'login/login_screen.dart';
 
 class SuccessfullyPasswordChangedPageNew extends StatefulWidget {
   const SuccessfullyPasswordChangedPageNew({super.key});
@@ -32,7 +33,7 @@ class _SuccessfullyPasswordChangedPageNewState
       onWillPop: () async {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const LoginPageNew()),
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
         );
         return false;
       },
@@ -57,7 +58,7 @@ class _SuccessfullyPasswordChangedPageNewState
                             () => Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const LoginPageNew(),
+                                builder: (_) => const LoginScreen(),
                               ),
                             ),
                       ),
@@ -102,7 +103,7 @@ class _SuccessfullyPasswordChangedPageNewState
                         style: TextStyle(
                           color: const Color(
                             0xff03110A,
-                          ), //Constants.primaryColor(),
+                          ), //AppColors.primaryColor(),
                           fontFamily: 'Visby',
                           fontWeight: FontWeight.bold,
                           fontSize: Constants.getMainFontSize(context),
@@ -126,7 +127,7 @@ class _SuccessfullyPasswordChangedPageNewState
                       child: Text(
                         'You have successfully changed\n              the password',
                         style: TextStyle(
-                          color: Constants.secondaryColor(),
+                          color: AppColors.secondaryColor(),
                           fontFamily: 'Visby',
                           fontWeight: FontWeight.normal,
                           fontSize: Constants.getSmallFontSize(context),
@@ -162,7 +163,7 @@ class _SuccessfullyPasswordChangedPageNewState
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => const LoginPageNew(),
+                              builder: (_) => const LoginScreen(),
                             ),
                           );
                         },
@@ -181,8 +182,8 @@ class _SuccessfullyPasswordChangedPageNewState
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
                               colors: [
-                                Constants.gradientColor1(),
-                                Constants.gradientColor2(),
+                                AppColors.gradientColor1(),
+                                AppColors.gradientColor2(),
                               ],
                             ),
                           ),

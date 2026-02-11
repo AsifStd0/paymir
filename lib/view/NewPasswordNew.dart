@@ -1,11 +1,14 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../util/NetworkHelperClass.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
+
 import '../util/Constants.dart';
 import '../util/MyValidation.dart';
-import 'login/LoginPageNew.dart';
+import '../util/NetworkHelperClass.dart';
 import 'SuccessfullyChangedPasswordNew.dart';
+import 'login/login_screen.dart';
 
 class NewPasswordNew extends StatefulWidget {
   final String CNICString;
@@ -78,7 +81,7 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                         Text(
                           'Enter new password',
                           style: TextStyle(
-                            color: Constants.primaryColor(),
+                            color: AppColors.primaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.bold,
                             fontSize: Constants.getMainFontSize(context),
@@ -95,7 +98,7 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                         Text(
                           'Please provide a strong password to reset it!',
                           style: TextStyle(
-                            color: Constants.secondaryColor(),
+                            color: AppColors.secondaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.w500,
                             fontSize: Constants.getSmallFontSize(context),
@@ -112,7 +115,7 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                         Text(
                           "- Please enter a password that is\n\n\t  - At least 8 characters long\n\t  - Must contain at least\n\t\t     - One uppercase letter\n\t\t     - One lowercase letter\n\t\t     - One digit\n\t\t     - One special character\n\t  - The password must not contain spaces",
                           style: TextStyle(
-                            color: Constants.secondaryColor(),
+                            color: AppColors.secondaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.w300,
                             fontSize: Constants.getSmallFontSize(context),
@@ -158,7 +161,7 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                                 fontSize: Constants.getTextformfieldHintFont(
                                   context,
                                 ),
-                                color: Constants.secondaryColor(),
+                                color: AppColors.secondaryColor(),
                                 fontFamily: 'Visby',
                                 fontWeight: FontWeight.normal,
                               ), //hint text style
@@ -224,7 +227,7 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                                 fontSize: Constants.getTextformfieldHintFont(
                                   context,
                                 ),
-                                color: Constants.secondaryColor(),
+                                color: AppColors.secondaryColor(),
                                 fontFamily: 'Visby',
                                 fontWeight: FontWeight.normal,
                               ), //hint text style
@@ -332,8 +335,8 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                                     begin: Alignment.centerLeft,
                                     end: Alignment.centerRight,
                                     colors: [
-                                      Constants.gradientColor1(),
-                                      Constants.gradientColor2(),
+                                      AppColors.gradientColor1(),
+                                      AppColors.gradientColor2(),
                                     ],
                                   ),
                                 ),
@@ -454,7 +457,7 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
         Navigator.of(context, rootNavigator: true).pop();
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => const LoginPageNew()),
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
         );
       },
     );

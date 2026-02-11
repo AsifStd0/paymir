@@ -47,7 +47,7 @@ class CustomButton extends StatelessWidget {
                   ),
                 )
                 : BoxDecoration(
-                  color: Constants.secondaryColor(),
+                  color: AppColors.secondaryColor(),
                   borderRadius: BorderRadius.all(
                     Radius.circular(Constants.getButtonRadius(context)),
                   ),

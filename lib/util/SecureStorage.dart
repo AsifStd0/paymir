@@ -1,11 +1,8 @@
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorage {
-
-  IOSOptions _getIOSOptions() => const IOSOptions(
-    accountName: "paymentgateway",
-  );
+  IOSOptions _getIOSOptions() =>
+      const IOSOptions(accountName: "paymentgateway");
 
   AndroidOptions _getAndroidOptions() => const AndroidOptions(
     encryptedSharedPreferences: true,
@@ -20,33 +17,40 @@ class SecureStorage {
   final String _keyTokenExpiry = 'expiry';
   final String _keyCNIC = 'cnic';
 
-
   Future deleteToken() async {
-
     //Delete prvious key
     storage.deleteAll();
-
   }
 
   Future<String?> getToken() async {
     return await storage.read(
-        key: _keyToken,
-        iOptions: _getIOSOptions(),
-        aOptions: _getAndroidOptions()
+      key: _keyToken,
+      iOptions: _getIOSOptions(),
+      aOptions: _getAndroidOptions(),
     );
   }
 
   Future<String?> getTokenExpiry() async {
-    return await storage.read(key: _keyTokenExpiry, iOptions: _getIOSOptions(),
-        aOptions: _getAndroidOptions());
+    return await storage.read(
+      key: _keyTokenExpiry,
+      iOptions: _getIOSOptions(),
+      aOptions: _getAndroidOptions(),
+    );
   }
 
   Future<String?> getCNIC() async {
-    return await storage.read(key: _keyCNIC, iOptions: _getIOSOptions(),
-        aOptions: _getAndroidOptions());
+    return await storage.read(
+      key: _keyCNIC,
+      iOptions: _getIOSOptions(),
+      aOptions: _getAndroidOptions(),
+    );
   }
 
-  Future<void> storeToken(String tokenValue, DateTime expirationDate, String strCNIC) async {
+  Future<void> storeToken(
+    String tokenValue,
+    DateTime expirationDate,
+    String strCNIC,
+  ) async {
     // Unique key for token
     final keyToken = 'token';
     final keyExpiry = 'expiry';
@@ -82,5 +86,4 @@ class SecureStorage {
 
     print("Values stored to secure storage");
   }
-
 }

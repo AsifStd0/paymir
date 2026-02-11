@@ -1,47 +1,46 @@
 import 'dart:convert';
+
 import 'package:crypto/crypto.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../util/AlertDialogueClass.dart';
-import '../util/MyValidation.dart';
-import '../view/SuccessfulPaymentPageNew.dart';
-import '../util/Constants.dart';
-import '../util/NetworkHelperClass.dart';
-import '../util/SecureStorage.dart';
-import 'login/LoginPageNew.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
 
-class JazzCashPaymentPageNew extends StatefulWidget {
+import '../../util/AlertDialogueClass.dart';
+import '../../util/Constants.dart';
+import '../../util/MyValidation.dart';
+import '../../util/NetworkHelperClass.dart';
+import '../../util/SecureStorage.dart';
+import '../SuccessfulPaymentPageNew.dart';
+import '../login/login_screen.dart';
+
+class EasyPaisaPaymentPageNew extends StatefulWidget {
   final Map<String, dynamic> values;
   final List<dynamic> serviceCharges;
   //if you have multiple values add here
-  const JazzCashPaymentPageNew(
+  const EasyPaisaPaymentPageNew(
     this.values,
     this.serviceCharges, {
     super.key,
   }); //add also..example this.abc,this...
 
   @override
-  _JazzCashPaymentPageNewState createState() =>
-      _JazzCashPaymentPageNewState(values, serviceCharges);
+  _EasyPaisaPaymentPageNewState createState() =>
+      _EasyPaisaPaymentPageNewState(values, serviceCharges);
 }
 
-class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
+class _EasyPaisaPaymentPageNewState extends State<EasyPaisaPaymentPageNew> {
   Map<String, dynamic> values;
   List<dynamic> serviceCharges;
 
-  _JazzCashPaymentPageNewState(this.values, this.serviceCharges);
+  _EasyPaisaPaymentPageNewState(this.values, this.serviceCharges);
 
   final TextEditingController _mobileNumberController = MaskedTextController(
     mask: '00000000000',
   );
-  final TextEditingController _CNICController = MaskedTextController(
-    mask: '00000-0000000-0',
-  );
-
   final _formKey = GlobalKey<FormState>();
-
   bool _isLoading = false;
 
   void _submit() {
@@ -81,7 +80,6 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
   ];
 
   final SecureStorage _secureStorage = SecureStorage();
-
   String strToken = "";
   String totalAmountString = "";
   double taxAmount = 0.00;
@@ -127,11 +125,8 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
     }
   }
 
-  String strCNIC = "";
-
   Future<void> fetchSecureStorageData() async {
     strToken = await _secureStorage.getToken() ?? '';
-    strCNIC = await _secureStorage.getCNIC() ?? '';
     // _passwordController.text = await _secureStorage.getPassWord() ?? '';
   }
 
@@ -180,7 +175,7 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
                         Text(
                           values['departmentName'],
                           style: TextStyle(
-                            color: Constants.primaryColor(),
+                            color: AppColors.primaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.bold,
                             fontSize:
@@ -196,9 +191,9 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
                         ),
 
                         Text(
-                          'Application No:   ${values['dptPaymentID']}',
+                          'Application No: ' + values['trackingNumber'],
                           style: TextStyle(
-                            color: Constants.secondaryColor(),
+                            color: AppColors.secondaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.w500,
                             fontSize: Constants.getSmallFontSize(context),
@@ -238,8 +233,7 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
                                     ),
                                   ),
                                   TextSpan(
-                                    text:
-                                        "\n(Amount + Charges) $totalAmountString",
+                                    text: "\n(Amount + Tax) $totalAmountString",
                                     style: TextStyle(
                                       color: const Color(0xff929BA1),
                                       fontSize:
@@ -277,7 +271,7 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
                         Row(
                           children: [
                             Image.asset(
-                              'assets/images/jazzcashicon.jpg',
+                              'assets/images/easypaisalogo.jpg',
                               height: MediaQuery.of(context).size.width * 0.05,
                               width: MediaQuery.of(context).size.width * 0.05,
                             ),
@@ -287,7 +281,7 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
                             ),
 
                             Text(
-                              'JazzCash Mobile Account',
+                              'EasyPaisa Mobile Account',
                               style: TextStyle(
                                 fontSize:
                                     MediaQuery.of(context).size.width * 0.035,
@@ -310,12 +304,12 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
                           ),
 
                           child: Text(
-                            'Enter your JazzCash Mobile Account Number',
+                            'Enter your EasyPaisa Mobile Account Number',
                             textAlign: TextAlign.left,
                             //overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize:
-                                  MediaQuery.of(context).size.width * 0.029,
+                                  MediaQuery.of(context).size.width * 0.028,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
                               color: const Color(0xff207797),
@@ -326,16 +320,18 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
                         SizedBox(
                           height: Constants.getTextFormFieldHeight(context),
                           width: MediaQuery.of(context).size.width * 0.79,
+
                           child: TextFormField(
                             textAlign: TextAlign.start,
                             style: const TextStyle(fontWeight: FontWeight.bold),
+
                             decoration: InputDecoration(
                               hintText: "For example: 03123456789",
                               hintStyle: TextStyle(
                                 fontSize: Constants.getTextformfieldHintFont(
                                   context,
                                 ),
-                                color: Constants.secondaryColor(),
+                                color: AppColors.secondaryColor(),
                                 fontFamily: 'Visby',
                                 fontWeight: FontWeight.normal,
                               ),
@@ -370,106 +366,20 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
                           ),
                         ),
 
-                        Padding(
-                          // padding: const EdgeInsets.only(top:10),
-                          padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * 0.04,
-                            top:
-                                Constants.getVerticalGapBetweenTwoTextformfields(
-                                  context,
-                                ),
-                            bottom: MediaQuery.of(context).size.height * 0.01,
-                          ),
-                          child: Text(
-                            'Enter your CNIC Number',
-                            textAlign: TextAlign.left,
-                            //overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.029,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
-                              color: const Color(0xff207797),
-                            ),
-                          ),
-                        ),
-
                         SizedBox(
-                          height: Constants.getTextFormFieldHeight(context),
-                          width: MediaQuery.of(context).size.width * 0.79,
-
-                          child: TextFormField(
-                            textAlign: TextAlign.start,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-
-                            decoration: InputDecoration(
-                              hintText: "For example: 17301-1114758-3",
-                              hintStyle: TextStyle(
-                                fontSize: Constants.getTextformfieldHintFont(
-                                  context,
-                                ),
-                                color: Constants.secondaryColor(),
-                                fontFamily: 'Visby',
-                                fontWeight: FontWeight.normal,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    Constants.getTextformfieldBorderRadius(
-                                      context,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              counterText: '',
-                              contentPadding: EdgeInsets.only(
-                                top: Constants.getTextformfieldContentPadding(
-                                  context,
-                                ),
-                                left: Constants.getTextformfieldContentPadding(
-                                  context,
-                                ),
-                                bottom:
-                                    Constants.getTextformfieldContentPadding(
-                                      context,
-                                    ),
-                              ),
-                            ),
-                            controller: _CNICController,
-                            keyboardType: TextInputType.number,
-                            validator:
-                                (value) =>
-                                    MyValidationClass.validateCNIC(value),
-                          ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.1,
+                          height: MediaQuery.of(context).size.height * 0.201,
                         ),
                         TextButton(
-                          onPressed: () async {
+                          onPressed: () {
                             _submit();
                             if (MyValidationClass.validateMobile(
-                                      _mobileNumberController.text,
-                                    ) ==
-                                    null &&
-                                MyValidationClass.validateCNIC(
-                                      _CNICController.text,
-                                    ) ==
-                                    null) {
+                                  _mobileNumberController.text,
+                                ) ==
+                                null) {
                               setState(() {
                                 _isLoading = true;
                               });
-                              if (await NetworkHelper.checkInternetConnection()) {
-                                performJazzMWalletTransactionNew();
-                              } else {
-                                ShowAlertDialogueClass.showAlertDialogue(
-                                  context: context,
-                                  title: "No Internet",
-                                  message: "Check your internet connection!",
-                                  buttonText: "OK",
-                                  iconData: Icons.error,
-                                );
-                              }
+                              performEasyPaisaMWalletTransactionNew();
                             }
                           },
                           child: Container(
@@ -488,8 +398,8 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
                                 colors: [
-                                  Constants.gradientColor1(),
-                                  Constants.gradientColor2(),
+                                  AppColors.gradientColor1(),
+                                  AppColors.gradientColor2(),
                                 ],
                               ),
                             ),
@@ -527,11 +437,15 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
 
   String hashHmac(String data, String secret) {
     String returnString = "";
+
     var key = utf8.encode(secret);
     var bytes = utf8.encode(data);
+
     var hmacSha256 = Hmac(sha256, key); // HMAC-SHA256
     var digest = hmacSha256.convert(bytes);
+
     returnString = digest.toString();
+
     if (kDebugMode) {
       print("HMAC digest as bytes: ${digest.bytes}");
     }
@@ -565,10 +479,11 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
     );
   }
 
-  Future<bool> performJazzMWalletTransactionNew() async {
-    String CNIC = values['citizenCNIC'] ?? strCNIC; //"12345-1234567-3";
+  Future<bool> performEasyPaisaMWalletTransactionNew() async {
+    String CNIC = values['citizenCNIC'];
     String ApplicationTrackingNo = values['dptPaymentID'];
     String FeeAmount = values['feeAmount'].toStringAsFixed(2).toString();
+
     String strforhash = "$CNIC&$ApplicationTrackingNo&$FeeAmount";
 
     if (kDebugMode) {
@@ -580,37 +495,38 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
     if (kDebugMode) {
       print("The value of Hash: $hsh");
     }
+
     var data = {
-      "MobileNo":
-          _mobileNumberController.text, //use only this number for testing
-      "CNIC": _CNICController.text, //use only this cnic for testing
-      "CNIC_LoginAcct": strCNIC, //values['citizenCNIC'],
       "PaymentMode": "MobileWallet",
-      "ServiceProviderName": "JazzCash",
-      "serviceKey": values['serviceKey'],
+      "ServiceProviderName": "EasyPaisa",
+      "CNIC_LoginAcct": values['citizenCNIC'],
+      "serviceKey": "SRV-0008",
       "ApplicationNo": values['dptPaymentID'], // This is DPTPaymentID
       "ServiceFee": values['feeAmount'].toStringAsFixed(2).toString(),
-      "ServiceCharges": double.parse(
-        taxAmount.toStringAsFixed(2),
-      ), //10.00,//total tax amount not percentage
+      "ServiceCharges": double.parse(taxAmount.toStringAsFixed(2)),
       "KPITBPercentage": platformChargesPercentage,
       "KPITBCharges": platformChargesAmount,
       "PaymentPlatformPercentage": paymentChargesPercentage,
       "PaymentPlatformCharges": paymentChargesAmount,
-      "TotalAmount": double.parse(
-        totalAmount.toStringAsFixed(2),
-      ), //taxamount + fee amount
-      "transactionAmount": "0",
+      "transactionAmount": double.parse(totalAmount.toStringAsFixed(2)),
       "orderId": "",
       "storeId": "",
       "transactionType": "",
-      "mobileAccountNo": "",
-      "emailAddress": "",
+      //"mobileAccountNo": "03466948501",
+      "mobileAccountNo": _mobileNumberController.text,
+      "emailAddress": "testEnmail@gmail.com",
+      "MobileNo": "",
+      "CNIC": "",
+      "TotalAmount": 0, //not used in easypaisa
       "DuesExtration": "Server",
       "EncData": hsh,
     };
 
     String auth = "Bearer $strToken";
+
+    if (kDebugMode) {
+      print("data object: " + data.toString());
+    }
 
     try {
       final responseBody = await NetworkHelper.BillPayment(data, auth);
@@ -622,19 +538,19 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
         print("Response from server: $responseBody");
       }
       if (decodedResponseBody["responseCode"] == "200") {
-        // Navigator.push(
-        //     context,
-        //
-        //     MaterialPageRoute(
-        //         builder: (_) =>
-        //             SuccessfulPaymentPageNew(
-        //                 values,
-        //                 taxPercentage,
-        //                 (totalAmount).toStringAsFixed(2).toString(),
-        //                 _mobileNumberController.text,
-        //                 "Jazz")
-        //     )
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder:
+                (_) => SuccessfulPaymentPageNew(
+                  values,
+                  taxPercentage,
+                  (totalAmount).toStringAsFixed(2).toString(),
+                  _mobileNumberController.text,
+                  "EasyPaisa",
+                ),
+          ),
+        );
       } else {
         ShowAlertDialogueClass.showAlertDialogue(
           context: context,
@@ -658,7 +574,7 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
                   _secureStorage.deleteToken();
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (_) => const LoginPageNew()),
+                    MaterialPageRoute(builder: (_) => const LoginScreen()),
                   );
                 },
               ),
@@ -668,5 +584,10 @@ class _JazzCashPaymentPageNewState extends State<JazzCashPaymentPageNew> {
       );
     }
     return false;
+  }
+
+  Future<bool> checkInternetConnection() async {
+    bool isConnected = await InternetConnectionChecker().hasConnection;
+    return isConnected;
   }
 }

@@ -110,7 +110,7 @@
 //                 Text(
 //                   qrCodeResult,
 //                   style: TextStyle(
-//                     color: Constants.primaryColor(),
+//                     color: AppColors.primaryColor(),
 //                     fontFamily: 'Visby',
 //                     fontWeight: FontWeight.bold,
 //                     fontSize:Constants.getMainFontSize(context),
@@ -139,8 +139,8 @@
 //                             begin: Alignment.centerLeft,
 //                             end: Alignment.centerRight,
 //                             colors: [
-//                               Constants.gradientColor1(),
-//                               Constants.gradientColor2(),
+//                               AppColors.gradientColor1(),
+//                               AppColors.gradientColor2(),
 //                             ],
 //                           ),
 //                           borderRadius: BorderRadius.all(Radius.circular(Constants.getButtonRadius(context))),
@@ -308,12 +308,14 @@
 //   }
 // }
 
-
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
 import 'package:permission_handler/permission_handler.dart';
+
 import '../util/Constants.dart';
 import '../util/NetworkHelperClass.dart';
 import '../util/SecureStorage.dart';
@@ -353,30 +355,31 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
   void scanQRCode() {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Scan QR Code"),
-        content: SizedBox(
-          height: 250,
-          width: 250,
-          child: MobileScanner(
-            onDetect: (capture) {
-              final List<Barcode> barcodes = capture.barcodes;
-              if (barcodes.isNotEmpty) {
-                Navigator.pop(context);
-                setState(() {
-                  qrCodeResult = barcodes.first.rawValue ?? "No Data";
-                });
-                Future.delayed(const Duration(seconds: 4), () {
-                  setState(() {
-                    qrCodeResult = "No record found!";
-                  });
-                });
-                loadApplicationDetails(qrCodeResult);
-              }
-            },
+      builder:
+          (context) => AlertDialog(
+            title: const Text("Scan QR Code"),
+            content: SizedBox(
+              height: 250,
+              width: 250,
+              child: MobileScanner(
+                onDetect: (capture) {
+                  final List<Barcode> barcodes = capture.barcodes;
+                  if (barcodes.isNotEmpty) {
+                    Navigator.pop(context);
+                    setState(() {
+                      qrCodeResult = barcodes.first.rawValue ?? "No Data";
+                    });
+                    Future.delayed(const Duration(seconds: 4), () {
+                      setState(() {
+                        qrCodeResult = "No record found!";
+                      });
+                    });
+                    loadApplicationDetails(qrCodeResult);
+                  }
+                },
+              ),
+            ),
           ),
-        ),
-      ),
     );
   }
 
@@ -384,13 +387,16 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
     var data = {
       "DPTPaymentID": dtpPaymentID,
       "CNIC": cnicString,
-      "Using": "DPTPayID"
+      "Using": "DPTPayID",
     };
 
     String auth = "Bearer $strToken";
 
     try {
-      final responseBody = await NetworkHelper.getPendingTransactions(data, auth);
+      final responseBody = await NetworkHelper.getPendingTransactions(
+        data,
+        auth,
+      );
       if (responseBody != null && responseBody.contains("false")) {
         Future.delayed(const Duration(seconds: 3), () {
           setState(() {
@@ -418,16 +424,17 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
     } catch (e) {
       showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Error"),
-          content: const Text("Server is down and cannot be accessed!"),
-          actions: [
-            TextButton(
-              child: const Text("Close"),
-              onPressed: () => Navigator.pop(context),
+        builder:
+            (context) => AlertDialog(
+              title: const Text("Error"),
+              content: const Text("Server is down and cannot be accessed!"),
+              actions: [
+                TextButton(
+                  child: const Text("Close"),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
             ),
-          ],
-        ),
       );
     }
     return "false";
@@ -463,7 +470,11 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
                   ),
                 ],
               ),
-              SizedBox(height: Constants.getVerticalGapBetweenTwoTextformfields(context) * 300),
+              SizedBox(
+                height:
+                    Constants.getVerticalGapBetweenTwoTextformfields(context) *
+                    300,
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -471,16 +482,25 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
                   Text(
                     qrCodeResult,
                     style: TextStyle(
-                      color: Constants.primaryColor(),
+                      color: AppColors.primaryColor(),
                       fontFamily: 'Visby',
                       fontWeight: FontWeight.bold,
                       fontSize: Constants.getMainFontSize(context),
                     ),
                   ),
-                  SizedBox(height: Constants.getVerticalGapBetweenTwoTextformfields(context) * 350),
+                  SizedBox(
+                    height:
+                        Constants.getVerticalGapBetweenTwoTextformfields(
+                          context,
+                        ) *
+                        350,
+                  ),
                   Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: Constants.getSymmetricHorizontalPadding(context)),
+                      horizontal: Constants.getSymmetricHorizontalPadding(
+                        context,
+                      ),
+                    ),
                     child: Align(
                       alignment: Alignment.center,
                       child: TextButton(
@@ -494,30 +514,49 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
                               colors: [
-                                Constants.gradientColor1(),
-                                Constants.gradientColor2(),
+                                AppColors.gradientColor1(),
+                                AppColors.gradientColor2(),
                               ],
                             ),
-                            borderRadius: BorderRadius.all(Radius.circular(Constants.getButtonRadius(context))),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
+                                Constants.getButtonRadius(context),
+                              ),
+                            ),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SizedBox(
-                                height: Constants.getVerticalGapBetweenTwoTextformfields(context) * 35,
-                                width: Constants.getVerticalGapBetweenTwoTextformfields(context) * 35,
-                                child: SvgPicture.asset("assets/images/qrcodelogo1.svg"),
+                                height:
+                                    Constants.getVerticalGapBetweenTwoTextformfields(
+                                      context,
+                                    ) *
+                                    35,
+                                width:
+                                    Constants.getVerticalGapBetweenTwoTextformfields(
+                                      context,
+                                    ) *
+                                    35,
+                                child: SvgPicture.asset(
+                                  "assets/images/qrcodelogo1.svg",
+                                ),
                               ),
                               SizedBox(
-                                width: Constants.getVerticalGapBetweenTwoTextformfields(context) * 20,
+                                width:
+                                    Constants.getVerticalGapBetweenTwoTextformfields(
+                                      context,
+                                    ) *
+                                    20,
                               ),
                               Text(
                                 'Scan QR Code',
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: Constants.getButtonFont(context),
-                                    fontFamily: 'Visby',
-                                    fontWeight: FontWeight.bold),
+                                  color: Colors.white,
+                                  fontSize: Constants.getButtonFont(context),
+                                  fontFamily: 'Visby',
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ],
                           ),
@@ -534,4 +573,3 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
     );
   }
 }
-

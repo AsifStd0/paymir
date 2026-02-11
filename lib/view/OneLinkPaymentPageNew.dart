@@ -1,19 +1,18 @@
 import 'dart:convert';
-import 'dart:math';
+
 import 'package:crypto/crypto.dart';
-import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
+
 import '../util/AlertDialogueClass.dart';
-import '../util/MyValidation.dart';
-import '../view/SuccessfulPaymentPageNew.dart';
 import '../util/Constants.dart';
 import '../util/NetworkHelperClass.dart';
 import '../util/SecureStorage.dart';
-import 'login/LoginPageNew.dart';
 import 'OneLinkInQuiryPaymentPageNew.dart';
+import 'login/login_screen.dart';
 
 class OneLinkPaymentPageNew extends StatefulWidget {
   final Map<String, dynamic> values;
@@ -185,7 +184,7 @@ class _OneLinkPaymentPageNewState extends State<OneLinkPaymentPageNew> {
                         Text(
                           values['departmentName'],
                           style: TextStyle(
-                            color: Constants.primaryColor(),
+                            color: AppColors.primaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.bold,
                             fontSize:
@@ -203,7 +202,7 @@ class _OneLinkPaymentPageNewState extends State<OneLinkPaymentPageNew> {
                         Text(
                           'Application No:   ${values['trackingNumber']}',
                           style: TextStyle(
-                            color: Constants.secondaryColor(),
+                            color: AppColors.secondaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.w500,
                             fontSize: Constants.getSmallFontSize(context),
@@ -368,7 +367,7 @@ class _OneLinkPaymentPageNewState extends State<OneLinkPaymentPageNew> {
                                             Constants.getTextformfieldHintFont(
                                               context,
                                             ),
-                                        color: Constants.secondaryColor(),
+                                        color: AppColors.secondaryColor(),
                                         fontFamily: 'Visby',
                                         fontWeight: FontWeight.normal,
                                       ),
@@ -443,8 +442,8 @@ class _OneLinkPaymentPageNewState extends State<OneLinkPaymentPageNew> {
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
                                 colors: [
-                                  Constants.gradientColor1(),
-                                  Constants.gradientColor2(),
+                                  AppColors.gradientColor1(),
+                                  AppColors.gradientColor2(),
                                 ],
                               ),
                             ),
@@ -638,7 +637,7 @@ class _OneLinkPaymentPageNewState extends State<OneLinkPaymentPageNew> {
                   _secureStorage.deleteToken();
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (_) => const LoginPageNew()),
+                    MaterialPageRoute(builder: (_) => const LoginScreen()),
                   );
                 },
               ),

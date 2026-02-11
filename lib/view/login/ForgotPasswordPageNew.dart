@@ -1,16 +1,15 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:extended_masked_text/extended_masked_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:http/http.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
+
 import '../../util/Constants.dart';
 import '../../util/MyValidation.dart';
 import '../../util/NetworkHelperClass.dart';
-import '../EnterCodeForgotPasswordNew.dart';
+import 'EnterCodeForgotPasswordNew.dart';
 
 class ForgotPasswordNew extends StatefulWidget {
   @override
@@ -74,7 +73,7 @@ class _ForgotPasswordNewState extends State<ForgotPasswordNew> {
                         Text(
                           'Reset Password',
                           style: TextStyle(
-                            color: Constants.primaryColor(),
+                            color: AppColors.primaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.bold,
                             fontSize: Constants.getMainFontSize(context),
@@ -91,7 +90,7 @@ class _ForgotPasswordNewState extends State<ForgotPasswordNew> {
                         Text(
                           'Enter your CNIC. The verification code will be sent to the associated mobile number!',
                           style: TextStyle(
-                            color: Constants.secondaryColor(),
+                            color: AppColors.secondaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.w500,
                             fontSize: Constants.getSmallFontSize(context),
@@ -117,7 +116,7 @@ class _ForgotPasswordNewState extends State<ForgotPasswordNew> {
                                 fontSize: Constants.getTextformfieldHintFont(
                                   context,
                                 ),
-                                color: Constants.secondaryColor(),
+                                color: AppColors.secondaryColor(),
                                 fontFamily: 'Visby',
                                 fontWeight: FontWeight.normal,
                               ), //hint text style
@@ -192,8 +191,8 @@ class _ForgotPasswordNewState extends State<ForgotPasswordNew> {
                                     begin: Alignment.centerLeft,
                                     end: Alignment.centerRight,
                                     colors: [
-                                      Constants.gradientColor1(),
-                                      Constants.gradientColor2(),
+                                      AppColors.gradientColor1(),
+                                      AppColors.gradientColor2(),
                                     ],
                                   ),
                                 ),

@@ -253,7 +253,7 @@
 //                           hintStyle:
 //                           TextStyle(
 //                               fontSize: Constants.getTextformfieldHintFont(context),
-//                               color: Constants.secondaryColor(),
+//                               color: AppColors.secondaryColor(),
 //                               fontFamily: 'Visby',
 //                               fontWeight: FontWeight.normal
 //                           ), //hint text style
@@ -306,8 +306,8 @@
 //                             begin: Alignment.centerLeft,
 //                             end: Alignment.centerRight,
 //                             colors: [
-//                               Constants.gradientColor1(),
-//                               Constants.gradientColor2(),
+//                               AppColors.gradientColor1(),
+//                               AppColors.gradientColor2(),
 //                             ],
 //                           ),
 //                         ),
@@ -439,15 +439,17 @@
 
 import 'dart:async';
 import 'dart:io';
+
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
+
 import '../util/Constants.dart';
 import '../util/SecureStorage.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
-
-import 'VoucherNoPageNew.dart';
+import 'Voucher/VoucherNoPageNew.dart';
 
 class DastakPageNew extends StatefulWidget {
   const DastakPageNew({super.key});
@@ -457,7 +459,6 @@ class DastakPageNew extends StatefulWidget {
 }
 
 class _DastakPageNewState extends State<DastakPageNew> {
-
   int _selectedIndex = 0;
 
   File? _image;
@@ -468,11 +469,8 @@ class _DastakPageNewState extends State<DastakPageNew> {
     });
   }
 
-
-
   TextEditingController textEditingController = TextEditingController();
   String currentText = "";
-
 
   final List<Map<String, String>> _list = [
     {
@@ -565,22 +563,43 @@ class _DastakPageNewState extends State<DastakPageNew> {
 
   final SecureStorage _secureStorage = SecureStorage();
 
-  List<dynamic> pendingDues = [];//[{"arcid":77,"applicationTrackingNo":"RED-LRB-20220727-00002","cnic":"11111-1111111-1","serviceName":"Land Record and Boundary Identification (HadBarari)","serviceTypeName":"New Hadbarari Application","departmentName":"Revenue and Estate Department","feeAmount":1000.00,"status":"Pending","applicationGenerationDateTime":"2023-04-16T00:00:00","entryDateTime":"2023-04-17T00:00:00","responseStatus":true,"responseMessage":"Request entertained successfully"}];
-  List<dynamic> doneTransactions = [];//[{"arcid":77,"applicationTrackingNo":"RED-LRB-20220727-00002","cnic":"11111-1111111-1","serviceName":"Land Record and Boundary Identification (HadBarari)","serviceTypeName":"New Hadbarari Application","departmentName":"Revenue and Estate Department","feeAmount":1000.00,"status":"Pending","applicationGenerationDateTime":"2023-04-16T00:00:00","entryDateTime":"2023-04-17T00:00:00","responseStatus":true,"responseMessage":"Request entertained successfully"}];
+  List<dynamic> pendingDues =
+      []; //[{"arcid":77,"applicationTrackingNo":"RED-LRB-20220727-00002","cnic":"11111-1111111-1","serviceName":"Land Record and Boundary Identification (HadBarari)","serviceTypeName":"New Hadbarari Application","departmentName":"Revenue and Estate Department","feeAmount":1000.00,"status":"Pending","applicationGenerationDateTime":"2023-04-16T00:00:00","entryDateTime":"2023-04-17T00:00:00","responseStatus":true,"responseMessage":"Request entertained successfully"}];
+  List<dynamic> doneTransactions =
+      []; //[{"arcid":77,"applicationTrackingNo":"RED-LRB-20220727-00002","cnic":"11111-1111111-1","serviceName":"Land Record and Boundary Identification (HadBarari)","serviceTypeName":"New Hadbarari Application","departmentName":"Revenue and Estate Department","feeAmount":1000.00,"status":"Pending","applicationGenerationDateTime":"2023-04-16T00:00:00","entryDateTime":"2023-04-17T00:00:00","responseStatus":true,"responseMessage":"Request entertained successfully"}];
 
-  Map<String, dynamic> cardDataJsonObject ={};
-  Map<String, dynamic> profileDataJsonObject ={};
+  Map<String, dynamic> cardDataJsonObject = {};
+  Map<String, dynamic> profileDataJsonObject = {};
 
-  String strCardHolderName ="Name";
+  String strCardHolderName = "Name";
   DateTime now = DateTime.now();
 
-  String strExpiryDate = DateFormat('MM/yyyy').format(DateTime(DateTime.now().year + 5, DateTime.now().month, DateTime.now().day)).toString().replaceRange(0, 2, DateFormat('MM').format(DateTime(DateTime.now().year + 5, DateTime.now().month, DateTime.now().day)).toString());
+  String strExpiryDate = DateFormat('MM/yyyy')
+      .format(
+        DateTime(
+          DateTime.now().year + 5,
+          DateTime.now().month,
+          DateTime.now().day,
+        ),
+      )
+      .toString()
+      .replaceRange(
+        0,
+        2,
+        DateFormat('MM')
+            .format(
+              DateTime(
+                DateTime.now().year + 5,
+                DateTime.now().month,
+                DateTime.now().day,
+              ),
+            )
+            .toString(),
+      );
 
+  String strCardNumber = "****  ****  ****  ****";
 
-  String strCardNumber ="****  ****  ****  ****";
-
-  List<dynamic> serviceCharges =
-  [
+  List<dynamic> serviceCharges = [
     {
       "serviceProviderId": 1,
       "serviceProviderTitle": "Jazz Cash",
@@ -592,7 +611,7 @@ class _DastakPageNewState extends State<DastakPageNew> {
           "paymentModeTitle": "MobileApp",
           "paymentChargesPercentage": 0.70,
           "platformChargesPercentage": 0.0,
-          "totalTaxPercentage": 2.32
+          "totalTaxPercentage": 2.32,
         },
         {
           "paymentChargesId": 2,
@@ -601,7 +620,7 @@ class _DastakPageNewState extends State<DastakPageNew> {
           "paymentModeTitle": "OTC",
           "paymentChargesPercentage": 1.50,
           "platformChargesPercentage": 0.0,
-          "totalTaxPercentage": 2.32
+          "totalTaxPercentage": 2.32,
         },
         {
           "paymentChargesId": 3,
@@ -610,9 +629,9 @@ class _DastakPageNewState extends State<DastakPageNew> {
           "paymentModeTitle": "CreditCard/DebitCard",
           "paymentChargesPercentage": 2.00,
           "platformChargesPercentage": 0.0,
-          "totalTaxPercentage": 2.32
-        }
-      ]
+          "totalTaxPercentage": 2.32,
+        },
+      ],
     },
     {
       "serviceProviderId": 2,
@@ -625,9 +644,9 @@ class _DastakPageNewState extends State<DastakPageNew> {
           "paymentModeTitle": "MobileApp",
           "paymentChargesPercentage": 0.70,
           "platformChargesPercentage": 0.0,
-          "totalTaxPercentage": 2.32
-        }
-      ]
+          "totalTaxPercentage": 2.32,
+        },
+      ],
     },
     {
       "serviceProviderId": 3,
@@ -640,7 +659,7 @@ class _DastakPageNewState extends State<DastakPageNew> {
           "paymentModeTitle": "MobileApp",
           "paymentChargesPercentage": 0.50,
           "platformChargesPercentage": 0.0,
-          "totalTaxPercentage": 2.32
+          "totalTaxPercentage": 2.32,
         },
         {
           "paymentChargesId": 6,
@@ -649,7 +668,7 @@ class _DastakPageNewState extends State<DastakPageNew> {
           "paymentModeTitle": "OTC",
           "paymentChargesPercentage": 1.00,
           "platformChargesPercentage": 0.0,
-          "totalTaxPercentage": 2.32
+          "totalTaxPercentage": 2.32,
         },
         {
           "paymentChargesId": 7,
@@ -658,15 +677,15 @@ class _DastakPageNewState extends State<DastakPageNew> {
           "paymentModeTitle": "CreditCard/DebitCard",
           "paymentChargesPercentage": 1.50,
           "platformChargesPercentage": 0.0,
-          "totalTaxPercentage": 3.50
-        }
-      ]
-    }
+          "totalTaxPercentage": 3.50,
+        },
+      ],
+    },
   ];
 
-  String strToken="";
-  String strTokenExpiry="";
-  String strCNIC="";
+  String strToken = "";
+  String strTokenExpiry = "";
+  String strCNIC = "";
 
   Future<void> fetchSecureStorageData() async {
     strToken = await _secureStorage.getToken() ?? '';
@@ -676,13 +695,11 @@ class _DastakPageNewState extends State<DastakPageNew> {
     // _passwordController.text = await _secureStorage.getPassWord() ?? '';
   }
 
-
   @override
   void initState() {
     super.initState();
     fetchSecureStorageData();
-    Future.delayed(const Duration(milliseconds: 2900), () {
-    });
+    Future.delayed(const Duration(milliseconds: 2900), () {});
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final appDir = await getApplicationDocumentsDirectory();
@@ -698,10 +715,9 @@ class _DastakPageNewState extends State<DastakPageNew> {
 
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       onWillPop: () async {
-        return true;//(await ShowAlertDialogueClass.exitAppDialog(context));
+        return true; //(await ShowAlertDialogueClass.exitAppDialog(context));
       },
       child: Scaffold(
         backgroundColor: const Color(0xffFAFCFF),
@@ -715,10 +731,18 @@ class _DastakPageNewState extends State<DastakPageNew> {
                   // First Row
                   Padding(
                     padding: EdgeInsets.only(
-                      top:Constants.getVerticalGapBetweenTwoTextformfields(context)*40,
+                      top:
+                          Constants.getVerticalGapBetweenTwoTextformfields(
+                            context,
+                          ) *
+                          40,
                       //left: Constants.getHomePageMainTextLeftPadding(context)*2.3,
-                     // right: Constants.getVerticalGapBetweenTwoTextformfields(context),
-                      bottom: Constants.getVerticalGapBetweenTwoTextformfields(context)*9,
+                      // right: Constants.getVerticalGapBetweenTwoTextformfields(context),
+                      bottom:
+                          Constants.getVerticalGapBetweenTwoTextformfields(
+                            context,
+                          ) *
+                          9,
                     ),
 
                     child: Row(
@@ -727,107 +751,139 @@ class _DastakPageNewState extends State<DastakPageNew> {
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, bottom: 8),
                           child: Text(
-                              'Dastak Services',
-                              style: TextStyle(
-                                color: const Color(0xff3F3F3F),
-                                fontFamily: 'Metropolis',
-                                fontWeight: FontWeight.w700,
-                                fontSize:Constants.getServiceFontSize(context),
-                              )
+                            'Dastak Services',
+                            style: TextStyle(
+                              color: const Color(0xff3F3F3F),
+                              fontFamily: 'Metropolis',
+                              fontWeight: FontWeight.w700,
+                              fontSize: Constants.getServiceFontSize(context),
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        //showMyGeneraDialog();
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              //showMyGeneraDialog();
 
-                        Navigator.push(context, MaterialPageRoute(builder: (_)=>VoucherNoPageNew()));
-
-
-                      },
-                      child: Container(
-                        width: MediaQuery.sizeOf(context).width * .5,
-                        height: MediaQuery.sizeOf(context).width * 0.3, // Increased height slightly
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          color: const Color(0xffF4F6F9),
-                          borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).width * 0.03),
-                          border: Border.all(
-                            color: const Color(0xffEBEBEB),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(MediaQuery.sizeOf(context).width * 0.015),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center, // Center content vertically
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(Constants.getVerticalGapBetweenTwoTextformfields(context) * 5),
-                                child: SvgPicture.asset(
-                                  'assets/images/utilitieslogo.svg',
-                                  height: Constants.getSmallFontSize(context) * 2.5,
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => VoucherNoPageNew(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              width: MediaQuery.sizeOf(context).width * .5,
+                              height:
+                                  MediaQuery.sizeOf(context).width *
+                                  0.3, // Increased height slightly
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: const Color(0xffF4F6F9),
+                                borderRadius: BorderRadius.circular(
+                                  MediaQuery.sizeOf(context).width * 0.03,
+                                ),
+                                border: Border.all(
+                                  color: const Color(0xffEBEBEB),
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    top: Constants.getVerticalGapBetweenTwoTextformfields(context) * 2),
-                                child: SizedBox(
-                                  width: MediaQuery.sizeOf(context).width * 0.5, // Restrict width
-                                  child: Text(
-                                    'Housing Foundation Membership',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: const Color(0xff3F3F3F),
-                                      fontFamily: 'Metropolis',
-                                      fontSize: Constants.getSmallFontSize(context),
-                                      fontWeight: FontWeight.w600,
+                              child: Padding(
+                                padding: EdgeInsets.all(
+                                  MediaQuery.sizeOf(context).width * 0.015,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .center, // Center content vertically
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(
+                                        Constants.getVerticalGapBetweenTwoTextformfields(
+                                              context,
+                                            ) *
+                                            5,
+                                      ),
+                                      child: SvgPicture.asset(
+                                        'assets/images/utilitieslogo.svg',
+                                        height:
+                                            Constants.getSmallFontSize(
+                                              context,
+                                            ) *
+                                            2.5,
+                                      ),
                                     ),
-                                    softWrap: true,
-                                    overflow: TextOverflow.visible,
-                                    maxLines: 2, // Allow multi-line text
-                                  ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        top:
+                                            Constants.getVerticalGapBetweenTwoTextformfields(
+                                              context,
+                                            ) *
+                                            2,
+                                      ),
+                                      child: SizedBox(
+                                        width:
+                                            MediaQuery.sizeOf(context).width *
+                                            0.5, // Restrict width
+                                        child: Text(
+                                          'Housing Foundation Membership',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: const Color(0xff3F3F3F),
+                                            fontFamily: 'Metropolis',
+                                            fontSize:
+                                                Constants.getSmallFontSize(
+                                                  context,
+                                                ),
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          softWrap: true,
+                                          overflow: TextOverflow.visible,
+                                          maxLines: 2, // Allow multi-line text
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                    ],
+                  ),
 
-            SizedBox(height: Constants.getVerticalGapBetweenTwoTextformfields(context)*15),
-
+                  SizedBox(
+                    height:
+                        Constants.getVerticalGapBetweenTwoTextformfields(
+                          context,
+                        ) *
+                        15,
+                  ),
                 ],
               ),
             ),
           ),
         ),
-
-
       ),
     );
   }
 
   showAlertDialog(BuildContext context, String strResponse) {
-
     // set up the button
     Widget okButton = TextButton(
       child: const Text("OK"),
       onPressed: () {
-        if(strResponse.contains("successfully")) {
+        if (strResponse.contains("successfully")) {
           Navigator.of(context, rootNavigator: true).pop();
           //Navigator.push(context, MaterialPageRoute(builder: (_)=>VerificationCodePage(cnicString)));
-        }else {
+        } else {
           Navigator.of(context, rootNavigator: true).pop();
         }
       },
@@ -837,11 +893,7 @@ class _DastakPageNewState extends State<DastakPageNew> {
     AlertDialog alert = AlertDialog(
       title: const Text("Response"),
       content: Text(strResponse),
-      actions: [
-        okButton,
-
-      ],
-
+      actions: [okButton],
     );
 
     // show the dialog
@@ -852,6 +904,7 @@ class _DastakPageNewState extends State<DastakPageNew> {
       },
     );
   }
+
   String? validateEmail(String? value) {
     String pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -862,9 +915,9 @@ class _DastakPageNewState extends State<DastakPageNew> {
       return null;
     }
   }
+
   String? validateName(String? value) {
-    String pattern =
-        r"^([a-zA-Z]{3})+$";
+    String pattern = r"^([a-zA-Z]{3})+$";
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(value!)) {
       return 'Invalid Name!';
@@ -872,6 +925,7 @@ class _DastakPageNewState extends State<DastakPageNew> {
       return null;
     }
   }
+
   String? validatePassword(String? value) {
     if (value!.length < 8) {
       return 'Password must be at least 8 characters!';
@@ -880,17 +934,18 @@ class _DastakPageNewState extends State<DastakPageNew> {
     }
   }
 
-
-
-
-  void showMyGeneraDialog(){
+  void showMyGeneraDialog() {
     showGeneralDialog(
       context: context,
       barrierDismissible: true,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       barrierColor: Colors.black.withOpacity(0.5),
       transitionDuration: const Duration(milliseconds: 200),
-      pageBuilder: (BuildContext buildContext, Animation animation, Animation secondaryAnimation) {
+      pageBuilder: (
+        BuildContext buildContext,
+        Animation animation,
+        Animation secondaryAnimation,
+      ) {
         return Center(
           child: Container(
             width: MediaQuery.of(context).size.width - 50,
@@ -922,12 +977,15 @@ class _DastakPageNewState extends State<DastakPageNew> {
                   },
                   child: Container(
                     height: Constants.getButtonHeight(context),
-                    width: Constants.getButtonHeight(context)*2,
+                    width: Constants.getButtonHeight(context) * 2,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Constants.gradientColor1(),
+                      color: AppColors.gradientColor1(),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
                     child: const Center(
                       child: Text(
                         'Okay',

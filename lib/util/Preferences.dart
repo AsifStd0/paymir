@@ -1,3 +1,3 @@
-class Preferences {
+// class Preferences {
 
-}
+// }

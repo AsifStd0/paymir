@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'login/ForgotPasswordPageNew.dart';
-import '../view/NewPasswordNew.dart';
-import '../util/Constants.dart';
-import '../util/MyValidation.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
+
+import '../../util/Constants.dart';
+import '../../util/MyValidation.dart';
+import '../NewPasswordNew.dart';
+import 'ForgotPasswordPageNew.dart';
 
 class EnterCodeNew extends StatefulWidget {
   final String CNICString;
@@ -70,7 +72,7 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                         Text(
                           'Enter the Code',
                           style: TextStyle(
-                            color: Constants.primaryColor(),
+                            color: AppColors.primaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.bold,
                             fontSize: Constants.getMainFontSize(context),
@@ -85,7 +87,7 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                         Text(
                           'The code was sent to your associated mobile number!',
                           style: TextStyle(
-                            color: Constants.secondaryColor(),
+                            color: AppColors.secondaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.w500,
                             fontSize: Constants.getSmallFontSize(context),
@@ -114,7 +116,7 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                                 fontSize: Constants.getTextformfieldHintFont(
                                   context,
                                 ),
-                                color: Constants.secondaryColor(),
+                                color: AppColors.secondaryColor(),
                                 fontFamily: 'Visby',
                                 fontWeight: FontWeight.normal,
                               ), //hint text style
@@ -173,7 +175,7 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                                         ),
                                     color: const Color(
                                       0xff7472DE,
-                                    ), //Constants.secondaryColor(),
+                                    ), //AppColors.secondaryColor(),
                                     fontFamily: 'Visby',
                                     fontWeight: FontWeight.normal,
                                   ),
@@ -262,8 +264,8 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                                   begin: Alignment.centerLeft,
                                   end: Alignment.centerRight,
                                   colors: [
-                                    Constants.gradientColor1(),
-                                    Constants.gradientColor2(),
+                                    AppColors.gradientColor1(),
+                                    AppColors.gradientColor2(),
                                   ],
                                 ),
                               ),

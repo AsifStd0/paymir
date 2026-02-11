@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
 
 import '../../../util/Constants.dart';
 
@@ -12,7 +13,7 @@ class CustomInputDecoration {
     return InputDecoration(
       hintStyle: TextStyle(
         fontSize: Constants.getTextformfieldHintFont(context),
-        color: Constants.secondaryColor(),
+        color: AppColors.secondaryColor(),
         fontFamily: 'Visby',
         fontWeight: FontWeight.normal,
       ),

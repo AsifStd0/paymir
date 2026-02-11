@@ -1,12 +1,15 @@
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../util/NetworkHelperClass.dart';
-import '../view/SuccessfullyChangedPasswordNew.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
+
 import '../util/Constants.dart';
 import '../util/MyValidation.dart';
+import '../util/NetworkHelperClass.dart';
 import '../util/SecureStorage.dart';
+import '../view/SuccessfullyChangedPasswordNew.dart';
 
 class UpdatePasswordPageNew extends StatefulWidget {
   const UpdatePasswordPageNew({super.key});
@@ -15,11 +18,13 @@ class UpdatePasswordPageNew extends StatefulWidget {
   // ignore: library_private_types_in_public_api
   _UpdatePasswordPageNewState createState() => _UpdatePasswordPageNewState();
 }
-class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
 
-  final TextEditingController _txtOldPasswordController = TextEditingController();
+class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
+  final TextEditingController _txtOldPasswordController =
+      TextEditingController();
   final TextEditingController _txtPasswordController = TextEditingController();
-  final TextEditingController _txtRePasswordController = TextEditingController();
+  final TextEditingController _txtRePasswordController =
+      TextEditingController();
 
   bool _isLoading = false;
   late bool _passwordVisible1;
@@ -28,16 +33,15 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
 
   final _formKey = GlobalKey<FormState>();
 
-
   void _submit() {
     if (_formKey.currentState!.validate()) {
       // TODO SAVE DATA
     }
   }
 
-  String strToken="";
-  String strTokenExpiry="";
-  String strCNIC="";
+  String strToken = "";
+  String strTokenExpiry = "";
+  String strCNIC = "";
 
   final SecureStorage _secureStorage = SecureStorage();
 
@@ -57,10 +61,8 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
     _passwordVisible3 = false;
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       onWillPop: () async {
         return true;
@@ -70,56 +72,57 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-
-                   Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: Constants.getBackArrowLeftPadding(context),
-                          top:  Constants.getBackArrowTopPadding(context),
-                          bottom: Constants.getBackArrowBottomPadding(context),
-                        ),
-
-                          child: IconButton(
-                            icon:
-                            SvgPicture.asset("assets/images/back_arrow.svg"),
-                            onPressed: () async {
-                              Navigator.pop(context);
-                            },
-                          ),
-
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: Constants.getBackArrowLeftPadding(context),
+                        top: Constants.getBackArrowTopPadding(context),
+                        bottom: Constants.getBackArrowBottomPadding(context),
                       ),
-                    ],
-                  ),
+
+                      child: IconButton(
+                        icon: SvgPicture.asset("assets/images/back_arrow.svg"),
+                        onPressed: () async {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
 
                 Padding(
-                  padding:  EdgeInsets.symmetric(
-                    horizontal: Constants.getSymmetricHorizontalPadding(context),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Constants.getSymmetricHorizontalPadding(
+                      context,
+                    ),
                   ),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
                         Text(
-                            'Update Password',
-                            style: TextStyle(
-                              color: Constants.primaryColor(),
-                              fontFamily: 'Visby',
-                              fontWeight: FontWeight.bold,
-                              fontSize:Constants.getMainFontSize(context),
-                            ),
+                          'Update Password',
+                          style: TextStyle(
+                            color: AppColors.primaryColor(),
+                            fontFamily: 'Visby',
+                            fontWeight: FontWeight.bold,
+                            fontSize: Constants.getMainFontSize(context),
                           ),
+                        ),
 
                         SizedBox(
-                            height: Constants.getVerticalGapBetweenMainAndSmallFont(context)
+                          height:
+                              Constants.getVerticalGapBetweenMainAndSmallFont(
+                                context,
+                              ),
                         ),
 
                         Text(
                           'Please provide old password!',
                           style: TextStyle(
-                            color: Constants.secondaryColor(),
+                            color: AppColors.secondaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.w500,
                             fontSize: Constants.getSmallFontSize(context),
@@ -127,28 +130,37 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                         ),
 
                         SizedBox(
-                          height: Constants.getVerticalGapBetweenSmallfontAndTextfield(context),
+                          height:
+                              Constants.getVerticalGapBetweenSmallfontAndTextfield(
+                                context,
+                              ),
                         ),
 
-                        SizedBox(height: Constants.getTextFormFieldHeight(context),
+                        SizedBox(
+                          height: Constants.getTextFormFieldHeight(context),
 
-                          child: TextFormField(textAlign: TextAlign.start,
+                          child: TextFormField(
+                            textAlign: TextAlign.start,
                             controller: _txtOldPasswordController,
-                            validator: (value) => MyValidationClass.validateOldPassword(value),
+                            validator:
+                                (value) =>
+                                    MyValidationClass.validateOldPassword(
+                                      value,
+                                    ),
                             obscureText: !_passwordVisible1,
 
                             // Here is key idea
-
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
                                 icon: Icon(
                                   // Based on passwordVisible state choose the icon
-                                  _passwordVisible1? Icons.visibility: Icons.visibility_off,
+                                  _passwordVisible1
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
 
                                   color: Colors.grey,
                                 ),
                                 onPressed: () {
-
                                   // Update the state i.e. toogle the state of passwordVisible variable
                                   setState(() {
                                     _passwordVisible1 = !_passwordVisible1;
@@ -156,58 +168,90 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                                 },
                               ),
                               hintStyle: TextStyle(
-                                  fontSize: Constants.getTextformfieldHintFont(context),
-                                  color: Constants.secondaryColor(),
-                                  fontFamily: 'Visby',
-                                  fontWeight: FontWeight.normal
+                                fontSize: Constants.getTextformfieldHintFont(
+                                  context,
+                                ),
+                                color: AppColors.secondaryColor(),
+                                fontFamily: 'Visby',
+                                fontWeight: FontWeight.normal,
                               ), //hint text style
                               hintText: 'Enter current password',
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(Constants.getTextformfieldBorderRadius(context))),
-
-                        ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    Constants.getTextformfieldBorderRadius(
+                                      context,
+                                    ),
+                                  ),
+                                ),
+                              ),
                               counterText: '',
                               contentPadding: EdgeInsets.only(
-                                top: Constants.getTextformfieldContentPadding(context),
-                                left: Constants.getTextformfieldContentPadding(context),
-                                bottom: Constants.getTextformfieldContentPadding(context),
+                                top: Constants.getTextformfieldContentPadding(
+                                  context,
+                                ),
+                                left: Constants.getTextformfieldContentPadding(
+                                  context,
+                                ),
+                                bottom:
+                                    Constants.getTextformfieldContentPadding(
+                                      context,
+                                    ),
                               ),
                             ),
                           ),
                         ),
 
-                        SizedBox(height: Constants.getVerticalGapBetweenTwoTextformfields(context)*30),
+                        SizedBox(
+                          height:
+                              Constants.getVerticalGapBetweenTwoTextformfields(
+                                context,
+                              ) *
+                              30,
+                        ),
 
                         Text(
-                            "- Please enter a password that is\n\n\t  - At least 8 characters long\n\t  - Must contain at least\n\t\t     - One uppercase letter\n\t\t     - One lowercase letter\n\t\t     - One digit\n\t\t     - One special character\n\t  - The password must not contain spaces",
+                          "- Please enter a password that is\n\n\t  - At least 8 characters long\n\t  - Must contain at least\n\t\t     - One uppercase letter\n\t\t     - One lowercase letter\n\t\t     - One digit\n\t\t     - One special character\n\t  - The password must not contain spaces",
                           style: TextStyle(
-                              fontSize: Constants.getTextformfieldHintFont(context),
-                              color: Constants.secondaryColor(),
-                              fontFamily: 'Visby',
-                              fontWeight: FontWeight.normal
+                            fontSize: Constants.getTextformfieldHintFont(
+                              context,
+                            ),
+                            color: AppColors.secondaryColor(),
+                            fontFamily: 'Visby',
+                            fontWeight: FontWeight.normal,
                           ),
                         ),
 
-                        SizedBox(height: Constants.getVerticalGapBetweenTwoTextformfields(context)*30),
+                        SizedBox(
+                          height:
+                              Constants.getVerticalGapBetweenTwoTextformfields(
+                                context,
+                              ) *
+                              30,
+                        ),
 
-                        SizedBox(height:Constants.getTextFormFieldHeight(context),
-                          child: TextFormField(textAlign: TextAlign.start,
+                        SizedBox(
+                          height: Constants.getTextFormFieldHeight(context),
+                          child: TextFormField(
+                            textAlign: TextAlign.start,
                             controller: _txtPasswordController,
-                            validator: (value) => MyValidationClass.validatePassword(value),
+                            validator:
+                                (value) =>
+                                    MyValidationClass.validatePassword(value),
                             obscureText: !_passwordVisible2,
 
                             // Here is key idea
-
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
                                 icon: Icon(
                                   // Based on passwordVisible state choose the icon
-                                  _passwordVisible2? Icons.visibility: Icons.visibility_off,
+                                  _passwordVisible2
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
 
                                   color: Colors.grey,
                                 ),
                                 onPressed: () {
-
                                   // Update the state i.e. toogle the state of passwordVisible variable
                                   setState(() {
                                     _passwordVisible2 = !_passwordVisible2;
@@ -215,47 +259,69 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                                 },
                               ),
                               hintStyle: TextStyle(
-                                  fontSize: Constants.getTextformfieldHintFont(context),
-                                  color: Constants.secondaryColor(),
-                                  fontFamily: 'Visby',
-                                  fontWeight: FontWeight.normal
+                                fontSize: Constants.getTextformfieldHintFont(
+                                  context,
+                                ),
+                                color: AppColors.secondaryColor(),
+                                fontFamily: 'Visby',
+                                fontWeight: FontWeight.normal,
                               ), //hint text style
                               hintText: 'New password',
                               border: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(Constants.getTextformfieldBorderRadius(context))),
-
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    Constants.getTextformfieldBorderRadius(
+                                      context,
+                                    ),
+                                  ),
+                                ),
                               ),
                               counterText: '',
                               contentPadding: EdgeInsets.only(
-                                top: Constants.getTextformfieldContentPadding(context),
-                                left: Constants.getTextformfieldContentPadding(context),
-                                bottom: Constants.getTextformfieldContentPadding(context),
+                                top: Constants.getTextformfieldContentPadding(
+                                  context,
+                                ),
+                                left: Constants.getTextformfieldContentPadding(
+                                  context,
+                                ),
+                                bottom:
+                                    Constants.getTextformfieldContentPadding(
+                                      context,
+                                    ),
                               ),
                             ),
                           ),
                         ),
 
-                        SizedBox(height: Constants.getVerticalGapBetweenTwoTextformfields(context)),
+                        SizedBox(
+                          height:
+                              Constants.getVerticalGapBetweenTwoTextformfields(
+                                context,
+                              ),
+                        ),
 
-                        SizedBox(height:Constants.getTextFormFieldHeight(context),
-                          child: TextFormField(textAlign: TextAlign.start,
+                        SizedBox(
+                          height: Constants.getTextFormFieldHeight(context),
+                          child: TextFormField(
+                            textAlign: TextAlign.start,
                             controller: _txtRePasswordController,
-                            validator: (value) => MyValidationClass.validateRePassword(value),
+                            validator:
+                                (value) =>
+                                    MyValidationClass.validateRePassword(value),
                             obscureText: !_passwordVisible3,
 
                             // Here is key idea
-
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
                                 icon: Icon(
                                   // Based on passwordVisible state choose the icon
-                                  _passwordVisible3? Icons.visibility: Icons.visibility_off,
+                                  _passwordVisible3
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
 
                                   color: Colors.grey,
                                 ),
                                 onPressed: () {
-
                                   // Update the state i.e. toogle the state of passwordVisible variable
                                   setState(() {
                                     _passwordVisible3 = !_passwordVisible3;
@@ -263,22 +329,35 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                                 },
                               ),
                               hintStyle: TextStyle(
-                                  fontSize: Constants.getTextformfieldHintFont(context),
-                                  color: Constants.secondaryColor(),
-                                  fontFamily: 'Visby',
-                                  fontWeight: FontWeight.normal
+                                fontSize: Constants.getTextformfieldHintFont(
+                                  context,
+                                ),
+                                color: AppColors.secondaryColor(),
+                                fontFamily: 'Visby',
+                                fontWeight: FontWeight.normal,
                               ), //hint text style
                               hintText: 'Re enter new password',
                               border: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(Constants.getTextformfieldBorderRadius(context))),
-
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    Constants.getTextformfieldBorderRadius(
+                                      context,
+                                    ),
+                                  ),
+                                ),
                               ),
                               counterText: '',
                               contentPadding: EdgeInsets.only(
-                                top: Constants.getTextformfieldContentPadding(context),
-                                left: Constants.getTextformfieldContentPadding(context),
-                                bottom: Constants.getTextformfieldContentPadding(context),
+                                top: Constants.getTextformfieldContentPadding(
+                                  context,
+                                ),
+                                left: Constants.getTextformfieldContentPadding(
+                                  context,
+                                ),
+                                bottom:
+                                    Constants.getTextformfieldContentPadding(
+                                      context,
+                                    ),
                               ),
                             ),
                           ),
@@ -295,19 +374,24 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                               onPressed: () {
                                 _submit();
 
-                                if(MyValidationClass.validateOldPassword(_txtOldPasswordController.text) != null)
-                                  {
-                                    _txtPasswordController.clear();
-                                    _txtRePasswordController.clear();
-                                  }
-                                else {
+                                if (MyValidationClass.validateOldPassword(
+                                      _txtOldPasswordController.text,
+                                    ) !=
+                                    null) {
+                                  _txtPasswordController.clear();
+                                  _txtRePasswordController.clear();
+                                } else {
                                   if (MyValidationClass.validateOldPassword(
-                                      _txtOldPasswordController.text) == null &&
+                                            _txtOldPasswordController.text,
+                                          ) ==
+                                          null &&
                                       MyValidationClass.validatePassword(
-                                          _txtPasswordController.text) ==
+                                            _txtPasswordController.text,
+                                          ) ==
                                           null &&
                                       MyValidationClass.validateRePassword(
-                                          _txtRePasswordController.text) ==
+                                            _txtRePasswordController.text,
+                                          ) ==
                                           null) {
                                     if (_txtOldPasswordController.text !=
                                         _txtPasswordController.text) {
@@ -323,7 +407,8 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                                           builder: (BuildContext context) {
                                             return AlertDialog(
                                               shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(12.0),
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
                                               ),
                                               title: Row(
                                                 children: [
@@ -335,8 +420,9 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                                                   Text('Error'),
                                                 ],
                                               ),
-                                              content:
-                                              const Text('New passwords do not match!'),
+                                              content: const Text(
+                                                'New passwords do not match!',
+                                              ),
                                               actions: [
                                                 TextButton(
                                                   child: const Text('OK'),
@@ -348,10 +434,8 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                                             );
                                           },
                                         );
-
                                       }
-                                    }
-                                    else {
+                                    } else {
                                       showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
@@ -364,7 +448,8 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                                               ],
                                             ),
                                             content: const Text(
-                                                'Old and new passwords are same. Please provide a different password!'),
+                                              'Old and new passwords are same. Please provide a different password!',
+                                            ),
                                             actions: [
                                               TextButton(
                                                 child: const Text('OK'),
@@ -385,30 +470,40 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                                 width: double.infinity,
                                 height: Constants.getButtonHeight(context),
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(Constants.getButtonRadius(context))),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(
+                                      Constants.getButtonRadius(context),
+                                    ),
+                                  ),
 
                                   gradient: LinearGradient(
                                     begin: Alignment.centerLeft,
                                     end: Alignment.centerRight,
                                     colors: [
-                                      Constants.gradientColor1(),
-                                      Constants.gradientColor2(),
+                                      AppColors.gradientColor1(),
+                                      AppColors.gradientColor2(),
                                     ],
                                   ),
                                 ),
-                                child: _isLoading
-                                    ? const CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                                )
-                                    : Text(
-                                  'Continue',
-                                  style: TextStyle(
-                                      color:Colors.white,
-                                      fontSize:Constants.getButtonFont(context),
-                                      fontFamily: 'Visby',
-                                      fontWeight:FontWeight.bold
-                                  ),
-                                ),
+                                child:
+                                    _isLoading
+                                        ? const CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                Colors.white,
+                                              ),
+                                        )
+                                        : Text(
+                                          'Continue',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: Constants.getButtonFont(
+                                              context,
+                                            ),
+                                            fontFamily: 'Visby',
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                               ),
                             ),
                           ),
@@ -426,10 +521,7 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
   }
 
   Future<bool> updatePassword() async {
-
-    var data22 = {
-      "CNIC": strCNIC,
-    };
+    var data22 = {"CNIC": strCNIC};
 
     String auth = "Bearer $strToken";
 
@@ -452,16 +544,14 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
       String password = oldPasswordString.split(':')[1];
       if (password == _txtOldPasswordController.text) {
         updatePasswordNow();
-      }
-      else {
+      } else {
         // ignore: use_build_context_synchronously
         showAlertDialog(context, "Incorrect old password.");
         setState(() {
           _isLoading = false;
         });
       }
-    }
-    catch (e) {
+    } catch (e) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -471,16 +561,12 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
             ),
             title: Row(
               children: [
-                Icon(
-                  Icons.error_outline,
-                  color: Colors.red,
-                ),
+                Icon(Icons.error_outline, color: Colors.red),
                 SizedBox(width: 5),
                 Text('Error'),
               ],
             ),
-            content:
-             Text(e.toString()),
+            content: Text(e.toString()),
             actions: [
               TextButton(
                 child: const Text('Close'),
@@ -500,67 +586,64 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
   }
 
   Future<bool> updatePasswordNow() async {
-    var data = {
-      "CNIC": strCNIC,
-      "Password": _txtPasswordController.text
-    };
+    var data = {"CNIC": strCNIC, "Password": _txtPasswordController.text};
 
     String auth = "Bearer $strToken";
 
-   try{
-    final responseBody = await NetworkHelper.updateOldPassword(data, auth);
+    try {
+      final responseBody = await NetworkHelper.updateOldPassword(data, auth);
 
-    setState(() {
-      _isLoading = false;
-    });
+      setState(() {
+        _isLoading = false;
+      });
 
-    if (responseBody!.contains("true")) {
-      Navigator.pushReplacement(context, MaterialPageRoute(
-          builder: (_) => const SuccessfullyPasswordChangedPageNew()));
-    }
-    else {
-      showAlertDialog(
-          context, "Password could not be upated. Please try again!");
+      if (responseBody!.contains("true")) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const SuccessfullyPasswordChangedPageNew(),
+          ),
+        );
+      } else {
+        showAlertDialog(
+          context,
+          "Password could not be upated. Please try again!",
+        );
+      }
+      return false;
+    } catch (e) {
+      // print(e);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            title: Row(
+              children: [
+                Icon(Icons.error_outline, color: Colors.red),
+                SizedBox(width: 5),
+                Text('Error'),
+              ],
+            ),
+            content: const Text('Server is down and cannot be accessed!'),
+            actions: [
+              TextButton(
+                child: const Text('Close'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {
+                    _isLoading = false;
+                  });
+                },
+              ),
+            ],
+          );
+        },
+      );
     }
     return false;
-  }
-   catch (e) {
-     // print(e);
-     showDialog(
-       context: context,
-       builder: (BuildContext context) {
-         return AlertDialog(
-           shape: RoundedRectangleBorder(
-             borderRadius: BorderRadius.circular(12.0),
-           ),
-           title: Row(
-             children: [
-               Icon(
-                 Icons.error_outline,
-                 color: Colors.red,
-               ),
-               SizedBox(width: 5),
-               Text('Error'),
-             ],
-           ),
-           content: const Text('Server is down and cannot be accessed!'),
-           actions: [
-             TextButton(
-               child: const Text('Close'),
-               onPressed: () {
-                 Navigator.of(context).pop();
-                 setState(() {
-                   _isLoading = false;
-                 });
-               },
-             ),
-           ],
-         );
-       },
-     );
-
-   }
-   return false;
   }
 
   showAlertDialog(BuildContext context, String strResponse) {
@@ -569,17 +652,13 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
       onPressed: () {
         if (strResponse.contains('successfully')) {
           Navigator.of(context, rootNavigator: true).pop();
-        }
-        else
-        {
+        } else {
           Navigator.of(context, rootNavigator: true).pop();
         }
       },
     );
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       title: Row(
         children: [
           Icon(
@@ -587,16 +666,16 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                 ? Icons.check_circle_outline
                 : Icons.error_outline,
             color:
-            strResponse.contains('successfully') ? Colors.green : Colors.red,
+                strResponse.contains('successfully')
+                    ? Colors.green
+                    : Colors.red,
           ),
           SizedBox(width: 5),
           Text(strResponse.contains('successfully') ? 'Success' : 'Error'),
         ],
       ),
       content: Text(strResponse),
-      actions: [
-        okButton,
-      ],
+      actions: [okButton],
     );
     showDialog(
       context: context,

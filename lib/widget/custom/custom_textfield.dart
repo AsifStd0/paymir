@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
 
 import '../../../util/Constants.dart';
 import 'input_decoration.dart';
@@ -56,7 +57,7 @@ class CustomTextField extends StatelessWidget {
                   ? IconButton(
                     icon: Icon(
                       obscureText ? Icons.visibility_off : Icons.visibility,
-                      color: Constants.secondaryColor(),
+                      color: AppColors.secondaryColor(),
                     ),
                     onPressed: onSuffixIconTap,
                   )

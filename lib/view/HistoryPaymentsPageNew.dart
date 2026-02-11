@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import '../util/Constants.dart';
 import '../util/NetworkHelperClass.dart';
 import '../util/SecureStorage.dart';
-import 'login/LoginPageNew.dart';
+import 'login/login_screen.dart';
 
 class HistoryPaymentPageNew extends StatefulWidget {
   const HistoryPaymentPageNew();
@@ -625,7 +625,7 @@ class _HistoryPaymentPageNewState extends State<HistoryPaymentPageNew> {
                     _secureStorage.deleteToken();
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (_) => LoginPageNew()),
+                      MaterialPageRoute(builder: (_) => LoginScreen()),
                     );
                   },
                 ),

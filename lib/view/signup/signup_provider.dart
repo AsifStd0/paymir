@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../util/AlertDialogueClass.dart';
 import '../../util/NetworkHelperClass.dart';
+import '../../utils/app_strings.dart';
 import '../service/auth_service.dart';
 import 'signup_model.dart';
 
@@ -48,9 +49,9 @@ class SignupProvider extends ChangeNotifier {
         _setLoading(false);
         ShowAlertDialogueClass.showAlertDialogue(
           context: context,
-          title: "No Internet",
-          message: "Check your internet connection!",
-          buttonText: "OK",
+          title: AppStrings.noInternet,
+          message: AppStrings.checkInternetConnection,
+          buttonText: AppStrings.ok,
           iconData: Icons.error,
         );
         return false;
@@ -63,12 +64,15 @@ class SignupProvider extends ChangeNotifier {
       if (response["statusCode"] == "200") {
         return true;
       } else {
-        _setError(response["responseMessage"] ?? "CNIC verification failed");
+        _setError(
+          response["responseMessage"] ?? AppStrings.cnicVerificationFailed,
+        );
         ShowAlertDialogueClass.showAlertDialogue(
           context: context,
-          title: "Error",
-          message: response["responseMessage"] ?? "CNIC verification failed",
-          buttonText: "OK",
+          title: AppStrings.error,
+          message:
+              response["responseMessage"] ?? AppStrings.cnicVerificationFailed,
+          buttonText: AppStrings.ok,
           iconData: Icons.error_outline_rounded,
         );
         return false;
@@ -78,9 +82,9 @@ class SignupProvider extends ChangeNotifier {
       _setError(e.toString());
       ShowAlertDialogueClass.showAlertDialogue(
         context: context,
-        title: "Error",
+        title: AppStrings.error,
         message: e.toString(),
-        buttonText: "Close",
+        buttonText: AppStrings.close,
         iconData: Icons.error,
       );
       return false;
@@ -105,9 +109,9 @@ class SignupProvider extends ChangeNotifier {
         _setLoading(false);
         ShowAlertDialogueClass.showAlertDialogue(
           context: context,
-          title: "No Internet",
-          message: "Check your internet connection!",
-          buttonText: "OK",
+          title: AppStrings.noInternet,
+          message: AppStrings.checkInternetConnection,
+          buttonText: AppStrings.ok,
           iconData: Icons.error,
         );
         return false;
@@ -131,14 +135,13 @@ class SignupProvider extends ChangeNotifier {
       if (response.isSuccess) {
         return true;
       } else {
-        _setError(response.responseMessage ?? "Registration failed");
+        _setError(response.responseMessage ?? AppStrings.registrationFailed);
         ShowAlertDialogueClass.showAlertDialogue(
           context: context,
-          title: "Registration Failed",
+          title: AppStrings.registrationFailed,
           message:
-              response.responseMessage ??
-              "Registration failed. Please try again.",
-          buttonText: "OK",
+              response.responseMessage ?? AppStrings.registrationFailedMessage,
+          buttonText: AppStrings.ok,
           iconData: Icons.error_outline_rounded,
         );
         return false;
@@ -148,9 +151,9 @@ class SignupProvider extends ChangeNotifier {
       _setError(e.toString());
       ShowAlertDialogueClass.showAlertDialogue(
         context: context,
-        title: "Error",
+        title: AppStrings.error,
         message: e.toString(),
-        buttonText: "Close",
+        buttonText: AppStrings.close,
         iconData: Icons.error,
       );
       return false;

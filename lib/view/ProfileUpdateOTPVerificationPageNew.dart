@@ -1,25 +1,34 @@
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../util/NetworkHelperClass.dart';
-import '../view/MobileVerifiedPageNew.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+
 import '../util/AlertDialogueClass.dart';
 import '../util/Constants.dart';
+import '../util/NetworkHelperClass.dart';
 import '../util/SecureStorage.dart';
-import 'HomePageNew.dart';
+import '../view/MobileVerifiedPageNew.dart';
+import 'home_page/home_screen.dart';
 
 class ProfileUpdateOTPVerificationPageNew extends StatefulWidget {
-  Map<String, dynamic> values;///if you have multiple values add here
+  Map<String, dynamic> values;
+
+  ///if you have multiple values add here
   ProfileUpdateOTPVerificationPageNew(this.values);
 
   @override
-  _ProfileUpdateOTPVerificationPageNewState createState() => _ProfileUpdateOTPVerificationPageNewState(this.values);
+  _ProfileUpdateOTPVerificationPageNewState createState() =>
+      _ProfileUpdateOTPVerificationPageNewState(this.values);
 }
 
-class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVerificationPageNew> {
-  Map<String, dynamic> values;///if you have multiple values add here
+class _ProfileUpdateOTPVerificationPageNewState
+    extends State<ProfileUpdateOTPVerificationPageNew> {
+  Map<String, dynamic> values;
+
+  ///if you have multiple values add here
 
   _ProfileUpdateOTPVerificationPageNewState(this.values);
 
@@ -38,7 +47,6 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
 
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       onWillPop: () async {
         Navigator.pop(context);
@@ -47,69 +55,73 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            child:
-            Column(
+            child: Column(
               children: [
-                   Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: Constants.getBackArrowLeftPadding(context),
-                          top:  Constants.getBackArrowTopPadding(context),
-                          bottom: Constants.getBackArrowBottomPadding(context),
-                        ),
-                        child: IconButton(
-                            icon:
-                            SvgPicture.asset("assets/images/back_arrow.svg"),
-                            onPressed: ()
-                            =>
-                                Navigator.pop(context),
-                          ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: Constants.getBackArrowLeftPadding(context),
+                        top: Constants.getBackArrowTopPadding(context),
+                        bottom: Constants.getBackArrowBottomPadding(context),
                       ),
-                    ],
-                  ),
+                      child: IconButton(
+                        icon: SvgPicture.asset("assets/images/back_arrow.svg"),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ),
+                  ],
+                ),
 
                 Padding(
-                  padding:  EdgeInsets.symmetric(
-                    horizontal: Constants.getSymmetricHorizontalPadding(context),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Constants.getSymmetricHorizontalPadding(
+                      context,
+                    ),
                   ),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
                         Text(
-                            'Enter verification code',
-                            style: TextStyle(
-                              color: Constants.primaryColor(),
-                              fontFamily: 'Visby',
-                              fontWeight: FontWeight.bold,
-                              fontSize:Constants.getMainFontSize(context), ),
+                          'Enter verification code',
+                          style: TextStyle(
+                            color: AppColors.primaryColor(),
+                            fontFamily: 'Visby',
+                            fontWeight: FontWeight.bold,
+                            fontSize: Constants.getMainFontSize(context),
                           ),
+                        ),
 
                         SizedBox(
-                            height: Constants.getVerticalGapBetweenMainAndSmallFont(context)
+                          height:
+                              Constants.getVerticalGapBetweenMainAndSmallFont(
+                                context,
+                              ),
                         ),
 
                         Text(
                           'Enter 4-digits code that was just sent to your email',
                           style: TextStyle(
-                            color: Constants.secondaryColor(),
+                            color: AppColors.secondaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.w500,
                             fontSize: Constants.getSmallFontSize(context),
-                          )
-                          ,
+                          ),
                         ),
 
                         SizedBox(
-                          height: Constants.getVerticalGapBetweenSmallfontAndTextfield(context),
+                          height:
+                              Constants.getVerticalGapBetweenSmallfontAndTextfield(
+                                context,
+                              ),
                         ),
 
-
                         Padding(
-                          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.09),
+                          padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.09,
+                          ),
                           child: Center(
                             child: Container(
                               color: Color(0xffFAFCFF),
@@ -124,12 +136,17 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
                                   shape: PinCodeFieldShape.box,
                                   errorBorderColor: Colors.lightGreenAccent,
                                   borderRadius: BorderRadius.circular(15),
-                                  fieldHeight: MediaQuery.of(context).size.height * 0.065,
-                                  fieldWidth: MediaQuery.of(context).size.height * 0.065,
-                                  activeFillColor: Colors.white
-
+                                  fieldHeight:
+                                      MediaQuery.of(context).size.height *
+                                      0.065,
+                                  fieldWidth:
+                                      MediaQuery.of(context).size.height *
+                                      0.065,
+                                  activeFillColor: Colors.white,
                                 ),
-                                animationDuration: const Duration(milliseconds: 300),
+                                animationDuration: const Duration(
+                                  milliseconds: 300,
+                                ),
                                 backgroundColor: Color(0xffFAFCFF),
                                 enableActiveFill: false,
                                 controller: textEditingController,
@@ -138,13 +155,12 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
                                     _isCompleted = true;
                                   });
                                   debugPrint("Completed");
-
                                 },
                                 onChanged: (value) {
                                   debugPrint(value);
                                   setState(() {
                                     currentText = value;
-                                    if(currentText.length<4){
+                                    if (currentText.length < 4) {
                                       _isCompleted = false;
                                     }
                                   });
@@ -158,90 +174,125 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
                           ),
                         ),
 
-                        SizedBox( height: MediaQuery.of(context).size.height * 0.4,),
-                        TextButton(onPressed:_isCompleted? () async {
-                          setState(() {
-                            _isLoading = true;
-                          });
-                          if (kDebugMode) {
-                            print("value of otp: "+ values['otp']);
-                          }
-                          if (currentText.toString() == values['otp']) {
-
-                            if(await NetworkHelper.checkInternetConnection()) {
-                              updateProfile();
-                            }
-                            else
-                            {
-                              ShowAlertDialogueClass.showAlertDialogue(context: context, title: "No Internet", message: "Check your internet connection!", buttonText: "OK", iconData:Icons.error);
-                            }
-                          } else {
-                            setState(() {
-                              _isLoading = false;
-                            });
-                            // Do something if the OTP is incorrect
-                            showDialog(
-
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                  title: Row(
-                                    children: [
-                                      Text("Incorrect code"),
-                                      Spacer(),
-                                      Icon(Icons.error, color: Colors.red),
-                                    ],
-                                  ),
-                                  content: Text("The code you entered is not correct. Please try again!"),
-                                  actions: [
-                                    TextButton(
-                                      child: Text("OK"),
-                                      onPressed: () {
-                                        setState(() {
-                                          currentText = "";
-                                          _isLoading = false;
-                                        });
-                                        textEditingController.clear();
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          }
-                        }:null,
-                          child: Container(alignment:
-                          Alignment.center,
-                            width:
-                            double.infinity,
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.4,
+                        ),
+                        TextButton(
+                          onPressed:
+                              _isCompleted
+                                  ? () async {
+                                    setState(() {
+                                      _isLoading = true;
+                                    });
+                                    if (kDebugMode) {
+                                      print("value of otp: " + values['otp']);
+                                    }
+                                    if (currentText.toString() ==
+                                        values['otp']) {
+                                      if (await NetworkHelper.checkInternetConnection()) {
+                                        updateProfile();
+                                      } else {
+                                        ShowAlertDialogueClass.showAlertDialogue(
+                                          context: context,
+                                          title: "No Internet",
+                                          message:
+                                              "Check your internet connection!",
+                                          buttonText: "OK",
+                                          iconData: Icons.error,
+                                        );
+                                      }
+                                    } else {
+                                      setState(() {
+                                        _isLoading = false;
+                                      });
+                                      // Do something if the OTP is incorrect
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                            title: Row(
+                                              children: [
+                                                Text("Incorrect code"),
+                                                Spacer(),
+                                                Icon(
+                                                  Icons.error,
+                                                  color: Colors.red,
+                                                ),
+                                              ],
+                                            ),
+                                            content: Text(
+                                              "The code you entered is not correct. Please try again!",
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                child: Text("OK"),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    currentText = "";
+                                                    _isLoading = false;
+                                                  });
+                                                  textEditingController.clear();
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
+                                  }
+                                  : null,
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: double.infinity,
                             height: Constants.getButtonHeight(context),
-                            decoration:_isCompleted?
-                            BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(Constants.getButtonRadius(context))),
-                              gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                colors: [
-                                  Color(0xff08A1A7),
-                                  Color(0xff4B2A7A),
-                                ],
-                              ),
-                            ):
-                            BoxDecoration(color:Colors.grey,
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(Constants.getButtonRadius(context)))),
-                            child:_isLoading? const CircularProgressIndicator( valueColor: AlwaysStoppedAnimation<Color>(Colors.white),)
-                           :Text('Verify', style:
-                            TextStyle(
-                                color:Colors.white,
-                                fontSize:Constants.getButtonFont(context),
-                                fontFamily: 'Visby',
-                                fontWeight:FontWeight.bold
-                            )),
+                            decoration:
+                                _isCompleted
+                                    ? BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                          Constants.getButtonRadius(context),
+                                        ),
+                                      ),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                        colors: [
+                                          Color(0xff08A1A7),
+                                          Color(0xff4B2A7A),
+                                        ],
+                                      ),
+                                    )
+                                    : BoxDecoration(
+                                      color: Colors.grey,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                          Constants.getButtonRadius(context),
+                                        ),
+                                      ),
+                                    ),
+                            child:
+                                _isLoading
+                                    ? const CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white,
+                                      ),
+                                    )
+                                    : Text(
+                                      'Verify',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: Constants.getButtonFont(
+                                          context,
+                                        ),
+                                        fontFamily: 'Visby',
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                           ),
                         ),
                       ],
@@ -257,16 +308,15 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
   }
 
   Future<bool> verifyCode() async {
-
     var data;
     String endPoint = "";
 
-      data = {
-        "CNIC": values['cnic'], // "Password": values['password'],
-        "MobileNo": values['mobileNo'],
-        "EmailAddress": values['emailAddress']
-      };
-      endPoint = "api/user/verifyUser";
+    data = {
+      "CNIC": values['cnic'], // "Password": values['password'],
+      "MobileNo": values['mobileNo'],
+      "EmailAddress": values['emailAddress'],
+    };
+    endPoint = "api/user/verifyUser";
 
     if (kDebugMode) {
       print("values object: $values");
@@ -282,18 +332,21 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
       });
 
       if (kDebugMode) {
-        print("server response body while creating account: " + responseBody.toString());
+        print(
+          "server response body while creating account: " +
+              responseBody.toString(),
+        );
       }
 
       if (decoded["statusCode"] == "200") {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (_) => MobileVerifiedPageNew()));
-      }
-      else   {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => MobileVerifiedPageNew()),
+        );
+      } else {
         showAlertDialog(context, decoded["responseMessage"]);
       }
-    }
-    catch (e) {
+    } catch (e) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -342,11 +395,7 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
               Icon(Icons.error_outline_rounded, color: Colors.red),
             ],
           ),
-          content: Row(
-            children: [
-              Text(message),
-            ],
-          ),
+          content: Row(children: [Text(message)]),
           actions: [
             TextButton(
               child: const Text("Close"),
@@ -363,7 +412,7 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
     );
   }
 
-  String strToken="";
+  String strToken = "";
   final SecureStorage _secureStorage = SecureStorage();
 
   Future<void> fetchSecureStorageData() async {
@@ -371,12 +420,11 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
   }
 
   Future<void> updateProfile() async {
-
     var data = {
       "CNIC": values['cnic'],
       "FullName": values['fullName'],
       "EmailAddress": values['emailAddress'],
-      "MobileNo":"+92" + values['mobileNo'],
+      "MobileNo": "+92" + values['mobileNo'],
     };
 
     String auth = "Bearer $strToken";
@@ -386,15 +434,14 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
       var decodedResponseBody = json.decode(responseBody!);
 
       if (kDebugMode) {
-        print("server replied responsebody: "+responseBody);
+        print("server replied responsebody: " + responseBody);
       }
 
       setState(() {
         _isLoading = false;
       });
 
-      if (decodedResponseBody["statusCode"]=="200")
-      {
+      if (decodedResponseBody["statusCode"] == "200") {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -403,8 +450,7 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
                 children: [
                   Text('Updated'),
                   Spacer(),
-                  Icon (Icons.check_circle_outline, color: Colors.green)    ,
-
+                  Icon(Icons.check_circle_outline, color: Colors.green),
                 ],
               ),
               content: Text(decodedResponseBody["responseMessage"]),
@@ -414,12 +460,16 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
               actions: [
                 TextButton(
                   child: Text('OK'),
-                  onPressed: () =>
-                  {
-                    Navigator.of(context).pop(),
-                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                  HomePageNew()), (Route<dynamic> route) => false)
-                  }
+                  onPressed:
+                      () => {
+                        Navigator.of(context).pop(),
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) => HomePageNew(),
+                          ),
+                          (Route<dynamic> route) => false,
+                        ),
+                      },
                 ),
               ],
             );
@@ -431,13 +481,13 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
           builder: (BuildContext context) {
             return AlertDialog(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               title: Row(
                 children: [
                   Text("Error"),
                   Spacer(),
-                  Icon(Icons.error_outline_rounded,
-                      color: Colors.red),
+                  Icon(Icons.error_outline_rounded, color: Colors.red),
                 ],
               ),
               content: Text(decodedResponseBody["responseMessage"]),
@@ -453,8 +503,7 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
           },
         );
       }
-    }
-    catch (e) {
+    } catch (e) {
       _isLoading = false;
       showDialog(
         context: context,
@@ -470,8 +519,7 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
                 Text("Error"),
               ],
             ),
-            content:
-            Text(e.toString()),
+            content: Text(e.toString()),
             actions: [
               TextButton(
                 child: const Text("Close"),
@@ -488,5 +536,4 @@ class _ProfileUpdateOTPVerificationPageNewState extends State<ProfileUpdateOTPVe
       );
     }
   }
-
 }

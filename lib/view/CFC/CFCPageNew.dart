@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'CFCVoucherNoPageNew.dart';
-
+import 'package:paymir_new_android/view/CFC_payment/CFCVoucherNoPageNew.dart';
 
 class CFCPageNew extends StatelessWidget {
   @override
@@ -50,23 +48,25 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('CFC Services'),
-      ),
+      appBar: AppBar(title: Text('CFC Services')),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 15.0), // Adjust vertical padding
+        padding: EdgeInsets.symmetric(
+          vertical: 15.0,
+        ), // Adjust vertical padding
         child: ListView.builder(
           itemCount: texts.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.only(left:5, right: 5, bottom: 6.0),
+              padding: const EdgeInsets.only(left: 5, right: 5, bottom: 6.0),
               child: GestureDetector(
                 onTap: () {
                   print(texts[index]);
                   // Navigate to next page
                   // Navigator.push(context, MaterialPageRoute(builder: (context) => NextPage()));
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=>CFCVoucherNoPageNew()));
-
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => CFCVoucherNoPageNew()),
+                  );
                 },
                 child: ClickableCard(
                   icon: Icons.add_business_rounded,
@@ -97,9 +97,7 @@ class ClickableCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
       elevation: 4.0,
       child: Container(
         padding: EdgeInsets.all(12.0),
@@ -109,11 +107,7 @@ class ClickableCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(
-              icon,
-              size: 50,
-              color: Colors.black87,
-            ),
+            Icon(icon, size: 50, color: Colors.black87),
             SizedBox(width: 16.0),
             Expanded(
               child: Text(
@@ -125,11 +119,7 @@ class ClickableCard extends StatelessWidget {
                 ),
               ),
             ),
-            Icon(
-              Icons.arrow_forward_ios,
-              size: 30,
-              color: Colors.black87,
-            ),
+            Icon(Icons.arrow_forward_ios, size: 30, color: Colors.black87),
           ],
         ),
       ),

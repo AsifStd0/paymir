@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
 
 import '../../util/AlertDialogueClass.dart';
 import '../../util/Constants.dart';
@@ -77,7 +78,7 @@ class _MobilePageNewState extends State<MobilePageNew> {
                       Text(
                         'Set up 2-step verification',
                         style: TextStyle(
-                          color: Constants.primaryColor(),
+                          color: AppColors.primaryColor(),
                           fontFamily: 'Visby',
                           fontWeight: FontWeight.bold,
                           fontSize: Constants.getMainFontSize(context),
@@ -93,7 +94,7 @@ class _MobilePageNewState extends State<MobilePageNew> {
                       Text(
                         'Enter your phone number so that we can send you verification code',
                         style: TextStyle(
-                          color: Constants.secondaryColor(),
+                          color: AppColors.secondaryColor(),
                           fontFamily: 'Visby',
                           fontWeight: FontWeight.w500,
                           fontSize: Constants.getSmallFontSize(context),

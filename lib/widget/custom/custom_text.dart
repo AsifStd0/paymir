@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
 
 import '../../../util/Constants.dart';
 
@@ -61,12 +62,12 @@ class CustomText extends StatelessWidget {
   Color _getDefaultColor(BuildContext context) {
     switch (type) {
       case CustomTextType.mainTitle:
-        return Constants.primaryColor();
+        return AppColors.primaryColor();
       case CustomTextType.subtitle:
       case CustomTextType.body:
       case CustomTextType.hint:
       case CustomTextType.divider:
-        return Constants.secondaryColor();
+        return AppColors.secondaryColor();
       case CustomTextType.button:
         return Colors.white;
       case CustomTextType.link:
@@ -74,7 +75,7 @@ class CustomText extends StatelessWidget {
       case CustomTextType.error:
         return Colors.red;
       case CustomTextType.forgotPassword:
-        return Constants.forgotPasswordColor();
+        return AppColors.forgotPasswordColor();
     }
   }
 
@@ -148,12 +149,14 @@ class CustomText extends StatelessWidget {
     required String text,
     BuildContext? context,
     Color? color,
+    FontWeight? fontWeight,
     TextAlign? textAlign,
   }) {
     return CustomText(
       text: text,
       type: CustomTextType.body,
       color: color,
+      fontWeight: fontWeight,
       textAlign: textAlign,
     );
   }

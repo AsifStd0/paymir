@@ -4,8 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../util/SecureStorage.dart';
-import '../HomePageNew.dart';
-import '../login/LoginPageNew.dart';
+import '../home_page/home_screen.dart';
+import '../login/login_screen.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
@@ -40,7 +40,7 @@ class _SplashscreenState extends State<Splashscreen> {
         }
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const LoginPageNew()),
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
         );
       } else {
         if (kDebugMode) {

@@ -4,14 +4,15 @@ import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:paymir_new_android/util/app_colors.dart';
 
 import '../util/AlertDialogueClass.dart';
 import '../util/Constants.dart';
 import '../util/MyValidation.dart';
 import '../util/NetworkHelperClass.dart';
 import '../util/SecureStorage.dart';
-import 'HomePageNew.dart';
 import 'ProfileUpdateOTPVerificationPageNew.dart';
+import 'home_page/home_screen.dart';
 
 class EditProfilePageNew extends StatefulWidget {
   final String strCNIC;
@@ -170,7 +171,7 @@ class _EditProfilePageNewState extends State<EditProfilePageNew> {
                                 Text(
                                   'Edit Profile',
                                   style: TextStyle(
-                                    color: Constants.primaryColor(),
+                                    color: AppColors.primaryColor(),
                                     fontFamily: 'Visby',
                                     fontWeight: FontWeight.bold,
                                     fontSize: Constants.getMainFontSize(
@@ -189,7 +190,7 @@ class _EditProfilePageNewState extends State<EditProfilePageNew> {
                                 Text(
                                   'It only takes a minute to edit your profile',
                                   style: TextStyle(
-                                    color: Constants.secondaryColor(),
+                                    color: AppColors.secondaryColor(),
                                     fontFamily: 'Visby',
                                     fontWeight: FontWeight.w500,
                                     fontSize: Constants.getSmallFontSize(
@@ -231,7 +232,7 @@ class _EditProfilePageNewState extends State<EditProfilePageNew> {
                                                   Constants.getTextformfieldHintFont(
                                                     context,
                                                   ),
-                                              color: Constants.secondaryColor(),
+                                              color: AppColors.secondaryColor(),
                                               fontFamily: 'Visby',
                                               fontWeight: FontWeight.normal,
                                             ),
@@ -294,7 +295,7 @@ class _EditProfilePageNewState extends State<EditProfilePageNew> {
                                                   Constants.getTextformfieldHintFont(
                                                     context,
                                                   ),
-                                              color: Constants.secondaryColor(),
+                                              color: AppColors.secondaryColor(),
                                               fontFamily: 'Visby',
                                               fontWeight: FontWeight.normal,
                                             ), //hint text style
@@ -356,7 +357,7 @@ class _EditProfilePageNewState extends State<EditProfilePageNew> {
                                             Constants.getTextformfieldHintFont(
                                               context,
                                             ),
-                                        color: Constants.secondaryColor(),
+                                        color: AppColors.secondaryColor(),
                                         fontFamily: 'Visby',
                                         fontWeight: FontWeight.normal,
                                       ), //h//hint text style
@@ -415,7 +416,7 @@ class _EditProfilePageNewState extends State<EditProfilePageNew> {
                                             Constants.getTextformfieldHintFont(
                                               context,
                                             ),
-                                        color: Constants.secondaryColor(),
+                                        color: AppColors.secondaryColor(),
                                         fontFamily: 'Visby',
                                         fontWeight: FontWeight.normal,
                                       ), //hhint text style
@@ -588,8 +589,8 @@ class _EditProfilePageNewState extends State<EditProfilePageNew> {
                                         begin: Alignment.centerLeft,
                                         end: Alignment.centerRight,
                                         colors: [
-                                          Constants.gradientColor1(),
-                                          Constants.gradientColor2(),
+                                          AppColors.gradientColor1(),
+                                          AppColors.gradientColor2(),
                                         ],
                                       ),
                                     ),

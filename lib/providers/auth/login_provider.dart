@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../models/auth/login_model.dart';
+import '../../services/auth_service.dart';
 import '../../util/AlertDialogueClass.dart';
 import '../../util/NetworkHelperClass.dart';
 import '../../util/SecureStorage.dart';
-import '../service/auth_service.dart';
-import 'login_model.dart';
+import '../../utils/app_strings.dart';
 
+/// Provider for managing login state and logic
 class LoginProvider extends ChangeNotifier {
   final AuthService _authService = AuthService();
 
@@ -32,7 +34,7 @@ class LoginProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Login user
+  ///!  Login user
   Future<bool> login({
     required String cnic,
     required String password,
@@ -46,16 +48,15 @@ class LoginProvider extends ChangeNotifier {
         _setLoading(false);
         ShowAlertDialogueClass.showAlertDialogue(
           context: context,
-          title: "No Internet",
-          message: "Check your internet connection!",
-          buttonText: "OK",
+          title: AppStrings.noInternet,
+          message: AppStrings.checkInternetConnection,
+          buttonText: AppStrings.ok,
           iconData: Icons.error,
         );
         return false;
       }
 
       final request = LoginRequest(username: cnic, password: password);
-
       final response = await _authService.login(request);
 
       _setLoading(false);
@@ -77,25 +78,23 @@ class LoginProvider extends ChangeNotifier {
 
         return true;
       } else {
-        _setError(response.errorDescription ?? "Login failed");
+        _setError(response.errorDescription ?? AppStrings.loginFailed);
 
         if (response.isUnverified) {
           ShowAlertDialogueClass.showAlertDialogCodeVerificationPage(
             context: context,
-            title: "Unverified CNIC",
-            message:
-                "A verification code has been sent to the associated mobile number. Please verify!",
-            buttonText: "Okay",
+            title: AppStrings.unverifiedCnic,
+            message: AppStrings.verificationCodeSent,
+            buttonText: AppStrings.ok,
             values: {"code": "1234", "cnic": cnic, "page": "from LoginPage"},
             iconData: const Icon(Icons.verified_user),
           );
         } else {
           ShowAlertDialogueClass.showAlertDialogue(
             context: context,
-            title: "Error!",
-            message:
-                response.errorDescription ?? "Login failed. Please try again.",
-            buttonText: "Okay!",
+            title: AppStrings.error,
+            message: response.errorDescription ?? AppStrings.loginFailedMessage,
+            buttonText: AppStrings.ok,
             iconData: Icons.warning_sharp,
           );
         }
@@ -106,9 +105,9 @@ class LoginProvider extends ChangeNotifier {
       _setError(e.toString());
       ShowAlertDialogueClass.showAlertDialogue(
         context: context,
-        title: "Error",
+        title: AppStrings.error,
         message: e.toString(),
-        buttonText: "Close",
+        buttonText: AppStrings.close,
         iconData: Icons.error,
       );
       return false;
