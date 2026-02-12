@@ -4,8 +4,10 @@ import 'package:provider/provider.dart';
 
 import '../providers/auth/mobile_provider.dart';
 import '../providers/auth/signup_provider.dart';
-import '../view/Dastak/home_provider.dart';
+import '../view/home_page/home_provider.dart';
 import '../view/HED/hed_provider.dart';
+import '../view/Profile/profile_provider.dart';
+import '../view/main/main_provider.dart';
 
 List<ChangeNotifierProvider> providersListData = [
   ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
@@ -13,4 +15,6 @@ List<ChangeNotifierProvider> providersListData = [
   ChangeNotifierProvider<MobileProvider>(create: (_) => MobileProvider()),
   ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider()),
   ChangeNotifierProvider<HedProvider>(create: (_) => HedProvider()),
+  ChangeNotifierProvider<ProfileProvider>(create: (_) => ProfileProvider()),
+  ChangeNotifierProvider<MainProvider>(create: (_) => MainProvider()),
 ];

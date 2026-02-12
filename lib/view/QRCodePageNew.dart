@@ -313,7 +313,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:paymir_new_android/util/app_colors.dart';
+import 'package:paymir_new_android/core/theme/app_colors.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../util/Constants.dart';

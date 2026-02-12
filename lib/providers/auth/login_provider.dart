@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:paymir_new_android/core/locator.dart';
 
+import '../../core/storage/Shared_pref.dart';
 import '../../models/auth/login_model.dart';
 import '../../services/auth_service.dart';
 import '../../util/AlertDialogueClass.dart';
 import '../../util/NetworkHelperClass.dart';
-import '../../util/SecureStorage.dart';
 import '../../utils/app_strings.dart';
 
 /// Provider for managing login state and logic
 class LoginProvider extends ChangeNotifier {
-  final AuthService _authService = AuthService();
+  final AuthService _authService = locator<AuthService>();
 
   bool _isLoading = false;
   bool _passwordVisible = false;
@@ -69,11 +70,10 @@ class LoginProvider extends ChangeNotifier {
           const Duration(seconds: expiresIn),
         );
 
-        final secureStorage = SecureStorage();
-        await secureStorage.storeToken(
-          response.accessToken!,
-          expirationDate,
-          cnic,
+        await SharedPrefService.storeToken(
+          tokenValue: response.accessToken!,
+          expirationDate: expirationDate,
+          cnic: cnic,
         );
 
         return true;

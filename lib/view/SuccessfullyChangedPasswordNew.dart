@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:paymir_new_android/util/app_colors.dart';
+import 'package:paymir_new_android/core/theme/app_colors.dart';
 
 import '../util/Constants.dart';
 import 'login/login_screen.dart';

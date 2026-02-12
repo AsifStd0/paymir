@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:paymir_new_android/util/app_colors.dart';
+import 'package:paymir_new_android/core/theme/app_colors.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../util/AlertDialogueClass.dart';
@@ -11,7 +11,7 @@ import '../util/Constants.dart';
 import '../util/NetworkHelperClass.dart';
 import '../util/SecureStorage.dart';
 import '../view/MobileVerifiedPageNew.dart';
-import 'home_page/home_screen.dart';
+import 'main/main_screen.dart';
 
 class ProfileUpdateOTPVerificationPageNew extends StatefulWidget {
   Map<String, dynamic> values;
@@ -465,7 +465,7 @@ class _ProfileUpdateOTPVerificationPageNewState
                         Navigator.of(context).pop(),
                         Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                            builder: (context) => HomePageNew(),
+                            builder: (context) => const MainScreen(),
                           ),
                           (Route<dynamic> route) => false,
                         ),

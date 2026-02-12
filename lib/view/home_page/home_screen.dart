@@ -5,11 +5,11 @@ import 'package:provider/provider.dart';
 
 import '../../util/AlertDialogueClass.dart';
 import '../../util/Constants.dart';
-import '../Dastak/home_provider.dart';
 import '../PaymentPageNew.dart';
-import '../ProfilePageNew.dart';
+import '../Profile/Profile_Screen.dart';
 import '../QRCodePageNew.dart';
 import '../Voucher/VoucherNoPageNew.dart';
+import 'home_provider.dart';
 import 'home_widget.dart';
 
 class HomePageNew extends StatefulWidget {
@@ -355,7 +355,11 @@ class _HomePageNewState extends State<HomePageNew> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => ProfilePageNew(cnic, provider.profileData),
+                builder:
+                    (_) => ProfileScreen(
+                      strCNIC: cnic,
+                      cardDataJsonObject: provider.profileData,
+                    ),
               ),
             );
             break;

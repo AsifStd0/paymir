@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:paymir_new_android/util/app_colors.dart';
 
+import '../../../core/theme/app_colors.dart';
 import '../../../util/Constants.dart';
 
 enum CustomTextType {
@@ -62,20 +62,20 @@ class CustomText extends StatelessWidget {
   Color _getDefaultColor(BuildContext context) {
     switch (type) {
       case CustomTextType.mainTitle:
-        return AppColors.primaryColor();
+        return AppColors.primary;
       case CustomTextType.subtitle:
       case CustomTextType.body:
       case CustomTextType.hint:
       case CustomTextType.divider:
-        return AppColors.secondaryColor();
+        return AppColors.secondary;
       case CustomTextType.button:
-        return Colors.white;
+        return AppColors.white;
       case CustomTextType.link:
-        return const Color(0xff21BF73);
+        return AppColors.link;
       case CustomTextType.error:
-        return Colors.red;
+        return AppColors.error;
       case CustomTextType.forgotPassword:
-        return AppColors.forgotPasswordColor();
+        return AppColors.forgotPassword;
     }
   }
 

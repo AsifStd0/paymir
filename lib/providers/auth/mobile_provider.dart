@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:paymir_new_android/core/locator.dart';
 
-import '../../services/auth_service.dart';
 import '../../models/auth/signup_model.dart';
-import '../../utils/app_strings.dart';
+import '../../services/auth_service.dart';
 import '../../util/AlertDialogueClass.dart';
 import '../../util/NetworkHelperClass.dart';
+import '../../utils/app_strings.dart';
 
 /// Provider for managing mobile verification state and logic
 class MobileProvider extends ChangeNotifier {
-  final AuthService _authService = AuthService();
+  final AuthService _authService = locator<AuthService>();
 
   bool _isLoading = false;
   String? _errorMessage;
@@ -73,7 +74,8 @@ class MobileProvider extends ChangeNotifier {
         ShowAlertDialogueClass.showAlertDialogue(
           context: context,
           title: AppStrings.registrationFailed,
-          message: response.responseMessage ?? AppStrings.registrationFailedMessage,
+          message:
+              response.responseMessage ?? AppStrings.registrationFailedMessage,
           buttonText: AppStrings.ok,
           iconData: Icons.error_outline_rounded,
         );

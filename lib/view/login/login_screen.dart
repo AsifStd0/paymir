@@ -13,7 +13,7 @@ import '../../util/MyValidation.dart';
 import '../../widget/custom/custom_button.dart';
 import '../../widget/custom/custom_text.dart';
 import '../../widget/custom/custom_textfield.dart';
-import '../home_page/home_screen.dart';
+import '../main/main_screen.dart';
 import '../signup/signup_screen.dart';
 import 'ForgotPasswordPageNew.dart';
 
@@ -41,16 +41,16 @@ class _LoginScreenState extends State<LoginScreen> {
     // if (!_formKey.currentState!.validate() || !_validateForm()) return;
 
     final loginProvider = Provider.of<LoginProvider>(context, listen: false);
-    // final success = await loginProvider.login(
-    //   cnic: _CNICController.text,
-    //   password: _passwordController.text,
-    //   context: context,
-    // );
+    final success = await loginProvider.login(
+      cnic: _CNICController.text,
+      password: _passwordController.text,
+      context: context,
+    );
 
     // if (success && mounted) {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (_) => const HomePageNew()),
+      MaterialPageRoute(builder: (_) => const MainScreen()),
     );
     // }
   }

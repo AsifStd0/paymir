@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:number_to_words_english/number_to_words_english.dart';
-import 'package:paymir_new_android/util/app_colors.dart';
+import 'package:paymir_new_android/core/theme/app_colors.dart';
 
 import '../../util/AlertDialogueClass.dart';
 import '../../util/Constants.dart';

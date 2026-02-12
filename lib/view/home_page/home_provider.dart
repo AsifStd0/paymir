@@ -4,16 +4,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:paymir_new_android/core/storage/Shared_pref.dart';
 
 import '../../util/AlertDialogueClass.dart';
-import '../../util/SecureStorage.dart';
-import '../home_page/home_services.dart';
 import '../login/login_screen.dart';
+import 'home_services.dart';
 
 /// Provider for managing home screen state
 class HomeProvider extends ChangeNotifier {
   final HomeService _homeService = HomeService();
-  final SecureStorage _secureStorage = SecureStorage();
 
   // Loading states
   bool _isLoadingCard = false;
@@ -80,15 +79,15 @@ class HomeProvider extends ChangeNotifier {
         );
   }
 
-  /// Get CNIC from secure storage
+  /// Get CNIC from storage
   Future<String> getCNIC() async {
-    return await _secureStorage.getCNIC() ?? '';
+    return await SharedPrefService.getCNIC() ?? '';
   }
 
   /// Load all home data
   Future<void> loadAllData() async {
-    final token = await _secureStorage.getToken() ?? '';
-    final cnic = await _secureStorage.getCNIC() ?? '';
+    final token = await SharedPrefService.getToken() ?? '';
+    final cnic = await SharedPrefService.getCNIC() ?? '';
 
     if (token.isEmpty || cnic.isEmpty) {
       return;
@@ -333,7 +332,7 @@ class HomeProvider extends ChangeNotifier {
   /// Handle logout
   Future<void> handleLogout(BuildContext context) async {
     try {
-      await _secureStorage.deleteToken();
+      await SharedPrefService.deleteToken();
       if (context.mounted) {
         Navigator.pushAndRemoveUntil(
           context,
@@ -384,7 +383,7 @@ class HomeProvider extends ChangeNotifier {
 
   /// Handle session expired
   void handleSessionExpired(BuildContext context, {String? message}) {
-    _secureStorage.deleteToken();
+    SharedPrefService.deleteToken();
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (_) => const LoginScreen()),

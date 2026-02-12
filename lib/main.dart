@@ -16,6 +16,7 @@ void main() async {
 
   // Initialize GetIt locator (SharedPreferences will initialize lazily)
   // We catch errors here to prevent app crash if platform channel isn't ready
+
   try {
     await setupLocator();
   } catch (e) {

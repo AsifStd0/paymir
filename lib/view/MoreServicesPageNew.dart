@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:paymir_new_android/util/app_colors.dart';
+import 'package:paymir_new_android/core/theme/app_colors.dart';
 
 import '../util/Constants.dart';
 import '../util/SecureStorage.dart';

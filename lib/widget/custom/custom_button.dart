@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/theme/app_colors.dart';
 import '../../../util/Constants.dart';
-import 'app_color.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -37,17 +37,10 @@ class CustomButton extends StatelessWidget {
                   borderRadius: BorderRadius.all(
                     Radius.circular(Constants.getButtonRadius(context)),
                   ),
-                  gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      AppColor.gradientColor1(),
-                      AppColor.gradientColor2(),
-                    ],
-                  ),
+                  gradient: AppColors.primaryGradient,
                 )
                 : BoxDecoration(
-                  color: AppColors.secondaryColor(),
+                  color: AppColors.secondary,
                   borderRadius: BorderRadius.all(
                     Radius.circular(Constants.getButtonRadius(context)),
                   ),
@@ -55,12 +48,12 @@ class CustomButton extends StatelessWidget {
         child:
             isLoading
                 ? const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.white),
                 )
                 : Text(
                   text,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: AppColors.white,
                     fontSize: Constants.getButtonFont(context),
                     fontFamily: 'Visby',
                     fontWeight: FontWeight.bold,

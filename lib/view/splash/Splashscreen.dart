@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../util/SecureStorage.dart';
-import '../home_page/home_screen.dart';
+import '../../core/storage/Shared_pref.dart';
 import '../login/login_screen.dart';
+import '../main/main_screen.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
@@ -15,8 +15,6 @@ class Splashscreen extends StatefulWidget {
 }
 
 class _SplashscreenState extends State<Splashscreen> {
-  final SecureStorage _secureStorage = SecureStorage();
-
   String strToken = "";
   String strTokenExpiry = "";
   DateTime expirationDate = DateTime.now();
@@ -48,7 +46,7 @@ class _SplashscreenState extends State<Splashscreen> {
         }
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const HomePageNew()),
+          MaterialPageRoute(builder: (context) => const MainScreen()),
         );
       }
     });
@@ -59,8 +57,8 @@ class _SplashscreenState extends State<Splashscreen> {
   }
 
   Future<void> fetchSecureStorageData() async {
-    strToken = await _secureStorage.getToken() ?? '';
-    strTokenExpiry = await _secureStorage.getTokenExpiry() ?? '';
+    strToken = await SharedPrefService.getToken() ?? '';
+    strTokenExpiry = await SharedPrefService.getTokenExpiry() ?? '';
     expirationDate =
         (strTokenExpiry.isEmpty)
             ? DateTime.now()

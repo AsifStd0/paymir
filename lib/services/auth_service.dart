@@ -1,39 +1,31 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:http/http.dart' as http;
-
+import '../core/services/base_service.dart';
 import '../core/storage/Shared_pref.dart';
 import '../models/auth/login_model.dart';
 import '../models/auth/signup_model.dart';
 
 /// Service for handling authentication operations
-class AuthService {
-  static const String _baseUrl = 'https://apipaymir.kp.gov.pk/';
+class AuthService extends BaseService {
+  AuthService(super.apiClient);
 
   /// Register a new user
   Future<SignupResponse> registerUser(SignupRequest request) async {
     try {
-      final url = Uri.parse('$_baseUrl/api/user/RegisterUser');
-      final headers = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      };
-
       log('Registering user: ${request.toJson()}');
 
-      final response = await http.post(
-        url,
-        headers: headers,
-        body: jsonEncode(request.toJson()),
+      final response = await apiClient.request(
+        method: 'POST',
+        endpoint: 'api/user/registerUser',
+        data: request.toJson(),
+        isFormData: true,
       );
 
-      log('Registration response status: ${response.statusCode}');
-      log('Registration response body: ${response.body}');
+      log('Registration response: $response');
 
-      if (response.statusCode == 200) {
-        final jsonResponse = json.decode(response.body);
-        final signupResponse = SignupResponse.fromJson(jsonResponse);
+      if (response != null) {
+        final signupResponse = SignupResponse.fromJson(response);
 
         // Save user data to shared preferences if registration is successful
         if (signupResponse.isSuccess) {
@@ -43,9 +35,8 @@ class AuthService {
         return signupResponse;
       } else {
         return SignupResponse(
-          statusCode: response.statusCode.toString(),
-          responseMessage:
-              'Registration failed with status ${response.statusCode}',
+          statusCode: '500',
+          responseMessage: 'Registration failed: No response from server',
         );
       }
     } catch (e) {
@@ -60,19 +51,23 @@ class AuthService {
   /// Check if CNIC is already verified
   Future<Map<String, dynamic>> checkVerifiedCNIC(String cnic) async {
     try {
-      final url = Uri.parse('$_baseUrl/api/user/CheckVerifiedCNIC');
-      final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+      final data = {'CNIC': cnic, 'Category': 'PAYMIR'};
 
-      final body = {'CNIC': cnic, 'Category': 'PAYMIR'};
+      final response = await apiClient.request(
+        method: 'POST',
+        endpoint: 'api/user/CheckVerifiedCNIC',
+        data: data,
+        isFormData: true,
+      );
 
-      final response = await http.post(url, headers: headers, body: body);
-
-      if (response.statusCode == 200) {
-        return json.decode(response.body);
+      if (response != null) {
+        return response is Map<String, dynamic>
+            ? response
+            : jsonDecode(response.toString());
       } else {
         return {
-          'statusCode': response.statusCode.toString(),
-          'responseMessage': 'Check failed',
+          'statusCode': '500',
+          'responseMessage': 'Check failed: No response from server',
         };
       }
     } catch (e) {
@@ -84,25 +79,23 @@ class AuthService {
   /// Login user
   Future<LoginResponse> login(LoginRequest request) async {
     try {
-      final url = Uri.parse('$_baseUrl/api/token');
-      final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-      final encoding = Encoding.getByName('utf-8');
-
       log('Logging in user: ${request.toJson()}');
 
-      final response = await http.post(
-        url,
-        headers: headers,
-        body: request.toJson(),
-        encoding: encoding,
+      final response = await apiClient.request(
+        method: 'POST',
+        endpoint: 'api/token',
+        data: request.toJson(),
+        isFormData: true,
       );
 
-      log('Login response status: ${response.statusCode}');
-      log('Login response body: ${response.body}');
+      log('Login response: $response');
 
-      if (response.statusCode == 200) {
-        final jsonResponse = json.decode(response.body);
-        final loginResponse = LoginResponse.fromJson(jsonResponse);
+      if (response != null) {
+        final responseData =
+            response is Map<String, dynamic>
+                ? response
+                : jsonDecode(response.toString());
+        final loginResponse = LoginResponse.fromJson(responseData);
 
         // Save login data if successful
         if (loginResponse.isSuccess) {
@@ -111,8 +104,11 @@ class AuthService {
 
         return loginResponse;
       } else {
-        final jsonResponse = json.decode(response.body);
-        return LoginResponse.fromJson(jsonResponse);
+        return LoginResponse(
+          isSuccess: false,
+          error: 'Login Error',
+          errorDescription: 'No response from server',
+        );
       }
     } catch (e) {
       log('Login error: $e');
@@ -127,13 +123,12 @@ class AuthService {
   /// Save login data to shared preferences
   Future<void> _saveLoginData(LoginResponse response, String cnic) async {
     try {
-      await SharedPrefService.setString('user_cnic', cnic);
+      await SharedPrefService.setUserCNIC(cnic);
       if (response.expiresIn != null) {
         final expirationDate = DateTime.now().add(
           Duration(seconds: response.expiresIn!),
         );
-        await SharedPrefService.setString(
-          'token_expiration',
+        await SharedPrefService.setTokenExpiration(
           expirationDate.toIso8601String(),
         );
       }
@@ -145,10 +140,10 @@ class AuthService {
   /// Save user data to shared preferences
   Future<void> _saveUserData(SignupRequest request) async {
     try {
-      await SharedPrefService.setString('user_cnic', request.cnic);
-      await SharedPrefService.setString('user_email', request.emailAddress);
-      await SharedPrefService.setString('user_fullname', request.fullName);
-      await SharedPrefService.setString('user_mobile', request.mobileNo);
+      await SharedPrefService.setUserCNIC(request.cnic);
+      await SharedPrefService.setUserEmail(request.emailAddress);
+      await SharedPrefService.setUserFullName(request.fullName);
+      await SharedPrefService.setUserMobile(request.mobileNo);
     } catch (e) {
       log('Error saving user data: $e');
     }

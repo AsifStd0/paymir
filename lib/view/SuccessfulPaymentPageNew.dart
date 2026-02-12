@@ -10,13 +10,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:paymir_new_android/util/app_colors.dart';
+import 'package:paymir_new_android/core/theme/app_colors.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 
-import 'home_page/home_screen.dart';
+import 'main/main_screen.dart';
 
 class SuccessfulPaymentPageNew extends StatefulWidget {
   final Map<String, dynamic> values;
@@ -224,7 +224,7 @@ class _SuccessfulPaymentPageNewState extends State<SuccessfulPaymentPageNew> {
     return WillPopScope(
       onWillPop: () async {
         Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => HomePageNew()),
+          MaterialPageRoute(builder: (context) => const MainScreen()),
           (Route<dynamic> route) => false,
         );
         return true;
@@ -296,7 +296,8 @@ class _SuccessfulPaymentPageNewState extends State<SuccessfulPaymentPageNew> {
                                           ).pushAndRemoveUntil(
                                             MaterialPageRoute(
                                               builder:
-                                                  (context) => HomePageNew(),
+                                                  (context) =>
+                                                      const MainScreen(),
                                             ),
                                             (Route<dynamic> route) => false,
                                           );

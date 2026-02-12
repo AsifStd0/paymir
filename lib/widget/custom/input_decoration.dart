@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paymir_new_android/util/app_colors.dart';
+import 'package:paymir_new_android/core/theme/app_colors.dart';
 
 import '../../../util/Constants.dart';
 

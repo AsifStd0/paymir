@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:paymir_new_android/core/locator.dart';
 
-import '../../services/auth_service.dart';
 import '../../models/auth/signup_model.dart';
-import '../../utils/app_strings.dart';
+import '../../services/auth_service.dart';
 import '../../util/AlertDialogueClass.dart';
 import '../../util/NetworkHelperClass.dart';
+import '../../utils/app_strings.dart';
 
 /// Provider for managing signup state and logic
 class SignupProvider extends ChangeNotifier {
-  final AuthService _authService = AuthService();
+  final AuthService _authService = locator<AuthService>();
 
   bool _isLoading = false;
   bool _isChecked = false;
@@ -64,11 +65,14 @@ class SignupProvider extends ChangeNotifier {
       if (response["statusCode"] == "200") {
         return true;
       } else {
-        _setError(response["responseMessage"] ?? AppStrings.cnicVerificationFailed);
+        _setError(
+          response["responseMessage"] ?? AppStrings.cnicVerificationFailed,
+        );
         ShowAlertDialogueClass.showAlertDialogue(
           context: context,
           title: AppStrings.error,
-          message: response["responseMessage"] ?? AppStrings.cnicVerificationFailed,
+          message:
+              response["responseMessage"] ?? AppStrings.cnicVerificationFailed,
           buttonText: AppStrings.ok,
           iconData: Icons.error_outline_rounded,
         );
@@ -135,7 +139,8 @@ class SignupProvider extends ChangeNotifier {
         ShowAlertDialogueClass.showAlertDialogue(
           context: context,
           title: AppStrings.registrationFailed,
-          message: response.responseMessage ?? AppStrings.registrationFailedMessage,
+          message:
+              response.responseMessage ?? AppStrings.registrationFailedMessage,
           buttonText: AppStrings.ok,
           iconData: Icons.error_outline_rounded,
         );
