@@ -58,6 +58,19 @@ class MyValidationClass extends ChangeNotifier {
     }
   }
 
+  /// Validate phone number with international format (+923XXXXXXXXX)
+  static String? validatePhoneNumberWithCountryCode(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Phone number cannot be empty!';
+    }
+    // Validate format: +923 followed by 9 digits
+    final regex = RegExp(r'^\+923[0-9]{9}$');
+    if (!regex.hasMatch(value)) {
+      return 'Invalid phone number. Valid format is +923XXXXXXXXX';
+    }
+    return null;
+  }
+
   static String? validatePSID(String? value) {
     if (value == null || value.isEmpty) {
       return 'PSID cannot be empty!';

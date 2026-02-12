@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -69,17 +67,17 @@ class ApiClient {
     try {
       final options = Options(
         method: method,
-        headers: {
-          if (isFormData)
-            'Content-Type': 'application/x-www-form-urlencoded'
-          else
-            'Content-Type': 'application/json',
-        },
+        contentType:
+            isFormData
+                ? Headers.formUrlEncodedContentType
+                : Headers.jsonContentType,
       );
 
+      // For form-urlencoded, Dio needs the data as a Map
+      // For JSON, Dio will automatically encode the Map to JSON
       final response = await _dio.request(
         endpoint,
-        data: isFormData ? data : (data != null ? jsonEncode(data) : null),
+        data: data,
         queryParameters: queryParams,
         options: options,
       );

@@ -17,15 +17,19 @@ class AuthService extends BaseService {
 
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/user/registerUser',
+        endpoint: 'api/user/RegisterUser',
         data: request.toJson(),
-        isFormData: true,
+        isFormData: true, // Keep as form data to match API requirements
       );
 
       log('Registration response: $response');
 
       if (response != null) {
-        final signupResponse = SignupResponse.fromJson(response);
+        final responseData =
+            response is Map<String, dynamic>
+                ? response
+                : jsonDecode(response.toString());
+        final signupResponse = SignupResponse.fromJson(responseData);
 
         // Save user data to shared preferences if registration is successful
         if (signupResponse.isSuccess) {
@@ -45,6 +49,46 @@ class AuthService extends BaseService {
         statusCode: '500',
         responseMessage: 'Error: ${e.toString()}',
       );
+    }
+  }
+
+  /// Verify user with OTP
+  Future<Map<String, dynamic>> verifyUser({
+    required String cnic,
+    required String mobileNo,
+    required String emailAddress,
+  }) async {
+    try {
+      final data = {
+        "CNIC": cnic,
+        "MobileNo": mobileNo,
+        "EmailAddress": emailAddress,
+      };
+
+      log('Verifying user: $data');
+
+      final response = await apiClient.request(
+        method: 'POST',
+        endpoint: 'api/user/verifyUser',
+        data: data,
+        isFormData: true, // Changed to form data to match API requirements
+      );
+
+      log('Verification response: $response');
+
+      if (response != null) {
+        return response is Map<String, dynamic>
+            ? response
+            : jsonDecode(response.toString());
+      } else {
+        return {
+          'statusCode': '500',
+          'responseMessage': 'Verification failed: No response from server',
+        };
+      }
+    } catch (e) {
+      log('Verify user error: $e');
+      return {'statusCode': '500', 'responseMessage': 'Error: ${e.toString()}'};
     }
   }
 

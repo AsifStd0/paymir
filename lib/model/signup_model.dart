@@ -38,16 +38,32 @@ class SignupResponse {
   final String? statusCode;
   final String? responseMessage;
   final dynamic data;
+  final String? otp;
+  final bool responseStatus;
 
-  SignupResponse({this.statusCode, this.responseMessage, this.data});
+  SignupResponse({
+    this.statusCode,
+    this.responseMessage,
+    this.data,
+    this.otp,
+    this.responseStatus = false,
+  });
 
   factory SignupResponse.fromJson(Map<String, dynamic> json) {
     return SignupResponse(
       statusCode: json["statusCode"]?.toString(),
       responseMessage: json["responseMessage"],
       data: json["data"],
+      otp: json["otp"]?.toString(),
+      responseStatus:
+          json["responseStatus"] == true || json["responseStatus"] == "true",
     );
   }
 
-  bool get isSuccess => statusCode == "200" || statusCode == 200;
+  bool get isSuccess =>
+      (statusCode == "200" || statusCode == "201" || statusCode == "202") &&
+      responseStatus;
+
+  bool get isRegistered => statusCode == "201";
+  bool get isUnverified => statusCode == "202";
 }

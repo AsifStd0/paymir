@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:paymir_new_android/view/home_page/home_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../util/Constants.dart';
@@ -92,11 +91,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomePageNew()),
-        );
         return false;
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => HomePageNew()),
+        // );
+        // return false;
       },
       child: Scaffold(
         body: SafeArea(

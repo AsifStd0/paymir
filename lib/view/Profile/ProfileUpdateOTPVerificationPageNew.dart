@@ -10,8 +10,8 @@ import '../util/AlertDialogueClass.dart';
 import '../util/Constants.dart';
 import '../util/NetworkHelperClass.dart';
 import '../util/SecureStorage.dart';
-import '../view/MobileVerifiedPageNew.dart';
 import 'main/main_screen.dart';
+import 'mobile_page_view/MobileVerifiedPageNew.dart';
 
 class ProfileUpdateOTPVerificationPageNew extends StatefulWidget {
   Map<String, dynamic> values;

@@ -58,6 +58,16 @@ class _SignUpState extends State<SignUp> {
     final signupProvider = Provider.of<SignupProvider>(context, listen: false);
     if (!signupProvider.isChecked) return;
 
+    // Store form data in provider
+    signupProvider.setSignupFormData(
+      firstName: _firstNameController.text,
+      lastName: _lastNameController.text,
+      cnic: _cnicController.text,
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+
+    // Check if CNIC is verified
     final isVerified = await signupProvider.checkUser(
       _cnicController.text,
       context,
@@ -66,9 +76,7 @@ class _SignUpState extends State<SignUp> {
     if (isVerified && mounted) {
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (context) => MobilePageNew(_prepareValues()),
-        ),
+        MaterialPageRoute(builder: (context) => const MobilePageNew()),
       );
     }
   }

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:paymir_new_android/core/locator.dart';
 
+import '../../models/auth/signup_model.dart';
+import '../../services/auth_service.dart';
 import '../../util/AlertDialogueClass.dart';
 import '../../util/NetworkHelperClass.dart';
 import '../../utils/app_strings.dart';
-import '../service/auth_service.dart';
-import 'signup_model.dart';
 
 class SignupProvider extends ChangeNotifier {
-  final AuthService _authService = AuthService();
+  final AuthService _authService = locator<AuthService>();
 
   bool _isLoading = false;
   bool _isChecked = false;

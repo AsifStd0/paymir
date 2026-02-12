@@ -8,7 +8,7 @@ import 'package:paymir_new_android/core/theme/app_colors.dart';
 
 import '../util/AlertDialogueClass.dart';
 import '../util/Constants.dart';
-import 'OneLinkPaymentPageNew.dart';
+import 'OneLinkPayment/OneLinkPaymentPageNew.dart';
 import 'SearchPageNew.dart';
 import 'easypaisa/EasyPaisaPaymentPageNew.dart';
 import 'jazzcash/JazzCashPaymentPageNew.dart';
@@ -1166,16 +1166,6 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                                                 ),
                                               ),
                                             ),
-                                            // Padding(
-                                            //   // Use a fraction of the screen width as the padding value
-                                            //   padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
-                                            //
-                                            //         child: Icon(
-                                            //           Icons.arrow_forward_ios,
-                                            //           color: Colors.white,
-                                            //           size: MediaQuery.of(context).size.width * 0.05,
-                                            //         ),
-                                            //         ),
                                           ],
                                         ),
                                       ),

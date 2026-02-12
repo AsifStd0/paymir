@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/providers/auth/signup_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/auth/mobile_provider.dart';
 import '../../util/AlertDialogueClass.dart';
 import '../../util/MyValidation.dart';
 import '../../utils/app_strings.dart';
@@ -162,48 +162,51 @@ class _MobileVerificationScreenState extends State<MobileVerificationScreen> {
     return Builder(
       builder: (builderContext) {
         try {
-          final mobileProvider = Provider.of<MobileProvider>(
+          final signupProvider = Provider.of<SignupProvider>(
             builderContext,
             listen: false,
           );
           return TextButton(
             onPressed:
-                mobileProvider.isLoading
+                signupProvider.isLoadingRegistration
                     ? null
                     : () async {
                       if (_formKey.currentState!.validate()) {
                         if (phoneNumber.isNotEmpty &&
                             RegExp(r'^\+923[0-9]{9}$').hasMatch(phoneNumber)) {
-                          values['mobileNo'] = phoneNumber;
-                          final nameParts = values['fullname'].split(' ');
-                          final firstName = nameParts[0];
-                          final lastName =
-                              nameParts.length > 1
-                                  ? nameParts.sublist(1).join(' ')
-                                  : '';
+                          // Store form data in provider if not already stored
+                          if (values['fullname'] != null &&
+                              values['cnic'] != null) {
+                            final nameParts = values['fullname'].split(' ');
+                            final firstName = nameParts[0];
+                            final lastName =
+                                nameParts.length > 1
+                                    ? nameParts.sublist(1).join(' ')
+                                    : '';
 
-                          final success = await mobileProvider.registerUser(
-                            firstName: firstName,
-                            lastName: lastName,
-                            cnic: values['cnic'],
-                            email: values['emailAddress'],
-                            password: values['password'],
-                            mobileNo: values['mobileNo'],
-                            context: builderContext,
-                          );
+                            signupProvider.setSignupFormData(
+                              firstName: firstName,
+                              lastName: lastName,
+                              cnic: values['cnic'],
+                              email: values['emailAddress'],
+                              password: values['password'],
+                            );
+                          }
+
+                          // Register user with mobile number
+                          final success = await signupProvider
+                              .registerUserWithMobile(
+                                mobileNo: phoneNumber,
+                                context: builderContext,
+                              );
 
                           if (success && mounted) {
-                            String otp = "1234"; // Placeholder
-                            values['otp'] = otp;
-                            ShowAlertDialogueClass.showAlertDialogSendtoVerificationPage(
-                              context: builderContext,
-                              title: AppStrings.response,
-                              message:
-                                  "${AppStrings.registrationSuccessful}. ${AppStrings.pleaseVerifyMobile}",
-                              buttonText: AppStrings.ok,
-                              values: values,
-                              iconData: Icons.offline_pin_rounded,
-                            );
+                            // Navigation is handled by the provider via alert dialog
+                            if (kDebugMode) {
+                              print(
+                                'Registration successful, OTP: ${signupProvider.otp}',
+                              );
+                            }
                           }
                         } else {
                           ShowAlertDialogueClass.showAlertDialogue(
@@ -234,8 +237,9 @@ class _MobileVerificationScreenState extends State<MobileVerificationScreen> {
                   ],
                 ),
               ),
-              child:
-                  mobileProvider.isLoading
+              child: Consumer<SignupProvider>(
+                builder: (context, signupProvider, _) {
+                  return signupProvider.isLoadingRegistration
                       ? const CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       )
@@ -247,7 +251,9 @@ class _MobileVerificationScreenState extends State<MobileVerificationScreen> {
                           fontFamily: 'Visby',
                           fontWeight: FontWeight.bold,
                         ),
-                      ),
+                      );
+                },
+              ),
             ),
           );
         } catch (e) {
