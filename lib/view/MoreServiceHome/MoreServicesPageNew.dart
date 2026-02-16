@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 
-import '../util/Constants.dart';
-import '../util/SecureStorage.dart';
+import '../../util/Mediaquery_Constant.dart';
+import '../../util/SecureStorage.dart';
 
 class MoreServicesPageNew extends StatefulWidget {
   const MoreServicesPageNew({super.key});
@@ -292,18 +292,21 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                   Padding(
                     padding: EdgeInsets.only(
                       top:
-                          Constants.getVerticalGapBetweenTwoTextformfields(
+                          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                             context,
                           ) *
                           40,
                       left:
-                          Constants.getHomePageMainTextLeftPadding(context) *
+                          MediaQueryConstant.getHomePageMainTextLeftPadding(
+                            context,
+                          ) *
                           2.3,
-                      right: Constants.getVerticalGapBetweenTwoTextformfields(
-                        context,
-                      ),
+                      right:
+                          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                            context,
+                          ),
                       bottom:
-                          Constants.getVerticalGapBetweenTwoTextformfields(
+                          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                             context,
                           ) *
                           9,
@@ -320,7 +323,9 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                               color: const Color(0xff3F3F3F),
                               fontFamily: 'Metropolis',
                               fontWeight: FontWeight.w700,
-                              fontSize: Constants.getServiceFontSize(context),
+                              fontSize: MediaQueryConstant.getServiceFontSize(
+                                context,
+                              ),
                             ),
                           ),
                         ),
@@ -360,7 +365,7 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.all(
-                                        Constants.getVerticalGapBetweenTwoTextformfields(
+                                        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                               context,
                                             ) *
                                             10,
@@ -368,7 +373,7 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                                       child: SvgPicture.asset(
                                         'assets/images/feelogo.svg',
                                         height:
-                                            Constants.getSmallFontSize(
+                                            MediaQueryConstant.getSmallFontSize(
                                               context,
                                             ) *
                                             2,
@@ -377,7 +382,7 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                                     Padding(
                                       padding: EdgeInsets.only(
                                         top:
-                                            Constants.getVerticalGapBetweenTwoTextformfields(
+                                            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                               context,
                                             ) *
                                             2,
@@ -387,9 +392,10 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                                         style: TextStyle(
                                           color: const Color(0xff3F3F3F),
                                           fontFamily: 'Metropolis',
-                                          fontSize: Constants.getSmallFontSize(
-                                            context,
-                                          ),
+                                          fontSize:
+                                              MediaQueryConstant.getSmallFontSize(
+                                                context,
+                                              ),
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
@@ -430,7 +436,7 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.all(
-                                        Constants.getVerticalGapBetweenTwoTextformfields(
+                                        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                               context,
                                             ) *
                                             10,
@@ -438,7 +444,7 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                                       child: SvgPicture.asset(
                                         'assets/images/carlogo.svg',
                                         height:
-                                            Constants.getSmallFontSize(
+                                            MediaQueryConstant.getSmallFontSize(
                                               context,
                                             ) *
                                             2,
@@ -447,7 +453,7 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                                     Padding(
                                       padding: EdgeInsets.only(
                                         top:
-                                            Constants.getVerticalGapBetweenTwoTextformfields(
+                                            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                               context,
                                             ) *
                                             2,
@@ -457,9 +463,10 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                                         style: TextStyle(
                                           color: const Color(0xff3F3F3F),
                                           fontFamily: 'Metropolis',
-                                          fontSize: Constants.getSmallFontSize(
-                                            context,
-                                          ),
+                                          fontSize:
+                                              MediaQueryConstant.getSmallFontSize(
+                                                context,
+                                              ),
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
@@ -499,7 +506,7 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.all(
-                                        Constants.getVerticalGapBetweenTwoTextformfields(
+                                        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                               context,
                                             ) *
                                             10,
@@ -507,7 +514,7 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                                       child: SvgPicture.asset(
                                         'assets/images/utilitieslogo.svg',
                                         height:
-                                            Constants.getSmallFontSize(
+                                            MediaQueryConstant.getSmallFontSize(
                                               context,
                                             ) *
                                             2,
@@ -516,7 +523,7 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                                     Padding(
                                       padding: EdgeInsets.only(
                                         top:
-                                            Constants.getVerticalGapBetweenTwoTextformfields(
+                                            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                               context,
                                             ) *
                                             2,
@@ -526,9 +533,10 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                                         style: TextStyle(
                                           color: const Color(0xff3F3F3F),
                                           fontFamily: 'Metropolis',
-                                          fontSize: Constants.getSmallFontSize(
-                                            context,
-                                          ),
+                                          fontSize:
+                                              MediaQueryConstant.getSmallFontSize(
+                                                context,
+                                              ),
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
@@ -544,7 +552,7 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                   ),
                   SizedBox(
                     height:
-                        Constants.getVerticalGapBetweenTwoTextformfields(
+                        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                           context,
                         ) *
                         15,
@@ -659,8 +667,8 @@ class _MoreServicesPageNewState extends State<MoreServicesPageNew> {
                     Navigator.of(context).pop();
                   },
                   child: Container(
-                    height: Constants.getButtonHeight(context),
-                    width: Constants.getButtonHeight(context) * 2,
+                    height: MediaQueryConstant.getButtonHeight(context),
+                    width: MediaQueryConstant.getButtonHeight(context) * 2,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
                       color: AppColors.gradientColor1(),

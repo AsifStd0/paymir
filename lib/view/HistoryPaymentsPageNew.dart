@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
-import '../util/Constants.dart';
+import '../util/Mediaquery_Constant.dart';
 import '../util/NetworkHelperClass.dart';
 import '../util/SecureStorage.dart';
 import 'login/login_screen.dart';
@@ -197,11 +197,16 @@ class _HistoryPaymentPageNewState extends State<HistoryPaymentPageNew> {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
-                              left: Constants.getBackArrowLeftPadding(context),
-                              top: Constants.getBackArrowTopPadding(context),
-                              bottom: Constants.getBackArrowBottomPadding(
+                              left: MediaQueryConstant.getBackArrowLeftPadding(
                                 context,
                               ),
+                              top: MediaQueryConstant.getBackArrowTopPadding(
+                                context,
+                              ),
+                              bottom:
+                                  MediaQueryConstant.getBackArrowBottomPadding(
+                                    context,
+                                  ),
                             ),
                             child: IconButton(
                               icon: SvgPicture.asset(
@@ -381,22 +386,22 @@ class _HistoryPaymentPageNewState extends State<HistoryPaymentPageNew> {
                                     child: Padding(
                                       padding: EdgeInsets.only(
                                         top:
-                                            Constants.getVerticalGapBetweenTwoTextformfields(
+                                            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                               context,
                                             ) *
                                             10,
                                         left:
-                                            Constants.getVerticalGapBetweenTwoTextformfields(
+                                            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                               context,
                                             ) *
                                             20,
                                         right:
-                                            Constants.getVerticalGapBetweenTwoTextformfields(
+                                            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                               context,
                                             ) *
                                             20,
                                         bottom:
-                                            Constants.getVerticalGapBetweenTwoTextformfields(
+                                            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                               context,
                                             ) *
                                             6,
@@ -421,12 +426,12 @@ class _HistoryPaymentPageNewState extends State<HistoryPaymentPageNew> {
                                           children: [
                                             Container(
                                               width:
-                                                  Constants.getVerticalGapBetweenTwoTextformfields(
+                                                  MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                                     context,
                                                   ) *
                                                   40,
                                               height:
-                                                  Constants.getVerticalGapBetweenTwoTextformfields(
+                                                  MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                                     context,
                                                   ) *
                                                   40,
@@ -438,7 +443,7 @@ class _HistoryPaymentPageNewState extends State<HistoryPaymentPageNew> {
                                               ),
                                               child: Padding(
                                                 padding: EdgeInsets.all(
-                                                  Constants.getVerticalGapBetweenTwoTextformfields(
+                                                  MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                                         context,
                                                       ) *
                                                       4,
@@ -451,7 +456,7 @@ class _HistoryPaymentPageNewState extends State<HistoryPaymentPageNew> {
                                             ),
                                             SizedBox(
                                               width:
-                                                  Constants.getVerticalGapBetweenTwoTextformfields(
+                                                  MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                                     context,
                                                   ) *
                                                   25,
@@ -466,7 +471,7 @@ class _HistoryPaymentPageNewState extends State<HistoryPaymentPageNew> {
                                                           filteredItems[index]['serviceName'],
                                                       style: TextStyle(
                                                         fontSize:
-                                                            Constants.getGeneralFontSize(
+                                                            MediaQueryConstant.getGeneralFontSize(
                                                               context,
                                                             ) *
                                                             0.016,
@@ -484,7 +489,7 @@ class _HistoryPaymentPageNewState extends State<HistoryPaymentPageNew> {
                                                           "\nPaid", //"\n"+pendingDues[index]['status']==Null?"Pending":pendingDues[index]['status'],
                                                       style: TextStyle(
                                                         fontSize:
-                                                            Constants.getGeneralFontSize(
+                                                            MediaQueryConstant.getGeneralFontSize(
                                                               context,
                                                             ) *
                                                             0.015,
@@ -501,7 +506,7 @@ class _HistoryPaymentPageNewState extends State<HistoryPaymentPageNew> {
                                             ),
                                             SizedBox(
                                               width:
-                                                  Constants.getVerticalGapBetweenTwoTextformfields(
+                                                  MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                                     context,
                                                   ) *
                                                   8,
@@ -519,7 +524,7 @@ class _HistoryPaymentPageNewState extends State<HistoryPaymentPageNew> {
                                                               .toString(),
                                                       style: TextStyle(
                                                         fontSize:
-                                                            Constants.getGeneralFontSize(
+                                                            MediaQueryConstant.getGeneralFontSize(
                                                               context,
                                                             ) *
                                                             0.021,
@@ -545,7 +550,7 @@ class _HistoryPaymentPageNewState extends State<HistoryPaymentPageNew> {
                                                       //                                                                text:  "\n" +doneTransactions[index]['paymentDate'],//+ (DateFormat('dd/MM/yyyy').format(DateTime.parse(doneTransactions[index]['paymentDate']))).toString(),
                                                       style: TextStyle(
                                                         fontSize:
-                                                            Constants.getGeneralFontSize(
+                                                            MediaQueryConstant.getGeneralFontSize(
                                                               context,
                                                             ) *
                                                             0.015,

@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 
-import '../../util/Constants.dart';
+import '../../util/Mediaquery_Constant.dart';
 import '../../util/MyValidation.dart';
-import '../../widget/custom/custom_button.dart';
+import '../../widget/custom_button.dart';
 
 /// HED header widget
 class HedHeader extends StatelessWidget {
@@ -19,10 +19,10 @@ class HedHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: Constants.getHomePageMainTextTopPadding(context),
-        left: Constants.getHomePageMainTextLeftPadding(context),
-        right: Constants.getHomePageMainTextRightPadding(context),
-        bottom: Constants.getHomePageMainTextBottomPadding(context),
+        top: MediaQueryConstant.getHomePageMainTextTopPadding(context),
+        left: MediaQueryConstant.getHomePageMainTextLeftPadding(context),
+        right: MediaQueryConstant.getHomePageMainTextRightPadding(context),
+        bottom: MediaQueryConstant.getHomePageMainTextBottomPadding(context),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,7 +30,7 @@ class HedHeader extends StatelessWidget {
           Text(
             'HED',
             style: TextStyle(
-              fontSize: Constants.getHomePageMainFontSize(context),
+              fontSize: MediaQueryConstant.getHomePageMainFontSize(context),
               color: const Color(0xff474747),
               fontFamily: 'Metropolis',
               fontWeight: FontWeight.bold,
@@ -39,7 +39,7 @@ class HedHeader extends StatelessWidget {
           Text(
             'Higher Education Department',
             style: TextStyle(
-              fontSize: Constants.getScreenWidth(context) * 0.032,
+              fontSize: MediaQueryConstant.getScreenWidth(context) * 0.032,
               color: const Color(0xff474747),
               fontFamily: 'Metropolis',
               fontWeight: FontWeight.w600,
@@ -53,9 +53,9 @@ class HedHeader extends StatelessWidget {
 
   Widget _buildProfileImage(BuildContext context) {
     final imageSize =
-        Constants.getVerticalGapBetweenTwoTextformfields(context) * 40;
+        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) * 40;
     final borderRadius =
-        Constants.getVerticalGapBetweenTwoTextformfields(context) * 10;
+        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) * 10;
 
     return GestureDetector(
       onTap: () {},
@@ -97,11 +97,22 @@ class MobileNumberSection extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.only(
-            top: Constants.getVerticalGapBetweenTwoTextformfields(context) * 7,
-            left: Constants.getHomePageMainTextLeftPadding(context) * 2.3,
-            right: Constants.getVerticalGapBetweenTwoTextformfields(context),
+            top:
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                7,
+            left:
+                MediaQueryConstant.getHomePageMainTextLeftPadding(context) *
+                2.3,
+            right: MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+              context,
+            ),
             bottom:
-                Constants.getVerticalGapBetweenTwoTextformfields(context) * 9,
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                9,
           ),
           child: Text(
             'Enter your mobile number',
@@ -109,7 +120,7 @@ class MobileNumberSection extends StatelessWidget {
               color: const Color(0xff3F3F3F),
               fontFamily: 'Metropolis',
               fontWeight: FontWeight.w700,
-              fontSize: Constants.getServiceFontSize(context),
+              fontSize: MediaQueryConstant.getServiceFontSize(context),
             ),
           ),
         ),
@@ -117,7 +128,7 @@ class MobileNumberSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SizedBox(
-              height: Constants.getTextFormFieldHeight(context),
+              height: MediaQueryConstant.getTextFormFieldHeight(context),
               width: MediaQuery.of(context).size.width * 0.79,
               child: TextFormField(
                 maxLength: 11,
@@ -126,7 +137,9 @@ class MobileNumberSection extends StatelessWidget {
                 decoration: InputDecoration(
                   hintText: "",
                   hintStyle: TextStyle(
-                    fontSize: Constants.getTextformfieldHintFont(context),
+                    fontSize: MediaQueryConstant.getTextformfieldHintFont(
+                      context,
+                    ),
                     color: AppColors.secondaryColor(),
                     fontFamily: 'Visby',
                     fontWeight: FontWeight.normal,
@@ -134,26 +147,38 @@ class MobileNumberSection extends StatelessWidget {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(
-                        Constants.getTextformfieldBorderRadius(context),
+                        MediaQueryConstant.getTextformfieldBorderRadius(
+                          context,
+                        ),
                       ),
                     ),
                   ),
                   counterText: '',
                   contentPadding: EdgeInsets.only(
-                    top: Constants.getTextformfieldContentPadding(context),
-                    left: Constants.getTextformfieldContentPadding(context),
-                    bottom: Constants.getTextformfieldContentPadding(context),
+                    top: MediaQueryConstant.getTextformfieldContentPadding(
+                      context,
+                    ),
+                    left: MediaQueryConstant.getTextformfieldContentPadding(
+                      context,
+                    ),
+                    bottom: MediaQueryConstant.getTextformfieldContentPadding(
+                      context,
+                    ),
                   ),
                 ),
                 controller: controller,
                 keyboardType: TextInputType.number,
-                validator: (value) => MyValidationClass.validateMobile(value),
+                validator: (value) => MyValidation.validateMobile(value),
               ),
             ),
           ],
         ),
         SizedBox(
-          height: Constants.getVerticalGapBetweenTwoTextformfields(context) * 1,
+          height:
+              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                context,
+              ) *
+              1,
         ),
       ],
     );
@@ -175,7 +200,7 @@ class LoadEntriesButton extends StatelessWidget {
         text: 'Load Entries',
         isLoading: isLoading,
         isEnabled: !isLoading,
-        width: Constants.getButtonHeight(context) * 5,
+        width: MediaQueryConstant.getButtonHeight(context) * 5,
       ),
     );
   }
@@ -202,13 +227,26 @@ class HedPendingTransactionItem extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
         child: Padding(
           padding: EdgeInsets.only(
-            top: Constants.getVerticalGapBetweenTwoTextformfields(context) * 10,
+            top:
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                10,
             left:
-                Constants.getVerticalGapBetweenTwoTextformfields(context) * 20,
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                20,
             right:
-                Constants.getVerticalGapBetweenTwoTextformfields(context) * 20,
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                20,
             bottom:
-                Constants.getVerticalGapBetweenTwoTextformfields(context) * 6,
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                6,
           ),
           child: Container(
             decoration: BoxDecoration(
@@ -226,7 +264,7 @@ class HedPendingTransactionItem extends StatelessWidget {
                 _buildIcon(context),
                 SizedBox(
                   width:
-                      Constants.getVerticalGapBetweenTwoTextformfields(
+                      MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                         context,
                       ) *
                       25,
@@ -239,7 +277,8 @@ class HedPendingTransactionItem extends StatelessWidget {
                           text: transaction['serviceName'] ?? '',
                           style: TextStyle(
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.016,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.016,
                             color: const Color(0xff424242),
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w700,
@@ -249,7 +288,8 @@ class HedPendingTransactionItem extends StatelessWidget {
                           text: '\nPending',
                           style: TextStyle(
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.015,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.015,
                             color: const Color(0xff424242).withOpacity(0.8),
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w400,
@@ -261,7 +301,7 @@ class HedPendingTransactionItem extends StatelessWidget {
                 ),
                 SizedBox(
                   width:
-                      Constants.getVerticalGapBetweenTwoTextformfields(
+                      MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                         context,
                       ) *
                       8,
@@ -275,7 +315,8 @@ class HedPendingTransactionItem extends StatelessWidget {
                           text: '+Rs ${transaction['feeAmount'] ?? 0}',
                           style: TextStyle(
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.021,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.021,
                             color: const Color(0xff45C232),
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w700,
@@ -286,7 +327,8 @@ class HedPendingTransactionItem extends StatelessWidget {
                               '\n${_formatDate(transaction['entryDateTime'])}',
                           style: TextStyle(
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.015,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.015,
                             color: const Color(0xff424242).withOpacity(0.8),
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w400,
@@ -305,7 +347,8 @@ class HedPendingTransactionItem extends StatelessWidget {
   }
 
   Widget _buildIcon(BuildContext context) {
-    final size = Constants.getVerticalGapBetweenTwoTextformfields(context) * 40;
+    final size =
+        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) * 40;
     return Container(
       width: size,
       height: size,
@@ -315,7 +358,8 @@ class HedPendingTransactionItem extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.all(
-          Constants.getVerticalGapBetweenTwoTextformfields(context) * 4,
+          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) *
+              4,
         ),
         child: SvgPicture.asset('assets/images/govt_logo.svg'),
       ),
@@ -353,13 +397,26 @@ class HedDoneTransactionItem extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
         child: Padding(
           padding: EdgeInsets.only(
-            top: Constants.getVerticalGapBetweenTwoTextformfields(context) * 10,
+            top:
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                10,
             left:
-                Constants.getVerticalGapBetweenTwoTextformfields(context) * 20,
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                20,
             right:
-                Constants.getVerticalGapBetweenTwoTextformfields(context) * 20,
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                20,
             bottom:
-                Constants.getVerticalGapBetweenTwoTextformfields(context) * 6,
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                6,
           ),
           child: Container(
             decoration: BoxDecoration(
@@ -377,7 +434,7 @@ class HedDoneTransactionItem extends StatelessWidget {
                 _buildIcon(context),
                 SizedBox(
                   width:
-                      Constants.getVerticalGapBetweenTwoTextformfields(
+                      MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                         context,
                       ) *
                       25,
@@ -390,7 +447,8 @@ class HedDoneTransactionItem extends StatelessWidget {
                           text: transaction['serviceName'] ?? '',
                           style: TextStyle(
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.016,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.016,
                             color: const Color(0xff424242),
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w700,
@@ -400,7 +458,8 @@ class HedDoneTransactionItem extends StatelessWidget {
                           text: '\nPaid',
                           style: TextStyle(
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.015,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.015,
                             color: Colors.green,
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w400,
@@ -412,7 +471,7 @@ class HedDoneTransactionItem extends StatelessWidget {
                 ),
                 SizedBox(
                   width:
-                      Constants.getVerticalGapBetweenTwoTextformfields(
+                      MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                         context,
                       ) *
                       8,
@@ -426,7 +485,8 @@ class HedDoneTransactionItem extends StatelessWidget {
                           text: '+Rs ${transaction['feeAmount'] ?? 0}',
                           style: TextStyle(
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.021,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.021,
                             color: const Color(0xff45C232),
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w700,
@@ -436,7 +496,8 @@ class HedDoneTransactionItem extends StatelessWidget {
                           text: '\n${_formatDate(transaction['paymentDate'])}',
                           style: TextStyle(
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.015,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.015,
                             color: const Color(0xff424242).withOpacity(0.8),
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w400,
@@ -455,7 +516,8 @@ class HedDoneTransactionItem extends StatelessWidget {
   }
 
   Widget _buildIcon(BuildContext context) {
-    final size = Constants.getVerticalGapBetweenTwoTextformfields(context) * 40;
+    final size =
+        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) * 40;
     return Container(
       width: size,
       height: size,
@@ -465,7 +527,8 @@ class HedDoneTransactionItem extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.all(
-          Constants.getVerticalGapBetweenTwoTextformfields(context) * 4,
+          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) *
+              4,
         ),
         child: SvgPicture.asset('assets/images/govt_logo.svg'),
       ),

@@ -4,14 +4,15 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/api/NetworkApiService.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 
-import '../util/AlertDialogueClass.dart';
-import '../util/Constants.dart';
-import '../util/MyValidation.dart';
-import '../util/NetworkHelperClass.dart';
-import '../util/SecureStorage.dart';
-import 'login/login_screen.dart';
+import '../../util/AlertDialogueClass.dart';
+import '../../util/Mediaquery_Constant.dart';
+import '../../util/MyValidation.dart';
+import '../../util/NetworkHelperClass.dart';
+import '../../util/SecureStorage.dart';
+import '../login/login_screen.dart';
 
 class OneLinkInQuiryPaymentPageNew extends StatefulWidget {
   final Map<String, dynamic> values;
@@ -159,9 +160,13 @@ class _OneLinkInQuiryPaymentPageNewState
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        left: Constants.getBackArrowLeftPadding(context),
-                        top: Constants.getBackArrowTopPadding(context),
-                        bottom: Constants.getBackArrowBottomPadding(context),
+                        left: MediaQueryConstant.getBackArrowLeftPadding(
+                          context,
+                        ),
+                        top: MediaQueryConstant.getBackArrowTopPadding(context),
+                        bottom: MediaQueryConstant.getBackArrowBottomPadding(
+                          context,
+                        ),
                       ),
 
                       child: IconButton(
@@ -176,9 +181,10 @@ class _OneLinkInQuiryPaymentPageNewState
 
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: Constants.getSymmetricHorizontalPadding(
-                      context,
-                    ),
+                    horizontal:
+                        MediaQueryConstant.getSymmetricHorizontalPadding(
+                          context,
+                        ),
                   ),
                   child: Form(
                     key: _formKey,
@@ -192,13 +198,14 @@ class _OneLinkInQuiryPaymentPageNewState
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.bold,
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.025,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.025,
                           ),
                         ),
 
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenMainAndSmallFont(
+                              MediaQueryConstant.getVerticalGapBetweenMainAndSmallFont(
                                 context,
                               ),
                         ),
@@ -209,7 +216,9 @@ class _OneLinkInQuiryPaymentPageNewState
                             color: AppColors.secondaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.w500,
-                            fontSize: Constants.getSmallFontSize(context),
+                            fontSize: MediaQueryConstant.getSmallFontSize(
+                              context,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -332,7 +341,9 @@ class _OneLinkInQuiryPaymentPageNewState
                         ),
 
                         SizedBox(
-                          height: Constants.getTextFormFieldHeight(context),
+                          height: MediaQueryConstant.getTextFormFieldHeight(
+                            context,
+                          ),
                           width: MediaQuery.of(context).size.width * 0.79,
                           child: TextFormField(
                             maxLength: 20,
@@ -341,9 +352,10 @@ class _OneLinkInQuiryPaymentPageNewState
                             decoration: InputDecoration(
                               hintText: "",
                               hintStyle: TextStyle(
-                                fontSize: Constants.getTextformfieldHintFont(
-                                  context,
-                                ),
+                                fontSize:
+                                    MediaQueryConstant.getTextformfieldHintFont(
+                                      context,
+                                    ),
                                 color: AppColors.secondaryColor(),
                                 fontFamily: 'Visby',
                                 fontWeight: FontWeight.normal,
@@ -351,7 +363,7 @@ class _OneLinkInQuiryPaymentPageNewState
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(
-                                    Constants.getTextformfieldBorderRadius(
+                                    MediaQueryConstant.getTextformfieldBorderRadius(
                                       context,
                                     ),
                                   ),
@@ -359,14 +371,16 @@ class _OneLinkInQuiryPaymentPageNewState
                               ),
                               counterText: '',
                               contentPadding: EdgeInsets.only(
-                                top: Constants.getTextformfieldContentPadding(
-                                  context,
-                                ),
-                                left: Constants.getTextformfieldContentPadding(
-                                  context,
-                                ),
+                                top:
+                                    MediaQueryConstant.getTextformfieldContentPadding(
+                                      context,
+                                    ),
+                                left:
+                                    MediaQueryConstant.getTextformfieldContentPadding(
+                                      context,
+                                    ),
                                 bottom:
-                                    Constants.getTextformfieldContentPadding(
+                                    MediaQueryConstant.getTextformfieldContentPadding(
                                       context,
                                     ),
                               ),
@@ -374,8 +388,7 @@ class _OneLinkInQuiryPaymentPageNewState
                             controller: textController,
                             keyboardType: TextInputType.number,
                             validator:
-                                (value) =>
-                                    MyValidationClass.validatePSID(value),
+                                (value) => MyValidation.validatePSID(value),
                           ),
                         ),
 
@@ -384,7 +397,7 @@ class _OneLinkInQuiryPaymentPageNewState
                           padding: EdgeInsets.only(
                             left: MediaQuery.of(context).size.width * 0.04,
                             top:
-                                Constants.getVerticalGapBetweenTwoTextformfields(
+                                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                   context,
                                 ),
                             bottom: MediaQuery.of(context).size.height * 0.01,
@@ -397,7 +410,7 @@ class _OneLinkInQuiryPaymentPageNewState
                         TextButton(
                           onPressed: () async {
                             _submit();
-                            if (MyValidationClass.validatePSID(
+                            if (MyValidation.validatePSID(
                                   textController.text,
                                 ) ==
                                 null) {
@@ -405,7 +418,7 @@ class _OneLinkInQuiryPaymentPageNewState
                               setState(() {
                                 _isLoading = true;
                               });
-                              if (await NetworkHelper.checkInternetConnection()) {
+                              if (await NetworkApiService.checkInternetConnection()) {
                                 //      performJazzMWalletTransactionNew();
                               } else {
                                 ShowAlertDialogueClass.showAlertDialogue(
@@ -421,12 +434,12 @@ class _OneLinkInQuiryPaymentPageNewState
                           child: Container(
                             alignment: Alignment.center,
                             width: double.infinity,
-                            height: Constants.getButtonHeight(context),
+                            height: MediaQueryConstant.getButtonHeight(context),
 
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(
-                                  Constants.getButtonRadius(context),
+                                  MediaQueryConstant.getButtonRadius(context),
                                 ),
                               ),
 
@@ -450,9 +463,10 @@ class _OneLinkInQuiryPaymentPageNewState
                                       'Check Status',
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: Constants.getButtonFont(
-                                          context,
-                                        ),
+                                        fontSize:
+                                            MediaQueryConstant.getButtonFont(
+                                              context,
+                                            ),
                                         fontFamily: 'Visby',
                                         fontWeight: FontWeight.bold,
                                       ),

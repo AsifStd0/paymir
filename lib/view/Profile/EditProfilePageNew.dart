@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:paymir_new_android/api/NetworkApiService.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/theme/app_colors.dart';
 import '../../util/AlertDialogueClass.dart';
-import '../../util/Constants.dart';
+import '../../util/Mediaquery_Constant.dart';
 import '../../util/MyValidation.dart';
-import '../../util/NetworkHelperClass.dart';
 import '../../util/SecureStorage.dart';
-import '../../utils/app_strings.dart';
-import '../../widget/custom/custom_button.dart';
-import '../../widget/custom/custom_text.dart';
-import '../ProfileUpdateOTPVerificationPageNew.dart';
+import '../../util/app_strings.dart';
+import '../../util/theme/app_colors.dart';
+import '../../widget/custom_button.dart';
+import '../../widget/custom_text.dart';
 import '../main/main_screen.dart';
+import 'ProfileUpdateOTPVerificationPageNew.dart';
 import 'profile_provider.dart';
 import 'profile_widget.dart';
 
@@ -55,23 +55,19 @@ class _EditProfilePageNewState extends State<EditProfilePageNew> {
     final provider = Provider.of<ProfileProvider>(context, listen: false);
 
     // Validate all fields
-    if (MyValidationClass.validateFirstName(
-              provider.firstNameController.text,
-            ) !=
+    if (MyValidation.validateFirstName(provider.firstNameController.text) !=
             null ||
-        MyValidationClass.validateName(provider.lastNameController.text) !=
-            null ||
-        MyValidationClass.validateMobileforEditProfile(
+        MyValidation.validateName(provider.lastNameController.text) != null ||
+        MyValidation.validateMobileforEditProfile(
               provider.mobileNumberController.text,
             ) !=
             null ||
-        MyValidationClass.validateEmail(provider.emailController.text) !=
-            null) {
+        MyValidation.validateEmail(provider.emailController.text) != null) {
       return;
     }
 
     // Check internet connection
-    if (!await NetworkHelper.checkInternetConnection()) {
+    if (!await NetworkApiService.checkInternetConnection()) {
       ShowAlertDialogueClass.showAlertDialogue(
         context: context,
         title: AppStrings.noInternet,
@@ -221,9 +217,10 @@ class _EditProfilePageNewState extends State<EditProfilePageNew> {
                         _buildHeader(context),
                         Padding(
                           padding: EdgeInsets.symmetric(
-                            horizontal: Constants.getSymmetricHorizontalPadding(
-                              context,
-                            ),
+                            horizontal:
+                                MediaQueryConstant.getSymmetricHorizontalPadding(
+                                  context,
+                                ),
                           ),
                           child: Form(
                             key: _formKey,
@@ -236,7 +233,7 @@ class _EditProfilePageNewState extends State<EditProfilePageNew> {
                                 ),
                                 SizedBox(
                                   height:
-                                      Constants.getVerticalGapBetweenMainAndSmallFont(
+                                      MediaQueryConstant.getVerticalGapBetweenMainAndSmallFont(
                                         context,
                                       ),
                                 ),
@@ -247,7 +244,7 @@ class _EditProfilePageNewState extends State<EditProfilePageNew> {
                                 ),
                                 SizedBox(
                                   height:
-                                      Constants.getVerticalGapBetweenSmallfontAndTextfield(
+                                      MediaQueryConstant.getVerticalGapBetweenSmallfontAndTextfield(
                                         context,
                                       ),
                                 ),
@@ -256,27 +253,26 @@ class _EditProfilePageNewState extends State<EditProfilePageNew> {
                                     EditProfileNameField(
                                       controller: provider.firstNameController,
                                       hintText: AppStrings.firstName,
-                                      validator:
-                                          MyValidationClass.validateFirstName,
+                                      validator: MyValidation.validateFirstName,
                                       isFirstName: true,
                                     ),
                                     SizedBox(
                                       width:
-                                          Constants.getHorizontalGapBetweenTwoTextformfields(
+                                          MediaQueryConstant.getHorizontalGapBetweenTwoTextformfields(
                                             context,
                                           ),
                                     ),
                                     EditProfileNameField(
                                       controller: provider.lastNameController,
                                       hintText: AppStrings.lastName,
-                                      validator: MyValidationClass.validateName,
+                                      validator: MyValidation.validateName,
                                       isFirstName: false,
                                     ),
                                   ],
                                 ),
                                 SizedBox(
                                   height:
-                                      Constants.getVerticalGapBetweenTwoTextformfields(
+                                      MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                         context,
                                       ),
                                 ),
@@ -284,25 +280,24 @@ class _EditProfilePageNewState extends State<EditProfilePageNew> {
                                   controller: provider.mobileNumberController,
                                   hintText: AppStrings.mobileNumber,
                                   validator:
-                                      MyValidationClass
-                                          .validateMobileforEditProfile,
+                                      MyValidation.validateMobileforEditProfile,
                                   keyboardType: TextInputType.number,
                                 ),
                                 SizedBox(
                                   height:
-                                      Constants.getVerticalGapBetweenTwoTextformfields(
+                                      MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                         context,
                                       ),
                                 ),
                                 EditProfileTextField(
                                   controller: provider.emailController,
                                   hintText: AppStrings.emailAddress,
-                                  validator: MyValidationClass.validateEmail,
+                                  validator: MyValidation.validateEmail,
                                   maxLength: 60,
                                 ),
                                 SizedBox(
                                   height:
-                                      Constants.getVerticalGapBetweenTwoTextformfields(
+                                      MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                         context,
                                       ) *
                                       350,
@@ -336,9 +331,9 @@ class _EditProfilePageNewState extends State<EditProfilePageNew> {
       children: [
         Padding(
           padding: EdgeInsets.only(
-            left: Constants.getBackArrowLeftPadding(context),
-            top: Constants.getBackArrowTopPadding(context),
-            bottom: Constants.getBackArrowBottomPadding(context),
+            left: MediaQueryConstant.getBackArrowLeftPadding(context),
+            top: MediaQueryConstant.getBackArrowTopPadding(context),
+            bottom: MediaQueryConstant.getBackArrowBottomPadding(context),
           ),
           child: IconButton(
             icon: SvgPicture.asset("assets/images/back_arrow.svg"),

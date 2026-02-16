@@ -1,34 +1,34 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:paymir_new_android/api/NetworkApiService.dart';
 import 'package:paymir_new_android/core/locator.dart';
-import 'package:paymir_new_android/core/storage/Shared_pref.dart';
+import 'package:paymir_new_android/util/Shared_pref.dart';
 
-import '../../models/auth/signup_model.dart';
-import '../../services/auth_service.dart';
-import '../../util/AlertDialogueClass.dart';
-import '../../util/NetworkHelperClass.dart';
-import '../../utils/app_strings.dart';
-import '../../view/mobile_page_view/MobileVerifiedPageNew.dart';
+import '../core/services/auth_service.dart';
+import '../model/signup_model.dart';
+import '../util/AlertDialogueClass.dart';
+import '../util/app_strings.dart';
+import '../view/mobile_page_view/MobileVerifiedPageNew.dart';
 
-/// Provider for managing complete signup flow state and logic
-/// Handles: CNIC check → Mobile entry → Registration → OTP verification
+// !/ ! Provider for managing complete signup flow state and logic
+// !/ ! Handles: CNIC check → Mobile entry → Registration → OTP verification
 class SignupProvider extends ChangeNotifier {
   final AuthService _authService = locator<AuthService>();
 
-  // Loading states
+  // ! Loading states
   bool _isLoading = false;
   bool _isLoadingRegistration = false;
   bool _isLoadingVerification = false;
 
-  // UI states
+  // ! UI states
   bool _isChecked = false;
   bool _passwordVisible = false;
 
-  // Error handling
+  // ! Error handling
   String? _errorMessage;
 
-  // Signup data (stored temporarily during flow)
+  // ! Signup data (stored temporarily during flow)
   String? _firstName;
   String? _lastName;
   String? _cnic;
@@ -37,7 +37,7 @@ class SignupProvider extends ChangeNotifier {
   String? _mobileNo;
   String? _otp;
 
-  // Getters
+  // ! Getters
   bool get isLoading => _isLoading;
   bool get isLoadingRegistration => _isLoadingRegistration;
   bool get isLoadingVerification => _isLoadingVerification;
@@ -46,7 +46,7 @@ class SignupProvider extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
   String? get otp => _otp;
 
-  // Setters
+  // ! Setters
   void setChecked(bool value) {
     _isChecked = value;
     notifyListeners();
@@ -77,26 +77,13 @@ class SignupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Clear all signup data
-  void clearSignupData() {
-    _firstName = null;
-    _lastName = null;
-    _cnic = null;
-    _email = null;
-    _password = null;
-    _mobileNo = null;
-    _otp = null;
-    _errorMessage = null;
-    notifyListeners();
-  }
-
-  /// Step 1: Check if CNIC is verified before registration
+  // !/ ! !  Step 1: Check if CNIC is verified before registration
   Future<bool> checkUser(String cnic, BuildContext context) async {
     try {
       _setLoading(true);
       _setError(null);
 
-      if (!await NetworkHelper.checkInternetConnection()) {
+      if (!await NetworkApiService.checkInternetConnection()) {
         _setLoading(false);
         ShowAlertDialogueClass.showAlertDialogue(
           context: context,
@@ -107,12 +94,12 @@ class SignupProvider extends ChangeNotifier {
         );
         return false;
       }
-
+      // ! ! CNIC Response
       final response = await _authService.checkVerifiedCNIC(cnic);
       _setLoading(false);
 
       if (response["statusCode"] == "200") {
-        // Store CNIC for later use
+        // ! Store CNIC for later use
         _cnic = cnic;
         return true;
       } else {
@@ -143,7 +130,7 @@ class SignupProvider extends ChangeNotifier {
     }
   }
 
-  /// Step 2: Store signup form data (called from signup screen)
+  // !/ !! Step 2: Store signup form data (called from signup screen)
   void setSignupFormData({
     required String firstName,
     required String lastName,
@@ -158,7 +145,7 @@ class SignupProvider extends ChangeNotifier {
     _password = password;
   }
 
-  /// Step 3: Register user with mobile number (called from MobilePageNew)
+  // !/ ! ! Step 3: Register user with mobile number (called from MobilePageNew)
   Future<bool> registerUserWithMobile({
     required String mobileNo,
     required BuildContext context,
@@ -168,7 +155,7 @@ class SignupProvider extends ChangeNotifier {
       _setError(null);
       _mobileNo = mobileNo;
 
-      if (!await NetworkHelper.checkInternetConnection()) {
+      if (!await NetworkApiService.checkInternetConnection()) {
         _setLoadingRegistration(false);
         ShowAlertDialogueClass.showAlertDialogue(
           context: context,
@@ -209,22 +196,22 @@ class SignupProvider extends ChangeNotifier {
         category: "PAYMIR",
       );
       log('request: $request');
-
+      // ! ! Register Api Calling
       final response = await _authService.registerUser(request);
       _setLoadingRegistration(false);
 
       if (response.isSuccess && response.otp != null) {
         _otp = response.otp;
 
-        // Store signup data in SharedPreferences
+        // ! Store signup data in SharedPreferences
         await SharedPrefService.setUserCNIC(_cnic!);
         await SharedPrefService.setUserEmail(_email!);
         await SharedPrefService.setUserFullName("$_firstName $_lastName");
         await SharedPrefService.setUserMobile(mobileNo);
 
-        // Show appropriate dialog based on status code
+        // ! Show appropriate dialog based on status code
         if (response.isRegistered) {
-          // Status 201: User registered successfully
+          // ! Status 201: User registered successfully
           ShowAlertDialogueClass.showAlertDialogSendtoVerificationPage(
             context: context,
             title: "Response",
@@ -239,7 +226,7 @@ class SignupProvider extends ChangeNotifier {
             iconData: Icons.offline_pin_rounded,
           );
         } else if (response.isUnverified) {
-          // Status 202: User registered but unverified
+          // ! Status 202: User registered but unverified
           ShowAlertDialogueClass.showAlertDialogMobileVerificationPage(
             context: context,
             title: "Response",
@@ -282,7 +269,7 @@ class SignupProvider extends ChangeNotifier {
     }
   }
 
-  /// Step 4: Verify OTP locally (called from MobileVerificationPageNew)
+  // !/ ! Step 4: Verify OTP locally (called from MobileVerificationPageNew)
   bool verifyOTPLocally(String enteredOTP) {
     if (_otp == null) {
       return false;
@@ -290,13 +277,13 @@ class SignupProvider extends ChangeNotifier {
     return enteredOTP == _otp;
   }
 
-  /// Step 5: Verify user with server (called from MobileVerificationPageNew)
+  // !/ ! Step 5: Verify user with server (called from MobileVerificationPageNew)
   Future<bool> verifyUserWithServer({required BuildContext context}) async {
     try {
       _setLoadingVerification(true);
       _setError(null);
 
-      if (!await NetworkHelper.checkInternetConnection()) {
+      if (!await NetworkApiService.checkInternetConnection()) {
         _setLoadingVerification(false);
         ShowAlertDialogueClass.showAlertDialogue(
           context: context,
@@ -323,7 +310,7 @@ class SignupProvider extends ChangeNotifier {
       _setLoadingVerification(false);
 
       if (response["statusCode"] == "200") {
-        // Verification successful - navigate to success page
+        // ! Verification successful - navigate to success page
         if (context.mounted) {
           Navigator.pushReplacement(
             context,
@@ -357,6 +344,19 @@ class SignupProvider extends ChangeNotifier {
   }
 
   void clearError() {
+    _errorMessage = null;
+    notifyListeners();
+  }
+
+  // !/ ! Clear all signup data
+  void clearSignupData() {
+    _firstName = null;
+    _lastName = null;
+    _cnic = null;
+    _email = null;
+    _password = null;
+    _mobileNo = null;
+    _otp = null;
     _errorMessage = null;
     notifyListeners();
   }

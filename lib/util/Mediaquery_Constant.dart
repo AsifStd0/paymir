@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Constants {
+class MediaQueryConstant {
   static double getBackArrowTopPadding(BuildContext context) {
     return MediaQuery.of(context).size.height * 0.02;
   }
@@ -199,10 +199,6 @@ class Constants {
 
   static double getVerticalGapBetweenTwoTextformfields(BuildContext context) {
     return MediaQuery.of(context).size.height * .001;
-  }
-
-  static String baseUrl() {
-    return 'http://apipaymir.kp.gov.pk/';
   }
 
   static double getTextFormFieldHeight(BuildContext context) {

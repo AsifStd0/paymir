@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 
-import '../util/Constants.dart';
-import '../util/MyValidation.dart';
-import '../util/NetworkHelperClass.dart';
-import 'SuccessfullyChangedPasswordNew.dart';
-import 'login/login_screen.dart';
+import '../../util/Mediaquery_Constant.dart';
+import '../../util/MyValidation.dart';
+import '../../util/NetworkHelperClass.dart';
+import '../SuccessfullyChangedPasswordNew.dart';
+import 'login_screen.dart';
 
 class NewPasswordNew extends StatefulWidget {
   final String CNICString;
@@ -52,9 +52,13 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        left: Constants.getBackArrowLeftPadding(context),
-                        top: Constants.getBackArrowTopPadding(context),
-                        bottom: Constants.getBackArrowBottomPadding(context),
+                        left: MediaQueryConstant.getBackArrowLeftPadding(
+                          context,
+                        ),
+                        top: MediaQueryConstant.getBackArrowTopPadding(context),
+                        bottom: MediaQueryConstant.getBackArrowBottomPadding(
+                          context,
+                        ),
                       ),
 
                       child: IconButton(
@@ -69,9 +73,10 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
 
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: Constants.getSymmetricHorizontalPadding(
-                      context,
-                    ),
+                    horizontal:
+                        MediaQueryConstant.getSymmetricHorizontalPadding(
+                          context,
+                        ),
                   ),
                   child: Form(
                     key: _formKey,
@@ -84,13 +89,15 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                             color: AppColors.primaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.bold,
-                            fontSize: Constants.getMainFontSize(context),
+                            fontSize: MediaQueryConstant.getMainFontSize(
+                              context,
+                            ),
                           ),
                         ),
 
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenMainAndSmallFont(
+                              MediaQueryConstant.getVerticalGapBetweenMainAndSmallFont(
                                 context,
                               ),
                         ),
@@ -101,13 +108,15 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                             color: AppColors.secondaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.w500,
-                            fontSize: Constants.getSmallFontSize(context),
+                            fontSize: MediaQueryConstant.getSmallFontSize(
+                              context,
+                            ),
                           ),
                         ),
 
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenSmallfontAndTextfield(
+                              MediaQueryConstant.getVerticalGapBetweenSmallfontAndTextfield(
                                 context,
                               ),
                         ),
@@ -118,25 +127,28 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                             color: AppColors.secondaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.w300,
-                            fontSize: Constants.getSmallFontSize(context),
+                            fontSize: MediaQueryConstant.getSmallFontSize(
+                              context,
+                            ),
                           ),
                         ),
 
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenSmallfontAndTextfield(
+                              MediaQueryConstant.getVerticalGapBetweenSmallfontAndTextfield(
                                 context,
                               ),
                         ),
 
                         SizedBox(
-                          height: Constants.getTextFormFieldHeight(context),
+                          height: MediaQueryConstant.getTextFormFieldHeight(
+                            context,
+                          ),
                           child: TextFormField(
                             textAlign: TextAlign.start,
                             controller: txtPasswordController,
                             validator:
-                                (value) =>
-                                    MyValidationClass.validatePassword(value),
+                                (value) => MyValidation.validatePassword(value),
                             obscureText: !_passwordVisible1,
 
                             // Here is key idea
@@ -158,9 +170,10 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                                 },
                               ),
                               hintStyle: TextStyle(
-                                fontSize: Constants.getTextformfieldHintFont(
-                                  context,
-                                ),
+                                fontSize:
+                                    MediaQueryConstant.getTextformfieldHintFont(
+                                      context,
+                                    ),
                                 color: AppColors.secondaryColor(),
                                 fontFamily: 'Visby',
                                 fontWeight: FontWeight.normal,
@@ -169,21 +182,23 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(
-                                    Constants.getTextformfieldBorderRadius(
+                                    MediaQueryConstant.getTextformfieldBorderRadius(
                                       context,
                                     ),
                                   ),
                                 ),
                               ),
                               contentPadding: EdgeInsets.only(
-                                top: Constants.getTextformfieldContentPadding(
-                                  context,
-                                ),
-                                left: Constants.getTextformfieldContentPadding(
-                                  context,
-                                ),
+                                top:
+                                    MediaQueryConstant.getTextformfieldContentPadding(
+                                      context,
+                                    ),
+                                left:
+                                    MediaQueryConstant.getTextformfieldContentPadding(
+                                      context,
+                                    ),
                                 bottom:
-                                    Constants.getTextformfieldContentPadding(
+                                    MediaQueryConstant.getTextformfieldContentPadding(
                                       context,
                                     ),
                               ),
@@ -193,19 +208,20 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
 
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenTwoTextformfields(
+                              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                 context,
                               ),
                         ),
 
                         SizedBox(
-                          height: Constants.getTextformfieldHeight(context),
+                          height: MediaQueryConstant.getTextformfieldHeight(
+                            context,
+                          ),
                           child: TextFormField(
                             textAlign: TextAlign.start,
                             controller: txtRePasswordController,
                             validator:
-                                (value) =>
-                                    MyValidationClass.validatePassword(value),
+                                (value) => MyValidation.validatePassword(value),
                             obscureText: !_passwordVisible2,
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
@@ -224,9 +240,10 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                                 },
                               ),
                               hintStyle: TextStyle(
-                                fontSize: Constants.getTextformfieldHintFont(
-                                  context,
-                                ),
+                                fontSize:
+                                    MediaQueryConstant.getTextformfieldHintFont(
+                                      context,
+                                    ),
                                 color: AppColors.secondaryColor(),
                                 fontFamily: 'Visby',
                                 fontWeight: FontWeight.normal,
@@ -235,7 +252,7 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(
-                                    Constants.getTextformfieldBorderRadius(
+                                    MediaQueryConstant.getTextformfieldBorderRadius(
                                       context,
                                     ),
                                   ),
@@ -243,14 +260,16 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                               ),
                               counterText: '',
                               contentPadding: EdgeInsets.only(
-                                top: Constants.getTextformfieldContentPadding(
-                                  context,
-                                ),
-                                left: Constants.getTextformfieldContentPadding(
-                                  context,
-                                ),
+                                top:
+                                    MediaQueryConstant.getTextformfieldContentPadding(
+                                      context,
+                                    ),
+                                left:
+                                    MediaQueryConstant.getTextformfieldContentPadding(
+                                      context,
+                                    ),
                                 bottom:
-                                    Constants.getTextformfieldContentPadding(
+                                    MediaQueryConstant.getTextformfieldContentPadding(
                                       context,
                                     ),
                               ),
@@ -260,7 +279,7 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
 
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenTwoTextformfields(
+                              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                 context,
                               ) *
                               90,
@@ -276,11 +295,11 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                             child: TextButton(
                               onPressed: () {
                                 _submit();
-                                if (MyValidationClass.validatePassword(
+                                if (MyValidation.validatePassword(
                                           txtPasswordController.text,
                                         ) ==
                                         null &&
-                                    MyValidationClass.validatePassword(
+                                    MyValidation.validatePassword(
                                           txtRePasswordController.text,
                                         ) ==
                                         null) {
@@ -324,11 +343,15 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                               child: Container(
                                 alignment: Alignment.center,
                                 width: double.infinity,
-                                height: Constants.getButtonHeight(context),
+                                height: MediaQueryConstant.getButtonHeight(
+                                  context,
+                                ),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(
-                                      Constants.getButtonRadius(context),
+                                      MediaQueryConstant.getButtonRadius(
+                                        context,
+                                      ),
                                     ),
                                   ),
                                   gradient: LinearGradient(
@@ -352,9 +375,10 @@ class _NewPasswordNewState extends State<NewPasswordNew> {
                                           'Continue',
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: Constants.getButtonFont(
-                                              context,
-                                            ),
+                                            fontSize:
+                                                MediaQueryConstant.getButtonFont(
+                                                  context,
+                                                ),
                                             fontFamily: 'Visby',
                                             fontWeight: FontWeight.bold,
                                           ),

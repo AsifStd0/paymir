@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../api/api_client.dart';
 import '../../core/locator.dart';
-import '../../core/services/api_class.dart';
 import '../../core/services/profile_service.dart';
-import '../../core/storage/Shared_pref.dart';
 import '../../util/AlertDialogueClass.dart';
-import '../../utils/app_strings.dart';
+import '../../util/Shared_pref.dart';
+import '../../util/app_strings.dart';
 import '../../view/login/login_screen.dart';
 
 /// Provider for managing profile screen state

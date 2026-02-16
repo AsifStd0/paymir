@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../util/Constants.dart';
+import '../util/Mediaquery_Constant.dart';
+import '../util/theme/app_colors.dart';
 
 enum CustomTextType {
   mainTitle,
@@ -82,20 +82,20 @@ class CustomText extends StatelessWidget {
   double _getDefaultFontSize(BuildContext context) {
     switch (type) {
       case CustomTextType.mainTitle:
-        return Constants.getMainFontSize(context);
+        return MediaQueryConstant.getMainFontSize(context);
       case CustomTextType.subtitle:
-        return Constants.getSmallFontSize(context);
+        return MediaQueryConstant.getSmallFontSize(context);
       case CustomTextType.body:
       case CustomTextType.hint:
       case CustomTextType.link:
       case CustomTextType.divider:
-        return Constants.getTextformfieldHintFont(context);
+        return MediaQueryConstant.getTextformfieldHintFont(context);
       case CustomTextType.button:
-        return Constants.getButtonFont(context);
+        return MediaQueryConstant.getButtonFont(context);
       case CustomTextType.error:
-        return Constants.getTextformfieldHintFont(context);
+        return MediaQueryConstant.getTextformfieldHintFont(context);
       case CustomTextType.forgotPassword:
-        return Constants.getForgotPasswordFontSize(context);
+        return MediaQueryConstant.getForgotPasswordFontSize(context);
     }
   }
 

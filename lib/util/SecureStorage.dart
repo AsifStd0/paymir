@@ -46,44 +46,44 @@ class SecureStorage {
     );
   }
 
-  Future<void> storeToken(
-    String tokenValue,
-    DateTime expirationDate,
-    String strCNIC,
-  ) async {
-    // Unique key for token
-    final keyToken = 'token';
-    final keyExpiry = 'expiry';
-    final keyCNIC = 'cnic';
+  // Future<void> storeToken(
+  //   String tokenValue,
+  //   DateTime expirationDate,
+  //   String strCNIC,
+  // ) async {
+  //   // Unique key for token
+  //   final keyToken = 'token';
+  //   final keyExpiry = 'expiry';
+  //   final keyCNIC = 'cnic';
 
-    String ExpiryString = expirationDate.toString();
+  //   String ExpiryString = expirationDate.toString();
 
-    // Delete previous keys
-    await storage.deleteAll(
-      iOptions: _getIOSOptions(),
-      aOptions: _getAndroidOptions(),
-    );
+  //   // Delete previous keys
+  //   await storage.deleteAll(
+  //     iOptions: _getIOSOptions(),
+  //     aOptions: _getAndroidOptions(),
+  //   );
 
-    // Write token value
-    await storage.write(
-      key: keyToken,
-      value: tokenValue,
-      iOptions: _getIOSOptions(),
-      aOptions: _getAndroidOptions(),
-    );
-    await storage.write(
-      key: keyExpiry,
-      value: ExpiryString,
-      iOptions: _getIOSOptions(),
-      aOptions: _getAndroidOptions(),
-    );
-    await storage.write(
-      key: keyCNIC,
-      value: strCNIC,
-      iOptions: _getIOSOptions(),
-      aOptions: _getAndroidOptions(),
-    );
+  // // Write token value
+  // await storage.write(
+  //   key: keyToken,
+  //   value: tokenValue,
+  //   iOptions: _getIOSOptions(),
+  //   aOptions: _getAndroidOptions(),
+  // );
+  // await storage.write(
+  //   key: keyExpiry,
+  //   value: ExpiryString,
+  //   iOptions: _getIOSOptions(),
+  //   aOptions: _getAndroidOptions(),
+  // );
+  // await storage.write(
+  //   key: keyCNIC,
+  //   value: strCNIC,
+  //   iOptions: _getIOSOptions(),
+  //   aOptions: _getAndroidOptions(),
+  // );
 
-    print("Values stored to secure storage");
-  }
+  //   print("Values stored to secure storage");
+  // }
 }

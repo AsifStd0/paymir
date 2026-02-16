@@ -4,9 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:paymir_new_android/api/NetworkApiService.dart';
 
 import '../../util/AlertDialogueClass.dart';
-import '../../util/NetworkHelperClass.dart';
 import '../../util/SecureStorage.dart';
 import '../../view/login/login_screen.dart';
 import 'hed_services.dart';
@@ -146,7 +146,7 @@ class HedProvider extends ChangeNotifier {
       return;
     }
 
-    if (!await NetworkHelper.checkInternetConnection()) {
+    if (!await NetworkApiService.checkInternetConnection()) {
       ShowAlertDialogueClass.showAlertDialogue(
         context: context,
         title: "No Internet",

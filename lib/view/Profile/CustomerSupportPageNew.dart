@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:paymir_new_android/api/NetworkApiService.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/theme/app_colors.dart';
-import '../../util/Constants.dart';
-import '../../util/NetworkHelperClass.dart';
+import '../../util/Mediaquery_Constant.dart';
 import '../../util/SecureStorage.dart';
-import '../../utils/app_strings.dart';
-import '../../widget/custom/custom_button.dart';
-import '../../widget/custom/custom_text.dart';
+import '../../util/app_strings.dart';
+import '../../util/theme/app_colors.dart';
+import '../../widget/custom_button.dart';
+import '../../widget/custom_text.dart';
 import 'Profile_Screen.dart';
 import 'profile_provider.dart';
 import 'profile_widget.dart';
@@ -55,7 +55,7 @@ class _CustomerSupportPageNewState extends State<CustomerSupportPageNew> {
       return;
     }
 
-    if (!await NetworkHelper.checkInternetConnection()) {
+    if (!await NetworkApiService.checkInternetConnection()) {
       _showErrorDialog(context, AppStrings.checkInternetConnection);
       return;
     }
@@ -124,9 +124,10 @@ class _CustomerSupportPageNewState extends State<CustomerSupportPageNew> {
                 _buildHeader(context),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: Constants.getSymmetricHorizontalPadding(
-                      context,
-                    ),
+                    horizontal:
+                        MediaQueryConstant.getSymmetricHorizontalPadding(
+                          context,
+                        ),
                   ),
                   child: Consumer<ProfileProvider>(
                     builder: (context, provider, _) {
@@ -139,7 +140,7 @@ class _CustomerSupportPageNewState extends State<CustomerSupportPageNew> {
                           ),
                           SizedBox(
                             height:
-                                Constants.getVerticalGapBetweenMainAndSmallFont(
+                                MediaQueryConstant.getVerticalGapBetweenMainAndSmallFont(
                                   context,
                                 ),
                           ),
@@ -150,7 +151,7 @@ class _CustomerSupportPageNewState extends State<CustomerSupportPageNew> {
                           ),
                           SizedBox(
                             height:
-                                Constants.getVerticalGapBetweenSmallfontAndTextfield(
+                                MediaQueryConstant.getVerticalGapBetweenSmallfontAndTextfield(
                                   context,
                                 ),
                           ),
@@ -160,7 +161,7 @@ class _CustomerSupportPageNewState extends State<CustomerSupportPageNew> {
                           ),
                           SizedBox(
                             height:
-                                Constants.getVerticalGapBetweenTwoTextformfields(
+                                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                   context,
                                 ) *
                                 20,
@@ -170,7 +171,7 @@ class _CustomerSupportPageNewState extends State<CustomerSupportPageNew> {
                           ),
                           SizedBox(
                             height:
-                                Constants.getVerticalGapBetweenTwoTextformfields(
+                                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                   context,
                                 ) *
                                 200,
@@ -183,7 +184,7 @@ class _CustomerSupportPageNewState extends State<CustomerSupportPageNew> {
                           ),
                           SizedBox(
                             height:
-                                Constants.getVerticalGapBetweenMainAndSmallFont(
+                                MediaQueryConstant.getVerticalGapBetweenMainAndSmallFont(
                                   context,
                                 ) *
                                 30,
@@ -207,9 +208,9 @@ class _CustomerSupportPageNewState extends State<CustomerSupportPageNew> {
       children: [
         Padding(
           padding: EdgeInsets.only(
-            left: Constants.getBackArrowLeftPadding(context),
-            top: Constants.getBackArrowTopPadding(context),
-            bottom: Constants.getBackArrowBottomPadding(context),
+            left: MediaQueryConstant.getBackArrowLeftPadding(context),
+            top: MediaQueryConstant.getBackArrowTopPadding(context),
+            bottom: MediaQueryConstant.getBackArrowBottomPadding(context),
           ),
           child: IconButton(
             icon: SvgPicture.asset("assets/images/back_arrow.svg"),

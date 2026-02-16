@@ -1,12 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:paymir_new_android/api/NetworkApiService.dart';
 import 'package:paymir_new_android/core/locator.dart';
 
-import '../../core/storage/Shared_pref.dart';
-import '../../models/auth/login_model.dart';
-import '../../services/auth_service.dart';
-import '../../util/AlertDialogueClass.dart';
-import '../../util/NetworkHelperClass.dart';
-import '../../utils/app_strings.dart';
+import '../core/services/auth_service.dart';
+import '../model/login_model.dart';
+import '../util/AlertDialogueClass.dart';
+import '../util/Shared_pref.dart';
+import '../util/app_strings.dart';
 
 /// Provider for managing login state and logic
 class LoginProvider extends ChangeNotifier {
@@ -19,7 +21,7 @@ class LoginProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   bool get passwordVisible => _passwordVisible;
   String? get errorMessage => _errorMessage;
-
+  // ! ******
   void togglePasswordVisibility() {
     _passwordVisible = !_passwordVisible;
     notifyListeners();
@@ -44,8 +46,9 @@ class LoginProvider extends ChangeNotifier {
     try {
       _setLoading(true);
       _setError(null);
+      log('Login request: $cnic $password');
 
-      if (!await NetworkHelper.checkInternetConnection()) {
+      if (!await NetworkApiService.checkInternetConnection()) {
         _setLoading(false);
         ShowAlertDialogueClass.showAlertDialogue(
           context: context,
@@ -58,8 +61,9 @@ class LoginProvider extends ChangeNotifier {
       }
 
       final request = LoginRequest(username: cnic, password: password);
+      log('Login request: $request');
       final response = await _authService.login(request);
-
+      log('Login response: $response');
       _setLoading(false);
 
       if (response.isSuccess && response.accessToken != null) {

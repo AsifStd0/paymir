@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../core/theme/app_colors.dart';
-import '../../util/Constants.dart';
-import '../../utils/app_strings.dart';
+import '../../util/Mediaquery_Constant.dart';
+import '../../util/app_strings.dart';
+import '../../util/theme/app_colors.dart';
 
 /// Profile header card widget
 class ProfileHeaderCard extends StatelessWidget {
@@ -41,18 +41,25 @@ class ProfileHeaderCard extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(
-                Constants.getVerticalGapBetweenTwoTextformfields(context),
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ),
               ),
               spreadRadius:
-                  Constants.getVerticalGapBetweenTwoTextformfields(context) * 2,
+                  MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                    context,
+                  ) *
+                  2,
               blurRadius:
-                  Constants.getVerticalGapBetweenTwoTextformfields(context) *
+                  MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                    context,
+                  ) *
                   20,
               offset: const Offset(0, 2),
             ),
           ],
           borderRadius: BorderRadius.all(
-            Radius.circular(Constants.getCardBorderRadius(context)),
+            Radius.circular(MediaQueryConstant.getCardBorderRadius(context)),
           ),
           gradient: AppColors.primaryGradient,
         ),
@@ -370,7 +377,7 @@ class PasswordField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Constants.getTextFormFieldHeight(context),
+      height: MediaQueryConstant.getTextFormFieldHeight(context),
       child: TextFormField(
         controller: controller,
         obscureText: obscureText,
@@ -384,7 +391,7 @@ class PasswordField extends StatelessWidget {
             onPressed: onToggleVisibility,
           ),
           hintStyle: TextStyle(
-            fontSize: Constants.getTextformfieldHintFont(context),
+            fontSize: MediaQueryConstant.getTextformfieldHintFont(context),
             color: AppColors.secondary,
             fontFamily: 'Visby',
             fontWeight: FontWeight.normal,
@@ -392,14 +399,16 @@ class PasswordField extends StatelessWidget {
           hintText: hintText,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(Constants.getTextformfieldBorderRadius(context)),
+              Radius.circular(
+                MediaQueryConstant.getTextformfieldBorderRadius(context),
+              ),
             ),
           ),
           counterText: '',
           contentPadding: EdgeInsets.only(
-            top: Constants.getTextformfieldContentPadding(context),
-            left: Constants.getTextformfieldContentPadding(context),
-            bottom: Constants.getTextformfieldContentPadding(context),
+            top: MediaQueryConstant.getTextformfieldContentPadding(context),
+            left: MediaQueryConstant.getTextformfieldContentPadding(context),
+            bottom: MediaQueryConstant.getTextformfieldContentPadding(context),
           ),
         ),
       ),
@@ -437,7 +446,7 @@ class ComplaintCategoryDropdown extends StatelessWidget {
           horizontal: MediaQuery.of(context).size.width * 0.05,
         ),
         hintStyle: TextStyle(
-          fontSize: Constants.getTextformfieldHintFont(context),
+          fontSize: MediaQueryConstant.getTextformfieldHintFont(context),
           color: AppColors.primary,
           fontFamily: 'Visby',
           fontWeight: FontWeight.bold,
@@ -445,7 +454,9 @@ class ComplaintCategoryDropdown extends StatelessWidget {
         hintText: 'Select Category',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(Constants.getTextformfieldBorderRadius(context)),
+            Radius.circular(
+              MediaQueryConstant.getTextformfieldBorderRadius(context),
+            ),
           ),
           borderSide: const BorderSide(color: AppColors.tertiary),
         ),
@@ -468,7 +479,9 @@ class ComplaintDescriptionField extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.borderMedium),
         borderRadius: BorderRadius.all(
-          Radius.circular(Constants.getTextformfieldBorderRadius(context)),
+          Radius.circular(
+            MediaQueryConstant.getTextformfieldBorderRadius(context),
+          ),
         ),
       ),
       child: Column(
@@ -483,7 +496,7 @@ class ComplaintDescriptionField extends StatelessWidget {
               'Description',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: Constants.getTextformfieldHintFont(context),
+                fontSize: MediaQueryConstant.getTextformfieldHintFont(context),
                 color: AppColors.primary,
                 fontFamily: 'Visby',
               ),
@@ -497,12 +510,16 @@ class ComplaintDescriptionField extends StatelessWidget {
               border: InputBorder.none,
               counterText: '',
               contentPadding: EdgeInsets.only(
-                left: Constants.getTextformfieldContentPadding(context),
-                bottom: Constants.getTextformfieldContentPadding(context),
+                left: MediaQueryConstant.getTextformfieldContentPadding(
+                  context,
+                ),
+                bottom: MediaQueryConstant.getTextformfieldContentPadding(
+                  context,
+                ),
               ),
               hintText: 'Add your details here',
               hintStyle: TextStyle(
-                fontSize: Constants.getTextformfieldHintFont(context),
+                fontSize: MediaQueryConstant.getTextformfieldHintFont(context),
                 color: AppColors.secondary,
                 fontFamily: 'Visby',
                 fontWeight: FontWeight.normal,
@@ -579,7 +596,7 @@ class EditProfileNameField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: SizedBox(
-        height: Constants.getTextFormFieldHeight(context),
+        height: MediaQueryConstant.getTextFormFieldHeight(context),
         child: TextFormField(
           controller: controller,
           textAlignVertical: isFirstName ? TextAlignVertical.center : null,
@@ -588,7 +605,7 @@ class EditProfileNameField extends StatelessWidget {
           validator: validator,
           decoration: InputDecoration(
             hintStyle: TextStyle(
-              fontSize: Constants.getTextformfieldHintFont(context),
+              fontSize: MediaQueryConstant.getTextformfieldHintFont(context),
               color: AppColors.secondary,
               fontFamily: 'Visby',
               fontWeight: FontWeight.normal,
@@ -597,15 +614,17 @@ class EditProfileNameField extends StatelessWidget {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(
-                  Constants.getTextformfieldBorderRadius(context),
+                  MediaQueryConstant.getTextformfieldBorderRadius(context),
                 ),
               ),
             ),
             counterText: '',
             contentPadding: EdgeInsets.only(
-              top: Constants.getTextformfieldContentPadding(context),
-              left: Constants.getTextformfieldContentPadding(context),
-              bottom: Constants.getTextformfieldContentPadding(context),
+              top: MediaQueryConstant.getTextformfieldContentPadding(context),
+              left: MediaQueryConstant.getTextformfieldContentPadding(context),
+              bottom: MediaQueryConstant.getTextformfieldContentPadding(
+                context,
+              ),
             ),
           ),
         ),
@@ -634,7 +653,7 @@ class EditProfileTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Constants.getTextFormFieldHeight(context),
+      height: MediaQueryConstant.getTextFormFieldHeight(context),
       child: TextFormField(
         controller: controller,
         textAlign: TextAlign.start,
@@ -643,7 +662,7 @@ class EditProfileTextField extends StatelessWidget {
         maxLength: maxLength,
         decoration: InputDecoration(
           hintStyle: TextStyle(
-            fontSize: Constants.getTextformfieldHintFont(context),
+            fontSize: MediaQueryConstant.getTextformfieldHintFont(context),
             color: AppColors.secondary,
             fontFamily: 'Visby',
             fontWeight: FontWeight.normal,
@@ -651,14 +670,16 @@ class EditProfileTextField extends StatelessWidget {
           hintText: hintText,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(Constants.getTextformfieldBorderRadius(context)),
+              Radius.circular(
+                MediaQueryConstant.getTextformfieldBorderRadius(context),
+              ),
             ),
           ),
           counterText: '',
           contentPadding: EdgeInsets.only(
-            top: Constants.getTextformfieldContentPadding(context),
-            left: Constants.getTextformfieldContentPadding(context),
-            bottom: Constants.getTextformfieldContentPadding(context),
+            top: MediaQueryConstant.getTextformfieldContentPadding(context),
+            left: MediaQueryConstant.getTextformfieldContentPadding(context),
+            bottom: MediaQueryConstant.getTextformfieldContentPadding(context),
           ),
         ),
       ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:paymir_new_android/api/NetworkApiService.dart';
 
-import '../../core/storage/Shared_pref.dart';
 import '../../util/AlertDialogueClass.dart';
-import '../../util/NetworkHelperClass.dart';
-import '../../utils/app_strings.dart';
+import '../../util/Shared_pref.dart';
+import '../../util/app_strings.dart';
 import 'voucher_service.dart';
 
 /// Provider for managing voucher page state and logic
@@ -35,7 +35,7 @@ class VoucherProvider extends ChangeNotifier {
       _setError(null);
 
       // Check internet connection
-      if (!await NetworkHelper.checkInternetConnection()) {
+      if (!await NetworkApiService.checkInternetConnection()) {
         _setLoading(false);
         ShowAlertDialogueClass.showAlertDialogue(
           context: context,

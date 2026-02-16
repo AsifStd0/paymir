@@ -1,9 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../core/storage/Shared_pref.dart';
+import '../../util/Shared_pref.dart';
 import '../login/login_screen.dart';
 import '../main/main_screen.dart';
 
@@ -26,24 +25,12 @@ class _SplashscreenState extends State<Splashscreen> {
     fetchSecureStorageData();
 
     Future.delayed(const Duration(seconds: 3), () {
-      if (kDebugMode) {
-        print("Token: $strToken");
-        print("Expiry: $strTokenExpiry");
-        print("Now Date: ${DateTime.now()}");
-      }
-
       if (strToken.isEmpty || expirationDate.isBefore(DateTime.now())) {
-        if (kDebugMode) {
-          print('Token has expired.');
-        }
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const LoginScreen()),
         );
       } else {
-        if (kDebugMode) {
-          print('Token is still valid.');
-        }
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const MainScreen()),

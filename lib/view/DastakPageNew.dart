@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 
-import '../util/Constants.dart';
+import '../util/Mediaquery_Constant.dart';
 import '../util/SecureStorage.dart';
 import 'Voucher/VoucherNoPageNew.dart';
 
@@ -293,14 +293,14 @@ class _DastakPageNewState extends State<DastakPageNew> {
                   Padding(
                     padding: EdgeInsets.only(
                       top:
-                          Constants.getVerticalGapBetweenTwoTextformfields(
+                          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                             context,
                           ) *
                           40,
                       //left: Constants.getHomePageMainTextLeftPadding(context)*2.3,
                       // right: Constants.getVerticalGapBetweenTwoTextformfields(context),
                       bottom:
-                          Constants.getVerticalGapBetweenTwoTextformfields(
+                          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                             context,
                           ) *
                           9,
@@ -317,7 +317,9 @@ class _DastakPageNewState extends State<DastakPageNew> {
                               color: const Color(0xff3F3F3F),
                               fontFamily: 'Metropolis',
                               fontWeight: FontWeight.w700,
-                              fontSize: Constants.getServiceFontSize(context),
+                              fontSize: MediaQueryConstant.getServiceFontSize(
+                                context,
+                              ),
                             ),
                           ),
                         ),
@@ -366,7 +368,7 @@ class _DastakPageNewState extends State<DastakPageNew> {
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.all(
-                                        Constants.getVerticalGapBetweenTwoTextformfields(
+                                        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                               context,
                                             ) *
                                             5,
@@ -374,7 +376,7 @@ class _DastakPageNewState extends State<DastakPageNew> {
                                       child: SvgPicture.asset(
                                         'assets/images/utilitieslogo.svg',
                                         height:
-                                            Constants.getSmallFontSize(
+                                            MediaQueryConstant.getSmallFontSize(
                                               context,
                                             ) *
                                             2.5,
@@ -383,7 +385,7 @@ class _DastakPageNewState extends State<DastakPageNew> {
                                     Padding(
                                       padding: EdgeInsets.only(
                                         top:
-                                            Constants.getVerticalGapBetweenTwoTextformfields(
+                                            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                               context,
                                             ) *
                                             2,
@@ -399,7 +401,7 @@ class _DastakPageNewState extends State<DastakPageNew> {
                                             color: const Color(0xff3F3F3F),
                                             fontFamily: 'Metropolis',
                                             fontSize:
-                                                Constants.getSmallFontSize(
+                                                MediaQueryConstant.getSmallFontSize(
                                                   context,
                                                 ),
                                             fontWeight: FontWeight.w600,
@@ -422,7 +424,7 @@ class _DastakPageNewState extends State<DastakPageNew> {
 
                   SizedBox(
                     height:
-                        Constants.getVerticalGapBetweenTwoTextformfields(
+                        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                           context,
                         ) *
                         15,
@@ -537,8 +539,8 @@ class _DastakPageNewState extends State<DastakPageNew> {
                     Navigator.of(context).pop();
                   },
                   child: Container(
-                    height: Constants.getButtonHeight(context),
-                    width: Constants.getButtonHeight(context) * 2,
+                    height: MediaQueryConstant.getButtonHeight(context),
+                    width: MediaQueryConstant.getButtonHeight(context) * 2,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
                       color: AppColors.gradientColor1(),

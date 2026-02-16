@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/app_colors.dart';
+import '../../../util/theme/app_colors.dart';
 import '../../Voucher/VoucherNoPageNew.dart';
 
 /// Voucher tab content

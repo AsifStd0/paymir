@@ -10,13 +10,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
+import 'package:paymir_new_android/view/main/main_screen.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
-
-import 'main/main_screen.dart';
 
 class SuccessfulPaymentPageNew extends StatefulWidget {
   final Map<String, dynamic> values;

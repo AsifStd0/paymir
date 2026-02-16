@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 
+import '../util/app_url.dart';
+
 class ApiClient {
-  static const String _baseUrl = 'https://apipaymir.kp.gov.pk/';
+  static const String _baseUrl = ApiEndpoints.baseUrl;
   final Dio _dio;
   String? _authToken;
 
@@ -15,9 +20,29 @@ class ApiClient {
               connectTimeout: const Duration(seconds: 30),
               receiveTimeout: const Duration(seconds: 30),
               sendTimeout: const Duration(seconds: 30),
-              headers: {'Accept': 'application/json'},
             ),
           ) {
+    // Configure SSL certificate bypass for development
+    // NOTE: This is for development only. For production, use proper certificates.
+    if (kDebugMode) {
+      final adapter = _dio.httpClientAdapter;
+      if (adapter is IOHttpClientAdapter) {
+        adapter.createHttpClient = () {
+          final client = HttpClient();
+          client.badCertificateCallback = (
+            X509Certificate cert,
+            String host,
+            int port,
+          ) {
+            debugPrint(
+              '⚠️ Bypassing SSL certificate verification for $host:$port',
+            );
+            return true; // Accept all certificates in development
+          };
+          return client;
+        };
+      }
+    }
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
@@ -64,6 +89,9 @@ class ApiClient {
     Map<String, dynamic>? queryParams,
     bool isFormData = false,
   }) async {
+    debugPrint(
+      'ApiClient request: $method $endpoint $data $queryParams $isFormData',
+    );
     try {
       final options = Options(
         method: method,
@@ -71,26 +99,55 @@ class ApiClient {
             isFormData
                 ? Headers.formUrlEncodedContentType
                 : Headers.jsonContentType,
+        validateStatus: (status) => status! < 500,
+      );
+      debugPrint('ApiClient options: $options');
+      debugPrint(
+        'ApiClient contentType: ${isFormData ? "form-urlencoded" : "application/json"}',
       );
 
-      // For form-urlencoded, Dio needs the data as a Map
-      // For JSON, Dio will automatically encode the Map to JSON
+      // IMPORTANT: Do NOT wrap data in FormData.fromMap() for form-urlencoded!
+      // FormData.fromMap() sends multipart/form-data (with boundaries),
+      // which is NOT the same as application/x-www-form-urlencoded.
+      // Just pass the Map directly — Dio will auto-encode it as
+      // key=value&key=value when contentType is formUrlEncodedContentType.
+      dynamic requestData = data;
+
+      debugPrint('ApiClient requestData type: ${requestData.runtimeType}');
+      debugPrint('ApiClient requestData: $requestData');
+
       final response = await _dio.request(
         endpoint,
-        data: data,
+        data: requestData,
         queryParameters: queryParams,
         options: options,
       );
 
+      debugPrint('ApiClient response status: ${response.statusCode}');
+      debugPrint('ApiClient response data: ${response.data}');
+
       return response.data;
     } on DioException catch (e) {
+      debugPrint('ApiClient DioException: ${e.type}');
+      debugPrint('ApiClient error message: ${e.message}');
+      debugPrint('ApiClient error response: ${e.response?.data}');
+      debugPrint('ApiClient error status code: ${e.response?.statusCode}');
+      debugPrint('ApiClient error request path: ${e.requestOptions.path}');
+      debugPrint('ApiClient error request data: ${e.requestOptions.data}');
+      debugPrint(
+        'ApiClient error request headers: ${e.requestOptions.headers}',
+      );
+      debugPrint('ApiClient error stack trace: ${e.stackTrace}');
       _handleError(e);
+      rethrow;
+    } catch (e, stackTrace) {
+      debugPrint('ApiClient general error: $e');
+      debugPrint('ApiClient general error stack trace: $stackTrace');
       rethrow;
     }
   }
 
   void _handleError(DioException e) {
-    // You can throw custom exceptions here
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:

@@ -3,13 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 
-import '../../util/Constants.dart';
+import '../../util/Mediaquery_Constant.dart';
 import '../CFC/CFCPageNew.dart';
 import '../DastakPageNew.dart';
 import '../HED/HEDPageNew.dart';
-import '../MoreServicesPageNew.dart';
+import '../MoreServiceHome/MoreServicesPageNew.dart';
 import '../Voucher/VoucherNoPageNew.dart';
 
 /// Header widget with title and profile image
@@ -23,10 +23,10 @@ class HomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: Constants.getHomePageMainTextTopPadding(context),
-        left: Constants.getHomePageMainTextLeftPadding(context),
-        right: Constants.getHomePageMainTextRightPadding(context),
-        bottom: Constants.getHomePageMainTextBottomPadding(context),
+        top: MediaQueryConstant.getHomePageMainTextTopPadding(context),
+        left: MediaQueryConstant.getHomePageMainTextLeftPadding(context),
+        right: MediaQueryConstant.getHomePageMainTextRightPadding(context),
+        bottom: MediaQueryConstant.getHomePageMainTextBottomPadding(context),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,7 +34,7 @@ class HomeHeader extends StatelessWidget {
           Text(
             'Paymir',
             style: TextStyle(
-              fontSize: Constants.getHomePageMainFontSize(context),
+              fontSize: MediaQueryConstant.getHomePageMainFontSize(context),
               color: const Color(0xff474747),
               fontFamily: 'Metropolis',
               fontWeight: FontWeight.bold,
@@ -43,7 +43,7 @@ class HomeHeader extends StatelessWidget {
           Text(
             'Digital Payment Platform (D2P)',
             style: TextStyle(
-              fontSize: Constants.getScreenWidth(context) * 0.032,
+              fontSize: MediaQueryConstant.getScreenWidth(context) * 0.032,
               color: const Color(0xff474747),
               fontFamily: 'Metropolis',
               fontWeight: FontWeight.w600,
@@ -60,9 +60,9 @@ class HomeHeader extends StatelessWidget {
 
   Widget _buildProfileImage(BuildContext context) {
     final imageSize =
-        Constants.getVerticalGapBetweenTwoTextformfields(context) * 40;
+        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) * 40;
     final borderRadius =
-        Constants.getVerticalGapBetweenTwoTextformfields(context) * 10;
+        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) * 10;
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(borderRadius),
@@ -103,25 +103,27 @@ class PaymentCard extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: EdgeInsets.only(
-              left: Constants.getCardLeftPadding(context),
-              right: Constants.getCardRightPadding(context),
-              bottom: Constants.getCardBottomPadding(context),
+              left: MediaQueryConstant.getCardLeftPadding(context),
+              right: MediaQueryConstant.getCardRightPadding(context),
+              bottom: MediaQueryConstant.getCardBottomPadding(context),
             ),
             child: Container(
-              height: Constants.getCardHeight(context),
+              height: MediaQueryConstant.getCardHeight(context),
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(
-                      Constants.getVerticalGapBetweenTwoTextformfields(context),
+                      MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                        context,
+                      ),
                     ),
                     spreadRadius:
-                        Constants.getVerticalGapBetweenTwoTextformfields(
+                        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                           context,
                         ) *
                         2,
                     blurRadius:
-                        Constants.getVerticalGapBetweenTwoTextformfields(
+                        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                           context,
                         ) *
                         20,
@@ -129,7 +131,9 @@ class PaymentCard extends StatelessWidget {
                   ),
                 ],
                 borderRadius: BorderRadius.all(
-                  Radius.circular(Constants.getCardBorderRadius(context)),
+                  Radius.circular(
+                    MediaQueryConstant.getCardBorderRadius(context),
+                  ),
                 ),
                 gradient: LinearGradient(
                   begin: Alignment.bottomLeft,
@@ -142,14 +146,14 @@ class PaymentCard extends StatelessWidget {
               ),
               child: Padding(
                 padding: EdgeInsets.all(
-                  Constants.getCardInsidePadding(context),
+                  MediaQueryConstant.getCardInsidePadding(context),
                 ),
                 child: Column(
                   children: [
                     _buildBalanceRow(context),
                     SizedBox(
                       height:
-                          Constants.getVerticalGapBetweenTwoTextformfields(
+                          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                             context,
                           ) *
                           15,
@@ -157,7 +161,7 @@ class PaymentCard extends StatelessWidget {
                     _buildCardNumber(context),
                     SizedBox(
                       height:
-                          Constants.getVerticalGapBetweenTwoTextformfields(
+                          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                             context,
                           ) *
                           25.5,
@@ -183,7 +187,7 @@ class PaymentCard extends StatelessWidget {
               TextSpan(
                 text: 'Balance\n',
                 style: TextStyle(
-                  fontSize: Constants.getCardSmallFontSize(context),
+                  fontSize: MediaQueryConstant.getCardSmallFontSize(context),
                   color: const Color(0xffD3DDE5),
                   fontFamily: 'Metropolis',
                   fontWeight: FontWeight.normal,
@@ -192,7 +196,7 @@ class PaymentCard extends StatelessWidget {
               TextSpan(
                 text: '-------- ',
                 style: TextStyle(
-                  fontSize: Constants.getCardMediumFontSize(context),
+                  fontSize: MediaQueryConstant.getCardMediumFontSize(context),
                   color: Colors.white,
                   fontFamily: 'Metropolis',
                   fontWeight: FontWeight.bold,
@@ -203,8 +207,15 @@ class PaymentCard extends StatelessWidget {
         ),
         SizedBox(
           height:
-              Constants.getVerticalGapBetweenTwoTextformfields(context) * 81,
-          width: Constants.getVerticalGapBetweenTwoTextformfields(context) * 81,
+              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                context,
+              ) *
+              81,
+          width:
+              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                context,
+              ) *
+              81,
           child: SvgPicture.asset("assets/images/cardpamirlogo.svg"),
         ),
       ],
@@ -243,7 +254,8 @@ class PaymentCard extends StatelessWidget {
               Text(
                 'CARD HOLDER',
                 style: TextStyle(
-                  fontSize: Constants.getGeneralFontSize(context) * 0.0130,
+                  fontSize:
+                      MediaQueryConstant.getGeneralFontSize(context) * 0.0130,
                   color: const Color(0xffD3DDE5),
                   fontFamily: 'Helvetica',
                   fontWeight: FontWeight.normal,
@@ -251,7 +263,9 @@ class PaymentCard extends StatelessWidget {
               ),
               SizedBox(
                 height:
-                    Constants.getVerticalGapBetweenTwoTextformfields(context) *
+                    MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                      context,
+                    ) *
                     6,
               ),
               FittedBox(
@@ -262,7 +276,7 @@ class PaymentCard extends StatelessWidget {
                     color: const Color(0xffFFFFFF),
                     fontFamily: 'OCRAEXTENDED',
                     fontWeight: FontWeight.normal,
-                    fontSize: Constants.getScreenWidth(context) * 0.04,
+                    fontSize: MediaQueryConstant.getScreenWidth(context) * 0.04,
                     shadows: const [
                       Shadow(
                         offset: Offset(0.0, 1.0),
@@ -282,7 +296,8 @@ class PaymentCard extends StatelessWidget {
               Text(
                 'EXPIRES',
                 style: TextStyle(
-                  fontSize: Constants.getGeneralFontSize(context) * 0.0128,
+                  fontSize:
+                      MediaQueryConstant.getGeneralFontSize(context) * 0.0128,
                   color: const Color(0xffD3DDE5),
                   fontFamily: 'Helvetica',
                   fontWeight: FontWeight.normal,
@@ -290,13 +305,16 @@ class PaymentCard extends StatelessWidget {
               ),
               SizedBox(
                 height:
-                    Constants.getVerticalGapBetweenTwoTextformfields(context) *
+                    MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                      context,
+                    ) *
                     6,
               ),
               Text(
                 expiryDate,
                 style: TextStyle(
-                  fontSize: Constants.getGeneralFontSize(context) * 0.0161,
+                  fontSize:
+                      MediaQueryConstant.getGeneralFontSize(context) * 0.0161,
                   color: const Color(0xffFFFFFF),
                   fontFamily: 'OCRAEXTENDED',
                   fontWeight: FontWeight.normal,
@@ -314,8 +332,15 @@ class PaymentCard extends StatelessWidget {
         ),
         SizedBox(
           height:
-              Constants.getVerticalGapBetweenTwoTextformfields(context) * 55,
-          width: Constants.getVerticalGapBetweenTwoTextformfields(context) * 55,
+              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                context,
+              ) *
+              55,
+          width:
+              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                context,
+              ) *
+              55,
           child: SvgPicture.asset("assets/images/cardgovtlogo.svg"),
         ),
       ],
@@ -331,10 +356,16 @@ class ServicesTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: Constants.getVerticalGapBetweenTwoTextformfields(context) * 7,
-        left: Constants.getHomePageMainTextLeftPadding(context) * 2.3,
-        right: Constants.getVerticalGapBetweenTwoTextformfields(context),
-        bottom: Constants.getVerticalGapBetweenTwoTextformfields(context) * 9,
+        top:
+            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) *
+            7,
+        left: MediaQueryConstant.getHomePageMainTextLeftPadding(context) * 2.3,
+        right: MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+          context,
+        ),
+        bottom:
+            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) *
+            9,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -345,7 +376,7 @@ class ServicesTitle extends StatelessWidget {
               color: const Color(0xff3F3F3F),
               fontFamily: 'Metropolis',
               fontWeight: FontWeight.w700,
-              fontSize: Constants.getServiceFontSize(context),
+              fontSize: MediaQueryConstant.getServiceFontSize(context),
             ),
           ),
         ],
@@ -393,20 +424,20 @@ class ServiceItem extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.all(
-                      Constants.getVerticalGapBetweenTwoTextformfields(
+                      MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                             context,
                           ) *
                           10,
                     ),
                     child: SvgPicture.asset(
                       iconPath,
-                      height: Constants.getSmallFontSize(context) * 2,
+                      height: MediaQueryConstant.getSmallFontSize(context) * 2,
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(
                       top:
-                          Constants.getVerticalGapBetweenTwoTextformfields(
+                          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                             context,
                           ) *
                           2,
@@ -416,7 +447,7 @@ class ServiceItem extends StatelessWidget {
                       style: TextStyle(
                         color: const Color(0xff3F3F3F),
                         fontFamily: 'Metropolis',
-                        fontSize: Constants.getSmallFontSize(context),
+                        fontSize: MediaQueryConstant.getSmallFontSize(context),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -552,13 +583,26 @@ class PendingTransactionItem extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
         child: Padding(
           padding: EdgeInsets.only(
-            top: Constants.getVerticalGapBetweenTwoTextformfields(context) * 10,
+            top:
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                10,
             left:
-                Constants.getVerticalGapBetweenTwoTextformfields(context) * 20,
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                20,
             right:
-                Constants.getVerticalGapBetweenTwoTextformfields(context) * 20,
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                20,
             bottom:
-                Constants.getVerticalGapBetweenTwoTextformfields(context) * 6,
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                6,
           ),
           child: Container(
             decoration: BoxDecoration(
@@ -576,7 +620,7 @@ class PendingTransactionItem extends StatelessWidget {
                 _buildIcon(context),
                 SizedBox(
                   width:
-                      Constants.getVerticalGapBetweenTwoTextformfields(
+                      MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                         context,
                       ) *
                       25,
@@ -589,7 +633,8 @@ class PendingTransactionItem extends StatelessWidget {
                           text: transaction['serviceName'] ?? '',
                           style: TextStyle(
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.016,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.016,
                             color: const Color(0xff424242),
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w700,
@@ -599,7 +644,8 @@ class PendingTransactionItem extends StatelessWidget {
                           text: '\nPending',
                           style: TextStyle(
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.015,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.015,
                             color: const Color(0xff424242).withOpacity(0.8),
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w400,
@@ -611,7 +657,7 @@ class PendingTransactionItem extends StatelessWidget {
                 ),
                 SizedBox(
                   width:
-                      Constants.getVerticalGapBetweenTwoTextformfields(
+                      MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                         context,
                       ) *
                       8,
@@ -625,7 +671,8 @@ class PendingTransactionItem extends StatelessWidget {
                           text: '+Rs ${transaction['feeAmount'] ?? 0}',
                           style: TextStyle(
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.021,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.021,
                             color: const Color(0xff45C232),
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w700,
@@ -636,7 +683,8 @@ class PendingTransactionItem extends StatelessWidget {
                               '\n${_formatDate(transaction['entryDateTime'])}',
                           style: TextStyle(
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.015,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.015,
                             color: const Color(0xff424242).withOpacity(0.8),
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w400,
@@ -655,7 +703,8 @@ class PendingTransactionItem extends StatelessWidget {
   }
 
   Widget _buildIcon(BuildContext context) {
-    final size = Constants.getVerticalGapBetweenTwoTextformfields(context) * 40;
+    final size =
+        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) * 40;
     return Container(
       width: size,
       height: size,
@@ -665,7 +714,8 @@ class PendingTransactionItem extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.all(
-          Constants.getVerticalGapBetweenTwoTextformfields(context) * 4,
+          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) *
+              4,
         ),
         child: SvgPicture.asset('assets/images/govt_logo.svg'),
       ),
@@ -703,13 +753,26 @@ class DoneTransactionItem extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
         child: Padding(
           padding: EdgeInsets.only(
-            top: Constants.getVerticalGapBetweenTwoTextformfields(context) * 10,
+            top:
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                10,
             left:
-                Constants.getVerticalGapBetweenTwoTextformfields(context) * 20,
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                20,
             right:
-                Constants.getVerticalGapBetweenTwoTextformfields(context) * 20,
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                20,
             bottom:
-                Constants.getVerticalGapBetweenTwoTextformfields(context) * 6,
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                6,
           ),
           child: Container(
             decoration: BoxDecoration(
@@ -727,7 +790,7 @@ class DoneTransactionItem extends StatelessWidget {
                 _buildIcon(context),
                 SizedBox(
                   width:
-                      Constants.getVerticalGapBetweenTwoTextformfields(
+                      MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                         context,
                       ) *
                       25,
@@ -740,7 +803,8 @@ class DoneTransactionItem extends StatelessWidget {
                           text: transaction['serviceName'] ?? '',
                           style: TextStyle(
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.016,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.016,
                             color: const Color(0xff424242),
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w700,
@@ -750,7 +814,8 @@ class DoneTransactionItem extends StatelessWidget {
                           text: '\nPaid',
                           style: TextStyle(
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.015,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.015,
                             color: Colors.green,
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w400,
@@ -762,7 +827,7 @@ class DoneTransactionItem extends StatelessWidget {
                 ),
                 SizedBox(
                   width:
-                      Constants.getVerticalGapBetweenTwoTextformfields(
+                      MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                         context,
                       ) *
                       8,
@@ -776,7 +841,8 @@ class DoneTransactionItem extends StatelessWidget {
                           text: '+Rs ${transaction['feeAmount'] ?? 0}',
                           style: TextStyle(
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.021,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.021,
                             color: const Color(0xff45C232),
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w700,
@@ -786,7 +852,8 @@ class DoneTransactionItem extends StatelessWidget {
                           text: '\n${_formatDate(transaction['paymentDate'])}',
                           style: TextStyle(
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.015,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.015,
                             color: const Color(0xff424242).withOpacity(0.8),
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w400,
@@ -805,7 +872,8 @@ class DoneTransactionItem extends StatelessWidget {
   }
 
   Widget _buildIcon(BuildContext context) {
-    final size = Constants.getVerticalGapBetweenTwoTextformfields(context) * 40;
+    final size =
+        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) * 40;
     return Container(
       width: size,
       height: size,
@@ -815,7 +883,8 @@ class DoneTransactionItem extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.all(
-          Constants.getVerticalGapBetweenTwoTextformfields(context) * 4,
+          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) *
+              4,
         ),
         child: SvgPicture.asset('assets/images/govt_logo.svg'),
       ),

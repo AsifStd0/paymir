@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 
-import '../../../util/Constants.dart';
+import '../util/Mediaquery_Constant.dart';
 
 class CustomInputDecoration {
   static InputDecoration getDecoration({
@@ -12,7 +12,7 @@ class CustomInputDecoration {
   }) {
     return InputDecoration(
       hintStyle: TextStyle(
-        fontSize: Constants.getTextformfieldHintFont(context),
+        fontSize: MediaQueryConstant.getTextformfieldHintFont(context),
         color: AppColors.secondaryColor(),
         fontFamily: 'Visby',
         fontWeight: FontWeight.normal,
@@ -22,24 +22,30 @@ class CustomInputDecoration {
       prefixIcon: prefixIcon,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.all(
-          Radius.circular(Constants.getTextformfieldBorderRadius(context)),
+          Radius.circular(
+            MediaQueryConstant.getTextformfieldBorderRadius(context),
+          ),
         ),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(
-          Radius.circular(Constants.getTextformfieldBorderRadius(context)),
+          Radius.circular(
+            MediaQueryConstant.getTextformfieldBorderRadius(context),
+          ),
         ),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(
-          Radius.circular(Constants.getTextformfieldBorderRadius(context)),
+          Radius.circular(
+            MediaQueryConstant.getTextformfieldBorderRadius(context),
+          ),
         ),
       ),
       counterText: '',
       contentPadding: EdgeInsets.only(
-        top: Constants.getTextformfieldContentPadding(context),
-        left: Constants.getTextformfieldContentPadding(context),
-        bottom: Constants.getTextformfieldContentPadding(context),
+        top: MediaQueryConstant.getTextformfieldContentPadding(context),
+        left: MediaQueryConstant.getTextformfieldContentPadding(context),
+        bottom: MediaQueryConstant.getTextformfieldContentPadding(context),
       ),
     );
   }

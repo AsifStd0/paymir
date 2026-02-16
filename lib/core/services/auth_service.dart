@@ -1,23 +1,26 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import '../core/services/base_service.dart';
-import '../core/storage/Shared_pref.dart';
-import '../models/auth/login_model.dart';
-import '../models/auth/signup_model.dart';
+import 'package:flutter/foundation.dart';
 
-/// Service for handling authentication operations
+import '../../model/login_model.dart';
+import '../../model/signup_model.dart';
+import '../../util/Shared_pref.dart';
+import '../../util/app_url.dart';
+import 'base_service.dart';
+
+/// !                  Service for handling authentication operations
 class AuthService extends BaseService {
   AuthService(super.apiClient);
 
-  /// Register a new user
+  /// !                  Register a new user
   Future<SignupResponse> registerUser(SignupRequest request) async {
     try {
       log('Registering user: ${request.toJson()}');
 
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/user/RegisterUser',
+        endpoint: ApiEndpoints.registerUser,
         data: request.toJson(),
         isFormData: true, // Keep as form data to match API requirements
       );
@@ -52,7 +55,7 @@ class AuthService extends BaseService {
     }
   }
 
-  /// Verify user with OTP
+  /// !                  Verify user with OTP
   Future<Map<String, dynamic>> verifyUser({
     required String cnic,
     required String mobileNo,
@@ -69,7 +72,7 @@ class AuthService extends BaseService {
 
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/user/verifyUser',
+        endpoint: ApiEndpoints.verifyUser,
         data: data,
         isFormData: true, // Changed to form data to match API requirements
       );
@@ -92,17 +95,22 @@ class AuthService extends BaseService {
     }
   }
 
-  /// Check if CNIC is already verified
+  /// !                  Check if CNIC is already verified
   Future<Map<String, dynamic>> checkVerifiedCNIC(String cnic) async {
     try {
       final data = {'CNIC': cnic, 'Category': 'PAYMIR'};
 
+      debugPrint('CheckVerifiedCNIC request data: $data');
+
+      // apiClient.request() returns response.data directly (not http.Response)
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/user/CheckVerifiedCNIC',
+        endpoint: ApiEndpoints.checkVerifiedCNIC,
         data: data,
-        isFormData: true,
+        isFormData: false, // JSON body (like Postman sends)
       );
+
+      debugPrint('Check CNIC response: $response');
 
       if (response != null) {
         return response is Map<String, dynamic>
@@ -114,24 +122,27 @@ class AuthService extends BaseService {
           'responseMessage': 'Check failed: No response from server',
         };
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      debugPrint('Check CNIC error: $e');
+      debugPrint('Check CNIC stack trace: $stackTrace');
       log('Check CNIC error: $e');
       return {'statusCode': '500', 'responseMessage': 'Error: ${e.toString()}'};
     }
   }
 
-  /// Login user
+  /// !                  Login user
   Future<LoginResponse> login(LoginRequest request) async {
     try {
-      log('Logging in user: ${request.toJson()}');
+      log('Login request: ${request.toJson()}');
+      debugPrint('Logging in user: ${request.toJson()}');
 
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/token',
+        endpoint: ApiEndpoints.login,
         data: request.toJson(),
         isFormData: true,
       );
-
+      debugPrint('Login response: $response');
       log('Login response: $response');
 
       if (response != null) {
@@ -154,8 +165,9 @@ class AuthService extends BaseService {
           errorDescription: 'No response from server',
         );
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
       log('Login error: $e');
+      log('Login error stack trace: $stackTrace');
       return LoginResponse(
         isSuccess: false,
         error: 'Login Error',
@@ -164,7 +176,7 @@ class AuthService extends BaseService {
     }
   }
 
-  /// Save login data to shared preferences
+  /// !                  Save login data to shared preferences
   Future<void> _saveLoginData(LoginResponse response, String cnic) async {
     try {
       await SharedPrefService.setUserCNIC(cnic);
@@ -181,7 +193,7 @@ class AuthService extends BaseService {
     }
   }
 
-  /// Save user data to shared preferences
+  /// !                  Save user data to shared preferences
   Future<void> _saveUserData(SignupRequest request) async {
     try {
       await SharedPrefService.setUserCNIC(request.cnic);

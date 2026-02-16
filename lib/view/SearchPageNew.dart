@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../util/AlertDialogueClass.dart';
-import '../util/Constants.dart';
-import 'OneLinkPaymentPageNew.dart';
+import '../util/Mediaquery_Constant.dart';
+import 'OneLinkPayment/OneLinkPaymentPageNew.dart';
 import 'easypaisa/EasyPaisaPaymentPageNew.dart';
 import 'jazzcash/JazzCashPaymentPageNew.dart';
 
@@ -79,9 +79,13 @@ class _SearchPageNewState extends State<SearchPageNew> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        left: Constants.getBackArrowLeftPadding(context),
-                        top: Constants.getBackArrowTopPadding(context),
-                        bottom: Constants.getBackArrowBottomPadding(context),
+                        left: MediaQueryConstant.getBackArrowLeftPadding(
+                          context,
+                        ),
+                        top: MediaQueryConstant.getBackArrowTopPadding(context),
+                        bottom: MediaQueryConstant.getBackArrowBottomPadding(
+                          context,
+                        ),
                       ),
                       child: IconButton(
                         icon: SvgPicture.asset("assets/images/back_arrow.svg"),

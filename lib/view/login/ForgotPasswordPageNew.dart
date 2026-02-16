@@ -4,9 +4,9 @@ import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 
-import '../../util/Constants.dart';
+import '../../util/Mediaquery_Constant.dart';
 import '../../util/MyValidation.dart';
 import '../../util/NetworkHelperClass.dart';
 import 'EnterCodeForgotPasswordNew.dart';
@@ -44,9 +44,13 @@ class _ForgotPasswordNewState extends State<ForgotPasswordNew> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        left: Constants.getBackArrowLeftPadding(context),
-                        top: Constants.getBackArrowTopPadding(context),
-                        bottom: Constants.getBackArrowBottomPadding(context),
+                        left: MediaQueryConstant.getBackArrowLeftPadding(
+                          context,
+                        ),
+                        top: MediaQueryConstant.getBackArrowTopPadding(context),
+                        bottom: MediaQueryConstant.getBackArrowBottomPadding(
+                          context,
+                        ),
                       ),
 
                       child: IconButton(
@@ -61,9 +65,10 @@ class _ForgotPasswordNewState extends State<ForgotPasswordNew> {
 
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: Constants.getSymmetricHorizontalPadding(
-                      context,
-                    ),
+                    horizontal:
+                        MediaQueryConstant.getSymmetricHorizontalPadding(
+                          context,
+                        ),
                   ),
                   child: Form(
                     key: _formKey,
@@ -76,13 +81,15 @@ class _ForgotPasswordNewState extends State<ForgotPasswordNew> {
                             color: AppColors.primaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.bold,
-                            fontSize: Constants.getMainFontSize(context),
+                            fontSize: MediaQueryConstant.getMainFontSize(
+                              context,
+                            ),
                           ),
                         ),
 
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenMainAndSmallFont(
+                              MediaQueryConstant.getVerticalGapBetweenMainAndSmallFont(
                                 context,
                               ),
                         ),
@@ -93,29 +100,33 @@ class _ForgotPasswordNewState extends State<ForgotPasswordNew> {
                             color: AppColors.secondaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.w500,
-                            fontSize: Constants.getSmallFontSize(context),
+                            fontSize: MediaQueryConstant.getSmallFontSize(
+                              context,
+                            ),
                           ),
                         ),
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenSmallfontAndTextfield(
+                              MediaQueryConstant.getVerticalGapBetweenSmallfontAndTextfield(
                                 context,
                               ),
                         ),
                         SizedBox(
-                          height: Constants.getTextFormFieldHeight(context),
+                          height: MediaQueryConstant.getTextFormFieldHeight(
+                            context,
+                          ),
                           child: TextFormField(
                             textAlign: TextAlign.start,
                             controller: txtUsernameController,
                             keyboardType: TextInputType.number,
                             validator:
-                                (value) =>
-                                    MyValidationClass.validateCNIC(value),
+                                (value) => MyValidation.validateCNIC(value),
                             decoration: InputDecoration(
                               hintStyle: TextStyle(
-                                fontSize: Constants.getTextformfieldHintFont(
-                                  context,
-                                ),
+                                fontSize:
+                                    MediaQueryConstant.getTextformfieldHintFont(
+                                      context,
+                                    ),
                                 color: AppColors.secondaryColor(),
                                 fontFamily: 'Visby',
                                 fontWeight: FontWeight.normal,
@@ -124,7 +135,7 @@ class _ForgotPasswordNewState extends State<ForgotPasswordNew> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(
-                                    Constants.getTextformfieldBorderRadius(
+                                    MediaQueryConstant.getTextformfieldBorderRadius(
                                       context,
                                     ),
                                   ),
@@ -132,14 +143,16 @@ class _ForgotPasswordNewState extends State<ForgotPasswordNew> {
                               ),
                               counterText: '',
                               contentPadding: EdgeInsets.only(
-                                top: Constants.getTextformfieldContentPadding(
-                                  context,
-                                ),
-                                left: Constants.getTextformfieldContentPadding(
-                                  context,
-                                ),
+                                top:
+                                    MediaQueryConstant.getTextformfieldContentPadding(
+                                      context,
+                                    ),
+                                left:
+                                    MediaQueryConstant.getTextformfieldContentPadding(
+                                      context,
+                                    ),
                                 bottom:
-                                    Constants.getTextformfieldContentPadding(
+                                    MediaQueryConstant.getTextformfieldContentPadding(
                                       context,
                                     ),
                               ),
@@ -149,7 +162,7 @@ class _ForgotPasswordNewState extends State<ForgotPasswordNew> {
 
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenTwoTextformfields(
+                              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                 context,
                               ) *
                               160,
@@ -165,7 +178,7 @@ class _ForgotPasswordNewState extends State<ForgotPasswordNew> {
                             child: TextButton(
                               onPressed: () {
                                 _submit();
-                                if (MyValidationClass.validateCNIC(
+                                if (MyValidation.validateCNIC(
                                       txtUsernameController.text,
                                     ) ==
                                     null) {
@@ -178,12 +191,16 @@ class _ForgotPasswordNewState extends State<ForgotPasswordNew> {
                               child: Container(
                                 alignment: Alignment.center,
                                 width: double.infinity,
-                                height: Constants.getButtonHeight(context),
+                                height: MediaQueryConstant.getButtonHeight(
+                                  context,
+                                ),
 
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(
-                                      Constants.getButtonRadius(context),
+                                      MediaQueryConstant.getButtonRadius(
+                                        context,
+                                      ),
                                     ),
                                   ),
 
@@ -208,9 +225,10 @@ class _ForgotPasswordNewState extends State<ForgotPasswordNew> {
                                           'Continue',
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: Constants.getButtonFont(
-                                              context,
-                                            ),
+                                            fontSize:
+                                                MediaQueryConstant.getButtonFont(
+                                                  context,
+                                                ),
                                             fontFamily: 'Visby',
                                             fontWeight: FontWeight.bold,
                                           ),

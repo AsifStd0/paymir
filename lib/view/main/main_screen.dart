@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/theme/app_colors.dart';
 import '../../util/AlertDialogueClass.dart';
-import '../../util/Constants.dart';
+import '../../util/Mediaquery_Constant.dart';
+import '../../util/theme/app_colors.dart';
 import 'main_provider.dart';
 import 'main_tabs/home_tab.dart';
 import 'main_tabs/profile_tab.dart';
@@ -86,13 +86,13 @@ class _MainScreenState extends State<MainScreen> {
       selectedLabelStyle: TextStyle(
         color: AppColors.textMedium,
         fontFamily: 'Metropolis',
-        fontSize: Constants.getGeneralFontSize(context) * 0.016,
+        fontSize: MediaQueryConstant.getGeneralFontSize(context) * 0.016,
         fontWeight: FontWeight.bold,
       ),
       unselectedLabelStyle: TextStyle(
         color: AppColors.textMedium.withOpacity(0.80),
         fontFamily: 'Metropolis',
-        fontSize: Constants.getGeneralFontSize(context) * 0.014,
+        fontSize: MediaQueryConstant.getGeneralFontSize(context) * 0.014,
         fontWeight: FontWeight.w500,
       ),
       items: [

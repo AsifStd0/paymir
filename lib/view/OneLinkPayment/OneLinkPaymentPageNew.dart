@@ -5,14 +5,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 
-import '../util/AlertDialogueClass.dart';
-import '../util/Constants.dart';
-import '../util/NetworkHelperClass.dart';
-import '../util/SecureStorage.dart';
+import '../../util/AlertDialogueClass.dart';
+import '../../util/Mediaquery_Constant.dart';
+import '../../util/NetworkHelperClass.dart';
+import '../../util/SecureStorage.dart';
+import '../login/login_screen.dart';
 import 'OneLinkInQuiryPaymentPageNew.dart';
-import 'login/login_screen.dart';
 
 class OneLinkPaymentPageNew extends StatefulWidget {
   final Map<String, dynamic> values;
@@ -155,9 +155,13 @@ class _OneLinkPaymentPageNewState extends State<OneLinkPaymentPageNew> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        left: Constants.getBackArrowLeftPadding(context),
-                        top: Constants.getBackArrowTopPadding(context),
-                        bottom: Constants.getBackArrowBottomPadding(context),
+                        left: MediaQueryConstant.getBackArrowLeftPadding(
+                          context,
+                        ),
+                        top: MediaQueryConstant.getBackArrowTopPadding(context),
+                        bottom: MediaQueryConstant.getBackArrowBottomPadding(
+                          context,
+                        ),
                       ),
 
                       child: IconButton(
@@ -172,9 +176,10 @@ class _OneLinkPaymentPageNewState extends State<OneLinkPaymentPageNew> {
 
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: Constants.getSymmetricHorizontalPadding(
-                      context,
-                    ),
+                    horizontal:
+                        MediaQueryConstant.getSymmetricHorizontalPadding(
+                          context,
+                        ),
                   ),
                   child: Form(
                     key: _formKey,
@@ -188,13 +193,14 @@ class _OneLinkPaymentPageNewState extends State<OneLinkPaymentPageNew> {
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.bold,
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.025,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.025,
                           ),
                         ),
 
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenMainAndSmallFont(
+                              MediaQueryConstant.getVerticalGapBetweenMainAndSmallFont(
                                 context,
                               ),
                         ),
@@ -205,7 +211,9 @@ class _OneLinkPaymentPageNewState extends State<OneLinkPaymentPageNew> {
                             color: AppColors.secondaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.w500,
-                            fontSize: Constants.getSmallFontSize(context),
+                            fontSize: MediaQueryConstant.getSmallFontSize(
+                              context,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -349,9 +357,10 @@ class _OneLinkPaymentPageNewState extends State<OneLinkPaymentPageNew> {
                                   );
                                 },
                                 child: SizedBox(
-                                  height: Constants.getTextFormFieldHeight(
-                                    context,
-                                  ),
+                                  height:
+                                      MediaQueryConstant.getTextFormFieldHeight(
+                                        context,
+                                      ),
                                   width:
                                       MediaQuery.of(context).size.width * 0.79,
                                   child: TextFormField(
@@ -364,7 +373,7 @@ class _OneLinkPaymentPageNewState extends State<OneLinkPaymentPageNew> {
                                       hintText: "",
                                       hintStyle: TextStyle(
                                         fontSize:
-                                            Constants.getTextformfieldHintFont(
+                                            MediaQueryConstant.getTextformfieldHintFont(
                                               context,
                                             ),
                                         color: AppColors.secondaryColor(),
@@ -374,7 +383,7 @@ class _OneLinkPaymentPageNewState extends State<OneLinkPaymentPageNew> {
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(
-                                            Constants.getTextformfieldBorderRadius(
+                                            MediaQueryConstant.getTextformfieldBorderRadius(
                                               context,
                                             ),
                                           ),
@@ -383,15 +392,15 @@ class _OneLinkPaymentPageNewState extends State<OneLinkPaymentPageNew> {
                                       counterText: '',
                                       contentPadding: EdgeInsets.only(
                                         top:
-                                            Constants.getTextformfieldContentPadding(
+                                            MediaQueryConstant.getTextformfieldContentPadding(
                                               context,
                                             ),
                                         left:
-                                            Constants.getTextformfieldContentPadding(
+                                            MediaQueryConstant.getTextformfieldContentPadding(
                                               context,
                                             ),
                                         bottom:
-                                            Constants.getTextformfieldContentPadding(
+                                            MediaQueryConstant.getTextformfieldContentPadding(
                                               context,
                                             ),
                                       ),
@@ -411,7 +420,7 @@ class _OneLinkPaymentPageNewState extends State<OneLinkPaymentPageNew> {
                           padding: EdgeInsets.only(
                             left: MediaQuery.of(context).size.width * 0.04,
                             top:
-                                Constants.getVerticalGapBetweenTwoTextformfields(
+                                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                   context,
                                 ),
                             bottom: MediaQuery.of(context).size.height * 0.01,
@@ -429,12 +438,12 @@ class _OneLinkPaymentPageNewState extends State<OneLinkPaymentPageNew> {
                           child: Container(
                             alignment: Alignment.center,
                             width: double.infinity,
-                            height: Constants.getButtonHeight(context),
+                            height: MediaQueryConstant.getButtonHeight(context),
 
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(
-                                  Constants.getButtonRadius(context),
+                                  MediaQueryConstant.getButtonRadius(context),
                                 ),
                               ),
 
@@ -458,9 +467,10 @@ class _OneLinkPaymentPageNewState extends State<OneLinkPaymentPageNew> {
                                       'Ok',
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: Constants.getButtonFont(
-                                          context,
-                                        ),
+                                        fontSize:
+                                            MediaQueryConstant.getButtonFont(
+                                              context,
+                                            ),
                                         fontFamily: 'Visby',
                                         fontWeight: FontWeight.bold,
                                       ),

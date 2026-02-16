@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:paymir_new_android/util/Mediaquery_Constant.dart';
 
-import '../../utils/constants.dart';
 import 'app_colors.dart';
 
 /// Centralized theme configuration for the application
@@ -15,7 +15,7 @@ class AppTheme {
       color: AppColors.primary,
       fontFamily: 'Visby',
       fontWeight: FontWeight.bold,
-      fontSize: Constants.getMainFontSize(context),
+      fontSize: MediaQueryConstant.getMainFontSize(context),
     );
   }
 
@@ -25,7 +25,7 @@ class AppTheme {
       color: AppColors.secondary,
       fontFamily: 'Visby',
       fontWeight: FontWeight.w500,
-      fontSize: Constants.getSmallFontSize(context),
+      fontSize: MediaQueryConstant.getSmallFontSize(context),
     );
   }
 
@@ -39,7 +39,7 @@ class AppTheme {
       color: color ?? AppColors.secondary,
       fontFamily: 'Visby',
       fontWeight: fontWeight ?? FontWeight.normal,
-      fontSize: Constants.getTextformfieldHintFont(context),
+      fontSize: MediaQueryConstant.getTextformfieldHintFont(context),
     );
   }
 
@@ -49,7 +49,7 @@ class AppTheme {
       color: AppColors.white,
       fontFamily: 'Visby',
       fontWeight: FontWeight.bold,
-      fontSize: Constants.getButtonFont(context),
+      fontSize: MediaQueryConstant.getButtonFont(context),
     );
   }
 
@@ -59,7 +59,7 @@ class AppTheme {
       color: AppColors.link,
       fontFamily: 'Visby',
       fontWeight: FontWeight.normal,
-      fontSize: Constants.getTextformfieldHintFont(context),
+      fontSize: MediaQueryConstant.getTextformfieldHintFont(context),
     );
   }
 
@@ -69,7 +69,7 @@ class AppTheme {
       color: AppColors.forgotPassword,
       fontFamily: 'Visby',
       fontWeight: FontWeight.normal,
-      fontSize: Constants.getForgotPasswordFontSize(context),
+      fontSize: MediaQueryConstant.getForgotPasswordFontSize(context),
     );
   }
 
@@ -79,7 +79,7 @@ class AppTheme {
       color: AppColors.error,
       fontFamily: 'Visby',
       fontWeight: FontWeight.normal,
-      fontSize: Constants.getTextformfieldHintFont(context),
+      fontSize: MediaQueryConstant.getTextformfieldHintFont(context),
     );
   }
 
@@ -89,7 +89,7 @@ class AppTheme {
       color: AppColors.success,
       fontFamily: 'Visby',
       fontWeight: FontWeight.bold,
-      fontSize: Constants.getTextformfieldHintFont(context),
+      fontSize: MediaQueryConstant.getTextformfieldHintFont(context),
     );
   }
 
@@ -99,13 +99,15 @@ class AppTheme {
 
   /// Get vertical spacing
   static double getVerticalSpacing(BuildContext context, double multiplier) {
-    return Constants.getVerticalGapBetweenTwoTextformfields(context) *
+    return MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) *
         multiplier;
   }
 
   /// Get horizontal spacing
   static double getHorizontalSpacing(BuildContext context, double multiplier) {
-    return Constants.getHorizontalGapBetweenTwoTextformfields(context) *
+    return MediaQueryConstant.getHorizontalGapBetweenTwoTextformfields(
+          context,
+        ) *
         multiplier;
   }
 

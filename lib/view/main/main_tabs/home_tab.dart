@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../util/Constants.dart';
+import '../../../util/Mediaquery_Constant.dart';
+import '../../../util/theme/app_colors.dart';
 import '../../PaymentPageNew.dart';
 import '../../home_page/home_provider.dart';
 import '../../home_page/home_widget.dart';
@@ -51,7 +51,7 @@ class _HomeTabState extends State<HomeTab> {
                   ServicesGrid(),
                   SizedBox(
                     height:
-                        Constants.getVerticalGapBetweenTwoTextformfields(
+                        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                           context,
                         ) *
                         15,
@@ -59,7 +59,7 @@ class _HomeTabState extends State<HomeTab> {
                   ServicesGridRow2(),
                   SizedBox(
                     height:
-                        Constants.getVerticalGapBetweenTwoTextformfields(
+                        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                           context,
                         ) *
                         15,
@@ -77,9 +77,15 @@ class _HomeTabState extends State<HomeTab> {
   Widget _buildTransactionTabs(BuildContext context, HomeProvider provider) {
     return Padding(
       padding: EdgeInsets.only(
-        top: Constants.getVerticalGapBetweenTwoTextformfields(context) * 15,
-        left: Constants.getVerticalGapBetweenTwoTextformfields(context),
-        right: Constants.getVerticalGapBetweenTwoTextformfields(context),
+        top:
+            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) *
+            15,
+        left: MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+          context,
+        ),
+        right: MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+          context,
+        ),
       ),
       child: Container(
         color: AppColors.background,
@@ -114,22 +120,29 @@ class _HomeTabState extends State<HomeTab> {
       labelPadding: const EdgeInsets.only(bottom: 0),
       indicator: UnderlineTabIndicator(
         borderSide: BorderSide(
-          width: Constants.getVerticalGapBetweenTwoTextformfields(context) * 4,
+          width:
+              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                context,
+              ) *
+              4,
           color: AppColors.purpleAccent,
         ),
         insets: EdgeInsets.symmetric(
           horizontal:
-              Constants.getVerticalGapBetweenTwoTextformfields(context) * 20,
+              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                context,
+              ) *
+              20,
         ),
       ),
       labelStyle: TextStyle(
-        fontSize: Constants.getTabSelectedFontSize(context),
+        fontSize: MediaQueryConstant.getTabSelectedFontSize(context),
         color: AppColors.textMedium.withOpacity(1),
         fontFamily: 'Metropolis',
         fontWeight: FontWeight.w800,
       ),
       unselectedLabelStyle: TextStyle(
-        fontSize: Constants.getTabUnSelectedFontSize(context),
+        fontSize: MediaQueryConstant.getTabUnSelectedFontSize(context),
         color: AppColors.textMedium.withOpacity(0.55),
         fontFamily: 'Metropolis',
         fontWeight: FontWeight.w400,

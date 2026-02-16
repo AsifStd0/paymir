@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../util/Constants.dart';
+import '../../util/Mediaquery_Constant.dart';
 import '../login/login_screen.dart';
 import 'mobile_page_view_widgets.dart';
 
@@ -41,9 +41,10 @@ class _MobileVerifiedPageNewState extends State<MobileVerifiedPageNew> {
                 const MobileSuccessImage(),
                 const MobileSuccessTitle(text: "You're verified!"),
                 SizedBox(
-                  height: Constants.getVerticalGapBetweenMainAndSmallFont(
-                    context,
-                  ),
+                  height:
+                      MediaQueryConstant.getVerticalGapBetweenMainAndSmallFont(
+                        context,
+                      ),
                 ),
                 const MobileSuccessMessage(
                   text:
@@ -51,16 +52,17 @@ class _MobileVerifiedPageNewState extends State<MobileVerifiedPageNew> {
                 ),
                 SizedBox(
                   height:
-                      Constants.getVerticalGapBetweenTwoTextformfields(
+                      MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                         context,
                       ) *
                       60,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: Constants.getSymmetricHorizontalPadding(
-                      context,
-                    ),
+                    horizontal:
+                        MediaQueryConstant.getSymmetricHorizontalPadding(
+                          context,
+                        ),
                   ),
                   child: Align(
                     alignment: Alignment.bottomCenter,

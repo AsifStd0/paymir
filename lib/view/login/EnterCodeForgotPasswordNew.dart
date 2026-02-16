@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 
-import '../../util/Constants.dart';
+import '../../util/Mediaquery_Constant.dart';
 import '../../util/MyValidation.dart';
-import '../NewPasswordNew.dart';
 import 'ForgotPasswordPageNew.dart';
+import 'NewPasswordNew.dart';
 
 class EnterCodeNew extends StatefulWidget {
   final String CNICString;
@@ -45,9 +45,13 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        left: Constants.getBackArrowLeftPadding(context),
-                        top: Constants.getBackArrowTopPadding(context),
-                        bottom: Constants.getBackArrowBottomPadding(context),
+                        left: MediaQueryConstant.getBackArrowLeftPadding(
+                          context,
+                        ),
+                        top: MediaQueryConstant.getBackArrowTopPadding(context),
+                        bottom: MediaQueryConstant.getBackArrowBottomPadding(
+                          context,
+                        ),
                       ),
                       child: IconButton(
                         icon: SvgPicture.asset("assets/images/back_arrow.svg"),
@@ -60,9 +64,10 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: Constants.getSymmetricHorizontalPadding(
-                      context,
-                    ),
+                    horizontal:
+                        MediaQueryConstant.getSymmetricHorizontalPadding(
+                          context,
+                        ),
                   ),
                   child: Form(
                     key: _formKey,
@@ -75,12 +80,14 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                             color: AppColors.primaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.bold,
-                            fontSize: Constants.getMainFontSize(context),
+                            fontSize: MediaQueryConstant.getMainFontSize(
+                              context,
+                            ),
                           ),
                         ),
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenMainAndSmallFont(
+                              MediaQueryConstant.getVerticalGapBetweenMainAndSmallFont(
                                 context,
                               ),
                         ),
@@ -90,17 +97,21 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                             color: AppColors.secondaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.w500,
-                            fontSize: Constants.getSmallFontSize(context),
+                            fontSize: MediaQueryConstant.getSmallFontSize(
+                              context,
+                            ),
                           ),
                         ),
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenSmallfontAndTextfield(
+                              MediaQueryConstant.getVerticalGapBetweenSmallfontAndTextfield(
                                 context,
                               ),
                         ),
                         SizedBox(
-                          height: Constants.getTextFormFieldHeight(context),
+                          height: MediaQueryConstant.getTextFormFieldHeight(
+                            context,
+                          ),
                           child: TextFormField(
                             textAlign: TextAlign.start,
                             controller: txtCodeController,
@@ -108,14 +119,13 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                             keyboardType: TextInputType.number,
                             validator:
                                 (value) =>
-                                    MyValidationClass.validateFourDigitsCode(
-                                      value,
-                                    ),
+                                    MyValidation.validateFourDigitsCode(value),
                             decoration: InputDecoration(
                               hintStyle: TextStyle(
-                                fontSize: Constants.getTextformfieldHintFont(
-                                  context,
-                                ),
+                                fontSize:
+                                    MediaQueryConstant.getTextformfieldHintFont(
+                                      context,
+                                    ),
                                 color: AppColors.secondaryColor(),
                                 fontFamily: 'Visby',
                                 fontWeight: FontWeight.normal,
@@ -124,7 +134,7 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(
-                                    Constants.getTextformfieldBorderRadius(
+                                    MediaQueryConstant.getTextformfieldBorderRadius(
                                       context,
                                     ),
                                   ),
@@ -132,14 +142,16 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                               ),
                               //  counterText: '',
                               contentPadding: EdgeInsets.only(
-                                top: Constants.getTextformfieldContentPadding(
-                                  context,
-                                ),
-                                left: Constants.getTextformfieldContentPadding(
-                                  context,
-                                ),
+                                top:
+                                    MediaQueryConstant.getTextformfieldContentPadding(
+                                      context,
+                                    ),
+                                left:
+                                    MediaQueryConstant.getTextformfieldContentPadding(
+                                      context,
+                                    ),
                                 bottom:
-                                    Constants.getTextformfieldContentPadding(
+                                    MediaQueryConstant.getTextformfieldContentPadding(
                                       context,
                                     ),
                               ),
@@ -158,7 +170,7 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                           child: Padding(
                             padding: EdgeInsets.only(
                               top:
-                                  Constants.getVerticalGapBetweenTwoTextformfields(
+                                  MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                     context,
                                   ) *
                                   20,
@@ -170,7 +182,7 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                                   "I didn't receive the code!",
                                   style: TextStyle(
                                     fontSize:
-                                        Constants.getTextformfieldHintFont(
+                                        MediaQueryConstant.getTextformfieldHintFont(
                                           context,
                                         ),
                                     color: const Color(
@@ -186,7 +198,7 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                         ),
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenTwoTextformfields(
+                              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                 context,
                               ) *
                               30,
@@ -199,7 +211,7 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                           child: TextButton(
                             onPressed: () {
                               _submit();
-                              if (MyValidationClass.validateFourDigitsCode(
+                              if (MyValidation.validateFourDigitsCode(
                                     txtCodeController.text,
                                   ) ==
                                   null) {
@@ -253,11 +265,13 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                             child: Container(
                               alignment: Alignment.center,
                               width: double.infinity,
-                              height: Constants.getButtonHeight(context),
+                              height: MediaQueryConstant.getButtonHeight(
+                                context,
+                              ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(
-                                    Constants.getButtonRadius(context),
+                                    MediaQueryConstant.getButtonRadius(context),
                                   ),
                                 ),
                                 gradient: LinearGradient(
@@ -281,9 +295,10 @@ class _EnterCodeNewState extends State<EnterCodeNew> {
                                         'Continue',
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: Constants.getButtonFont(
-                                            context,
-                                          ),
+                                          fontSize:
+                                              MediaQueryConstant.getButtonFont(
+                                                context,
+                                              ),
                                           fontFamily: 'Visby',
                                           fontWeight: FontWeight.bold,
                                         ),

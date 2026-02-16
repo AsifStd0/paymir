@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:number_to_words_english/number_to_words_english.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 
 import '../util/AlertDialogueClass.dart';
-import '../util/Constants.dart';
+import '../util/Mediaquery_Constant.dart';
 import 'OneLinkPayment/OneLinkPaymentPageNew.dart';
 import 'SearchPageNew.dart';
 import 'easypaisa/EasyPaisaPaymentPageNew.dart';
@@ -93,10 +93,10 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                         ),
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(
-                            Constants.getScreenWidth(context) * 0.1,
+                            MediaQueryConstant.getScreenWidth(context) * 0.1,
                           ),
                           bottomRight: Radius.circular(
-                            Constants.getScreenWidth(context) * 0.1,
+                            MediaQueryConstant.getScreenWidth(context) * 0.1,
                           ),
                         ),
                       ),
@@ -104,10 +104,18 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
-                              left: Constants.getScreenWidth(context) * 0.009,
-                              top: Constants.getScreenHeight(context) * 0.02,
-                              right: Constants.getScreenWidth(context) * 0.08,
-                              bottom: Constants.getScreenHeight(context) * 0.03,
+                              left:
+                                  MediaQueryConstant.getScreenWidth(context) *
+                                  0.009,
+                              top:
+                                  MediaQueryConstant.getScreenHeight(context) *
+                                  0.02,
+                              right:
+                                  MediaQueryConstant.getScreenWidth(context) *
+                                  0.08,
+                              bottom:
+                                  MediaQueryConstant.getScreenHeight(context) *
+                                  0.03,
                             ),
 
                             child: Row(
@@ -128,7 +136,7 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                                     'Payment',
                                     style: TextStyle(
                                       fontSize:
-                                          Constants.getHomePageMainFontSize(
+                                          MediaQueryConstant.getHomePageMainFontSize(
                                             context,
                                           ),
                                       color: const Color(0xffFAFCFF),
@@ -145,15 +153,25 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                             //  left: mediaQueryData.size.width * 0.05,
                             //right: mediaQueryData.size.width * 0.05,
                             padding: EdgeInsets.only(
-                              left: Constants.getScreenWidth(context) * 0.065,
-                              top: Constants.getScreenHeight(context) * 0.007,
-                              right: Constants.getScreenWidth(context) * 0.065,
-                              bottom: Constants.getScreenHeight(context) * 0.02,
+                              left:
+                                  MediaQueryConstant.getScreenWidth(context) *
+                                  0.065,
+                              top:
+                                  MediaQueryConstant.getScreenHeight(context) *
+                                  0.007,
+                              right:
+                                  MediaQueryConstant.getScreenWidth(context) *
+                                  0.065,
+                              bottom:
+                                  MediaQueryConstant.getScreenHeight(context) *
+                                  0.02,
                             ),
 
                             child: SizedBox(
-                              height: Constants.getScreenHeight(context) * 0.05,
-                              width: Constants.getScreenWidth(context),
+                              height:
+                                  MediaQueryConstant.getScreenHeight(context) *
+                                  0.05,
+                              width: MediaQueryConstant.getScreenWidth(context),
                               child: ElevatedButton(
                                 onPressed: () {
                                   Navigator.push(
@@ -189,7 +207,7 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                                       'Search payment options',
                                       style: TextStyle(
                                         fontSize:
-                                            Constants.getTextformfieldHintFont(
+                                            MediaQueryConstant.getTextformfieldHintFont(
                                               context,
                                             ),
                                         color: const Color(0xff929BA1),
@@ -208,8 +226,8 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                   ),
                   Positioned(
                     bottom: MediaQuery.of(context).size.height * 0.03,
-                    left: Constants.getScreenWidth(context) * 0.065,
-                    right: Constants.getScreenWidth(context) * 0.065,
+                    left: MediaQueryConstant.getScreenWidth(context) * 0.065,
+                    right: MediaQueryConstant.getScreenWidth(context) * 0.065,
                     height: mediaQueryData.size.height / 1.37,
 
                     child: Card(
@@ -244,7 +262,7 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                                             text: 'Service Name\n',
                                             style: TextStyle(
                                               fontSize:
-                                                  Constants.getGeneralFontSize(
+                                                  MediaQueryConstant.getGeneralFontSize(
                                                     context,
                                                   ) *
                                                   0.014,
@@ -282,7 +300,7 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                                             text: "+Rs $_feeAmount\n",
                                             style: TextStyle(
                                               fontSize:
-                                                  Constants.getGeneralFontSize(
+                                                  MediaQueryConstant.getGeneralFontSize(
                                                     context,
                                                   ) *
                                                   0.025,
@@ -302,7 +320,7 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                                                 )).toString(),
                                             style: TextStyle(
                                               fontSize:
-                                                  Constants.getGeneralFontSize(
+                                                  MediaQueryConstant.getGeneralFontSize(
                                                     context,
                                                   ) *
                                                   0.015,
@@ -363,7 +381,7 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                                         'Unpaid',
                                         style: TextStyle(
                                           fontSize:
-                                              Constants.getGeneralFontSize(
+                                              MediaQueryConstant.getGeneralFontSize(
                                                 context,
                                               ) *
                                               0.012,
@@ -397,7 +415,7 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                                             text: 'Service Type\n',
                                             style: TextStyle(
                                               fontSize:
-                                                  Constants.getGeneralFontSize(
+                                                  MediaQueryConstant.getGeneralFontSize(
                                                     context,
                                                   ) *
                                                   0.014,
@@ -447,7 +465,7 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                                           'Department',
                                           style: TextStyle(
                                             fontSize:
-                                                Constants.getGeneralFontSize(
+                                                MediaQueryConstant.getGeneralFontSize(
                                                   context,
                                                 ) *
                                                 0.014,
@@ -482,7 +500,7 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                                           'Status',
                                           style: TextStyle(
                                             fontSize:
-                                                Constants.getGeneralFontSize(
+                                                MediaQueryConstant.getGeneralFontSize(
                                                   context,
                                                 ) *
                                                 0.014,
@@ -1109,14 +1127,15 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                                   children: [
                                     Expanded(
                                       child: Container(
-                                        height: Constants.getButtonHeight(
-                                          context,
-                                        ),
+                                        height:
+                                            MediaQueryConstant.getButtonHeight(
+                                              context,
+                                            ),
 
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.all(
                                             Radius.circular(
-                                              Constants.getButtonRadius(
+                                              MediaQueryConstant.getButtonRadius(
                                                 context,
                                               ),
                                             ),
@@ -1158,7 +1177,7 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                                                 style: TextStyle(
                                                   fontFamily: 'Metropolis',
                                                   fontSize:
-                                                      Constants.getButtonFont(
+                                                      MediaQueryConstant.getButtonFont(
                                                         context,
                                                       ),
                                                   color: Colors.white,

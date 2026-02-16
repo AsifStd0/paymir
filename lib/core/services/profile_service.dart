@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../../util/app_url.dart';
 import '../../view/Profile/profile_model.dart';
 import 'base_service.dart';
 
@@ -25,7 +26,7 @@ class ProfileService extends BaseService {
 
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/user/UploadProfileImg',
+        endpoint: ApiEndpoints.uploadProfileImg,
         data: data,
       );
 
@@ -51,7 +52,7 @@ class ProfileService extends BaseService {
 
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/user/DownloadProfileImg',
+        endpoint: ApiEndpoints.downloadProfileImg,
         data: data,
       );
 
@@ -77,7 +78,7 @@ class ProfileService extends BaseService {
 
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/user/GetOldPassword',
+        endpoint: ApiEndpoints.getOldPassword,
         data: data,
         isFormData: true,
       );
@@ -105,7 +106,7 @@ class ProfileService extends BaseService {
 
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/user/UpdateOldPassword',
+        endpoint: ApiEndpoints.updateOldPassword,
         data: data,
         isFormData: true,
       );
@@ -143,7 +144,7 @@ class ProfileService extends BaseService {
 
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/user/RegisterComplaint',
+        endpoint: ApiEndpoints.registerComplaint,
         data: data,
         isFormData: true,
       );
@@ -183,7 +184,7 @@ class ProfileService extends BaseService {
 
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/user/AttemptforEditProfile',
+        endpoint: ApiEndpoints.attemptForEditProfile,
         data: data,
       );
 
@@ -214,7 +215,7 @@ class ProfileService extends BaseService {
 
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/user/SendOTPtoMobileandEmail_AttemptforEditProfile',
+        endpoint: ApiEndpoints.sendOTPEditProfile,
         data: data,
       );
 
@@ -242,7 +243,7 @@ class ProfileService extends BaseService {
 
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/user/RequestforEditProfile',
+        endpoint: ApiEndpoints.requestForEditProfile,
         data: data,
       );
 
@@ -259,7 +260,7 @@ class ProfileService extends BaseService {
 
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/user/GetCardDetail',
+        endpoint: ApiEndpoints.getCardDetail,
         data: data,
       );
 

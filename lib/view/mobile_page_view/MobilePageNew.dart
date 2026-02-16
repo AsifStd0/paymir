@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/auth/signup_provider.dart';
-import '../../util/Constants.dart';
+import '../../providers/signup_provider.dart';
+import '../../util/Mediaquery_Constant.dart';
 import 'mobile_page_view_widgets.dart';
 
 /// Mobile number entry screen for signup
@@ -68,7 +68,9 @@ class _MobilePageNewState extends State<MobilePageNew> {
               const MobileBackButton(),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: Constants.getSymmetricHorizontalPadding(context),
+                  horizontal: MediaQueryConstant.getSymmetricHorizontalPadding(
+                    context,
+                  ),
                 ),
                 child: Form(
                   key: _formKey,
@@ -77,9 +79,10 @@ class _MobilePageNewState extends State<MobilePageNew> {
                     children: [
                       const MobileTitleText(text: 'Set up 2-step verification'),
                       SizedBox(
-                        height: Constants.getVerticalGapBetweenMainAndSmallFont(
-                          context,
-                        ),
+                        height:
+                            MediaQueryConstant.getVerticalGapBetweenMainAndSmallFont(
+                              context,
+                            ),
                       ),
                       const MobileSubtitleText(
                         text:
@@ -87,7 +90,7 @@ class _MobilePageNewState extends State<MobilePageNew> {
                       ),
                       SizedBox(
                         height:
-                            Constants.getVerticalGapBetweenSmallfontAndTextfield(
+                            MediaQueryConstant.getVerticalGapBetweenSmallfontAndTextfield(
                               context,
                             ),
                       ),

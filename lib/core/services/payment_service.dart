@@ -1,3 +1,4 @@
+import '../../util/app_url.dart';
 import 'base_service.dart';
 
 /// Service for payment-related operations
@@ -19,7 +20,7 @@ class PaymentService extends BaseService {
     try {
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/service/GeneratePSID',
+        endpoint: ApiEndpoints.generatePSID,
         data: data,
       );
 
@@ -36,7 +37,7 @@ class PaymentService extends BaseService {
     try {
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/service/ConfirmPSIDStatus',
+        endpoint: ApiEndpoints.confirmPSIDStatus,
         data: data,
       );
 
@@ -63,7 +64,7 @@ class PaymentService extends BaseService {
     try {
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/service/BillPayment',
+        endpoint: ApiEndpoints.billPayment,
         data: data,
       );
 
@@ -83,7 +84,7 @@ class PaymentService extends BaseService {
     try {
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/service/GetPSID',
+        endpoint: ApiEndpoints.getPSID,
         data: data,
       );
 
@@ -103,7 +104,7 @@ class PaymentService extends BaseService {
     try {
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/service/getPendingTransactions',
+        endpoint: ApiEndpoints.getPendingTransactions,
         data: data,
       );
 
@@ -123,7 +124,7 @@ class PaymentService extends BaseService {
     try {
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/service/getReceivedTransactions',
+        endpoint: ApiEndpoints.getReceivedTransactions,
         data: data,
       );
 

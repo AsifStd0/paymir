@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 
-import '../../util/Constants.dart';
+import '../../util/Mediaquery_Constant.dart';
 import '../../util/MyValidation.dart';
 
 /// ============================================
@@ -18,10 +18,16 @@ class VoucherTitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: Constants.getVerticalGapBetweenTwoTextformfields(context) * 50,
-        left: Constants.getHomePageMainTextLeftPadding(context) * 2.3,
-        right: Constants.getVerticalGapBetweenTwoTextformfields(context),
-        bottom: Constants.getVerticalGapBetweenTwoTextformfields(context) * 9,
+        top:
+            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) *
+            50,
+        left: MediaQueryConstant.getHomePageMainTextLeftPadding(context) * 2.3,
+        right: MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+          context,
+        ),
+        bottom:
+            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) *
+            9,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -32,7 +38,7 @@ class VoucherTitleText extends StatelessWidget {
               color: const Color(0xff3F3F3F),
               fontFamily: 'Metropolis',
               fontWeight: FontWeight.w700,
-              fontSize: Constants.getServiceFontSize(context),
+              fontSize: MediaQueryConstant.getServiceFontSize(context),
             ),
           ),
         ],
@@ -53,7 +59,7 @@ class VoucherNumberField extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         SizedBox(
-          height: Constants.getTextFormFieldHeight(context),
+          height: MediaQueryConstant.getTextFormFieldHeight(context),
           width: MediaQuery.of(context).size.width * 0.79,
           child: TextFormField(
             maxLength: 19,
@@ -62,7 +68,7 @@ class VoucherNumberField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: "",
               hintStyle: TextStyle(
-                fontSize: Constants.getTextformfieldHintFont(context),
+                fontSize: MediaQueryConstant.getTextformfieldHintFont(context),
                 color: AppColors.secondaryColor(),
                 fontFamily: 'Visby',
                 fontWeight: FontWeight.normal,
@@ -70,19 +76,23 @@ class VoucherNumberField extends StatelessWidget {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(
-                    Constants.getTextformfieldBorderRadius(context),
+                    MediaQueryConstant.getTextformfieldBorderRadius(context),
                   ),
                 ),
               ),
               counterText: '',
               contentPadding: EdgeInsets.only(
-                top: Constants.getTextformfieldContentPadding(context),
-                left: Constants.getTextformfieldContentPadding(context),
-                bottom: Constants.getTextformfieldContentPadding(context),
+                top: MediaQueryConstant.getTextformfieldContentPadding(context),
+                left: MediaQueryConstant.getTextformfieldContentPadding(
+                  context,
+                ),
+                bottom: MediaQueryConstant.getTextformfieldContentPadding(
+                  context,
+                ),
               ),
             ),
             controller: controller,
-            validator: (value) => MyValidationClass.validateVoucher(value),
+            validator: (value) => MyValidation.validateVoucher(value),
           ),
         ),
       ],
@@ -104,11 +114,11 @@ class VoucherCheckButton extends StatelessWidget {
         onPressed: isLoading ? null : onPressed,
         child: Container(
           alignment: Alignment.center,
-          width: Constants.getButtonHeight(context) * 5,
-          height: Constants.getButtonHeight(context),
+          width: MediaQueryConstant.getButtonHeight(context) * 5,
+          height: MediaQueryConstant.getButtonHeight(context),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(
-              Radius.circular(Constants.getButtonRadius(context)),
+              Radius.circular(MediaQueryConstant.getButtonRadius(context)),
             ),
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
@@ -125,7 +135,7 @@ class VoucherCheckButton extends StatelessWidget {
                     'Check Payment Details',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: Constants.getButtonFont(context),
+                      fontSize: MediaQueryConstant.getButtonFont(context),
                       fontFamily: 'Visby',
                       fontWeight: FontWeight.bold,
                     ),

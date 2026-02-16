@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../util/Constants.dart';
+import '../../util/Mediaquery_Constant.dart';
 import '../PaymentPageNew.dart';
 import 'Voucher_provider.dart';
 import 'Voucher_widget.dart';
@@ -76,9 +76,10 @@ class _VoucherNoPageNewState extends State<VoucherNoPageNew> {
                   const VoucherTitleText(text: 'Enter your voucher number'),
                   VoucherNumberField(controller: _voucherController),
                   SizedBox(
-                    height: Constants.getVerticalGapBetweenTwoTextformfields(
-                      context,
-                    ),
+                    height:
+                        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                          context,
+                        ),
                   ),
                   Consumer<VoucherProvider>(
                     builder: (context, voucherProvider, _) {

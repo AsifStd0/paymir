@@ -1,3 +1,276 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import '../../util/Mediaquery_Constant.dart';
+import '../../util/NetworkHelperClass.dart';
+import '../../util/SecureStorage.dart';
+import '../PaymentPageNew.dart';
+
+class QRCodeScanner extends StatefulWidget {
+  final List<dynamic> serviceCharges;
+
+  const QRCodeScanner(this.serviceCharges, {super.key});
+
+  @override
+  _QRCodeScannerState createState() => _QRCodeScannerState(serviceCharges);
+}
+
+class _QRCodeScannerState extends State<QRCodeScanner> {
+  List<dynamic> serviceCharges;
+  _QRCodeScannerState(this.serviceCharges);
+
+  String qrCodeResult = "Not Yet Scanned";
+  final SecureStorage _secureStorage = SecureStorage();
+  List<dynamic> pendingDues = [];
+  String strToken = "";
+  String strTokenExpiry = "";
+  String cnicString = "";
+
+  Future<void> _requestCameraPermission() async {
+    await Permission.camera.request();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _requestCameraPermission();
+    fetchSecureStorageData();
+  }
+
+  void scanQRCode() {
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text("Scan QR Code"),
+            content: SizedBox(
+              height: 250,
+              width: 250,
+              child: MobileScanner(
+                onDetect: (capture) {
+                  final List<Barcode> barcodes = capture.barcodes;
+                  if (barcodes.isNotEmpty) {
+                    Navigator.pop(context);
+                    setState(() {
+                      qrCodeResult = barcodes.first.rawValue ?? "No Data";
+                    });
+                    Future.delayed(const Duration(seconds: 4), () {
+                      setState(() {
+                        qrCodeResult = "No record found!";
+                      });
+                    });
+                    loadApplicationDetails(qrCodeResult);
+                  }
+                },
+              ),
+            ),
+          ),
+    );
+  }
+
+  Future<String?> loadApplicationDetails(String dtpPaymentID) async {
+    var data = {
+      "DPTPaymentID": dtpPaymentID,
+      "CNIC": cnicString,
+      "Using": "DPTPayID",
+    };
+
+    String auth = "Bearer $strToken";
+
+    try {
+      final responseBody = await NetworkHelper.getPendingTransactions(
+        data,
+        auth,
+      );
+      if (responseBody != null && responseBody.contains("false")) {
+        Future.delayed(const Duration(seconds: 3), () {
+          setState(() {
+            qrCodeResult = "Not Yet Scanned";
+          });
+        });
+        setState(() {
+          qrCodeResult = "No record found!";
+        });
+        return "false";
+      }
+      Map<String, dynamic> data2 = jsonDecode(responseBody!);
+      setState(() {
+        pendingDues = data2['pendingDues'];
+        serviceCharges = data2['serviceProviderTaxesConfigurations'];
+      });
+      Future.delayed(const Duration(seconds: 1), () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => PaymentPageNew(pendingDues[0], serviceCharges),
+          ),
+        );
+      });
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder:
+            (context) => AlertDialog(
+              title: const Text("Error"),
+              content: const Text("Server is down and cannot be accessed!"),
+              actions: [
+                TextButton(
+                  child: const Text("Close"),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            ),
+      );
+    }
+    return "false";
+  }
+
+  Future<void> fetchSecureStorageData() async {
+    strToken = await _secureStorage.getToken() ?? '';
+    strTokenExpiry = await _secureStorage.getTokenExpiry() ?? '';
+    cnicString = await _secureStorage.getCNIC() ?? '';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: MediaQueryConstant.getBackArrowLeftPadding(context),
+                      top: MediaQueryConstant.getBackArrowTopPadding(context),
+                      bottom: MediaQueryConstant.getBackArrowBottomPadding(
+                        context,
+                      ),
+                    ),
+                    child: IconButton(
+                      icon: SvgPicture.asset("assets/images/back_arrow.svg"),
+                      onPressed: () {
+                        Navigator.of(context, rootNavigator: true).pop();
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height:
+                    MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                      context,
+                    ) *
+                    300,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    qrCodeResult,
+                    style: TextStyle(
+                      color: AppColors.primaryColor(),
+                      fontFamily: 'Visby',
+                      fontWeight: FontWeight.bold,
+                      fontSize: MediaQueryConstant.getMainFontSize(context),
+                    ),
+                  ),
+                  SizedBox(
+                    height:
+                        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                          context,
+                        ) *
+                        350,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal:
+                          MediaQueryConstant.getSymmetricHorizontalPadding(
+                            context,
+                          ),
+                    ),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: TextButton(
+                        onPressed: scanQRCode,
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: double.infinity,
+                          height: MediaQueryConstant.getButtonHeight(context),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              colors: [
+                                AppColors.gradientColor1(),
+                                AppColors.gradientColor2(),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
+                                MediaQueryConstant.getButtonRadius(context),
+                              ),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height:
+                                    MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                                      context,
+                                    ) *
+                                    35,
+                                width:
+                                    MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                                      context,
+                                    ) *
+                                    35,
+                                child: SvgPicture.asset(
+                                  "assets/images/qrcodelogo1.svg",
+                                ),
+                              ),
+                              SizedBox(
+                                width:
+                                    MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                                      context,
+                                    ) *
+                                    20,
+                              ),
+                              Text(
+                                'Scan QR Code',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: MediaQueryConstant.getButtonFont(
+                                    context,
+                                  ),
+                                  fontFamily: 'Visby',
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 // // ignore_for_file: no_logic_in_create_state, use_build_context_synchronously
 // import 'dart:convert';
 // import 'package:flutter/material.dart';
@@ -307,269 +580,3 @@
 //     // _passwordController.text = await _secureStorage.getPassWord() ?? '';
 //   }
 // }
-
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
-import 'package:permission_handler/permission_handler.dart';
-
-import '../util/Constants.dart';
-import '../util/NetworkHelperClass.dart';
-import '../util/SecureStorage.dart';
-import 'PaymentPageNew.dart';
-
-class QRCodeScanner extends StatefulWidget {
-  final List<dynamic> serviceCharges;
-
-  const QRCodeScanner(this.serviceCharges, {super.key});
-
-  @override
-  _QRCodeScannerState createState() => _QRCodeScannerState(serviceCharges);
-}
-
-class _QRCodeScannerState extends State<QRCodeScanner> {
-  List<dynamic> serviceCharges;
-  _QRCodeScannerState(this.serviceCharges);
-
-  String qrCodeResult = "Not Yet Scanned";
-  final SecureStorage _secureStorage = SecureStorage();
-  List<dynamic> pendingDues = [];
-  String strToken = "";
-  String strTokenExpiry = "";
-  String cnicString = "";
-
-  Future<void> _requestCameraPermission() async {
-    await Permission.camera.request();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _requestCameraPermission();
-    fetchSecureStorageData();
-  }
-
-  void scanQRCode() {
-    showDialog(
-      context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text("Scan QR Code"),
-            content: SizedBox(
-              height: 250,
-              width: 250,
-              child: MobileScanner(
-                onDetect: (capture) {
-                  final List<Barcode> barcodes = capture.barcodes;
-                  if (barcodes.isNotEmpty) {
-                    Navigator.pop(context);
-                    setState(() {
-                      qrCodeResult = barcodes.first.rawValue ?? "No Data";
-                    });
-                    Future.delayed(const Duration(seconds: 4), () {
-                      setState(() {
-                        qrCodeResult = "No record found!";
-                      });
-                    });
-                    loadApplicationDetails(qrCodeResult);
-                  }
-                },
-              ),
-            ),
-          ),
-    );
-  }
-
-  Future<String?> loadApplicationDetails(String dtpPaymentID) async {
-    var data = {
-      "DPTPaymentID": dtpPaymentID,
-      "CNIC": cnicString,
-      "Using": "DPTPayID",
-    };
-
-    String auth = "Bearer $strToken";
-
-    try {
-      final responseBody = await NetworkHelper.getPendingTransactions(
-        data,
-        auth,
-      );
-      if (responseBody != null && responseBody.contains("false")) {
-        Future.delayed(const Duration(seconds: 3), () {
-          setState(() {
-            qrCodeResult = "Not Yet Scanned";
-          });
-        });
-        setState(() {
-          qrCodeResult = "No record found!";
-        });
-        return "false";
-      }
-      Map<String, dynamic> data2 = jsonDecode(responseBody!);
-      setState(() {
-        pendingDues = data2['pendingDues'];
-        serviceCharges = data2['serviceProviderTaxesConfigurations'];
-      });
-      Future.delayed(const Duration(seconds: 1), () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => PaymentPageNew(pendingDues[0], serviceCharges),
-          ),
-        );
-      });
-    } catch (e) {
-      showDialog(
-        context: context,
-        builder:
-            (context) => AlertDialog(
-              title: const Text("Error"),
-              content: const Text("Server is down and cannot be accessed!"),
-              actions: [
-                TextButton(
-                  child: const Text("Close"),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            ),
-      );
-    }
-    return "false";
-  }
-
-  Future<void> fetchSecureStorageData() async {
-    strToken = await _secureStorage.getToken() ?? '';
-    strTokenExpiry = await _secureStorage.getTokenExpiry() ?? '';
-    cnicString = await _secureStorage.getCNIC() ?? '';
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: Constants.getBackArrowLeftPadding(context),
-                      top: Constants.getBackArrowTopPadding(context),
-                      bottom: Constants.getBackArrowBottomPadding(context),
-                    ),
-                    child: IconButton(
-                      icon: SvgPicture.asset("assets/images/back_arrow.svg"),
-                      onPressed: () {
-                        Navigator.of(context, rootNavigator: true).pop();
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height:
-                    Constants.getVerticalGapBetweenTwoTextformfields(context) *
-                    300,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    qrCodeResult,
-                    style: TextStyle(
-                      color: AppColors.primaryColor(),
-                      fontFamily: 'Visby',
-                      fontWeight: FontWeight.bold,
-                      fontSize: Constants.getMainFontSize(context),
-                    ),
-                  ),
-                  SizedBox(
-                    height:
-                        Constants.getVerticalGapBetweenTwoTextformfields(
-                          context,
-                        ) *
-                        350,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: Constants.getSymmetricHorizontalPadding(
-                        context,
-                      ),
-                    ),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: TextButton(
-                        onPressed: scanQRCode,
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: double.infinity,
-                          height: Constants.getButtonHeight(context),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [
-                                AppColors.gradientColor1(),
-                                AppColors.gradientColor2(),
-                              ],
-                            ),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(
-                                Constants.getButtonRadius(context),
-                              ),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height:
-                                    Constants.getVerticalGapBetweenTwoTextformfields(
-                                      context,
-                                    ) *
-                                    35,
-                                width:
-                                    Constants.getVerticalGapBetweenTwoTextformfields(
-                                      context,
-                                    ) *
-                                    35,
-                                child: SvgPicture.asset(
-                                  "assets/images/qrcodelogo1.svg",
-                                ),
-                              ),
-                              SizedBox(
-                                width:
-                                    Constants.getVerticalGapBetweenTwoTextformfields(
-                                      context,
-                                    ) *
-                                    20,
-                              ),
-                              Text(
-                                'Scan QR Code',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: Constants.getButtonFont(context),
-                                  fontFamily: 'Visby',
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}

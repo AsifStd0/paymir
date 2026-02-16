@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/util/MyValidation.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 
-import '../../../util/Constants.dart';
+import '../util/Mediaquery_Constant.dart';
 import 'input_decoration.dart';
-import 'validation.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -39,7 +39,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Constants.getTextFormFieldHeight(context),
+      height: MediaQueryConstant.getTextFormFieldHeight(context),
       child: TextFormField(
         controller: controller,
         textAlign: textAlign,
@@ -78,7 +78,7 @@ class CustomTextField extends StatelessWidget {
     return CustomTextField(
       controller: controller,
       hintText: hintText,
-      validator: CustomValidation.validateName,
+      validator: MyValidation.validateName,
       maxLength: maxLength,
       inputFormatters:
           inputFormatters ?? [FilteringTextInputFormatter.deny(RegExp(r"\s"))],
@@ -93,7 +93,7 @@ class CustomTextField extends StatelessWidget {
     return CustomTextField(
       controller: controller,
       hintText: hintText,
-      validator: CustomValidation.validateEmail,
+      validator: MyValidation.validateEmail,
       keyboardType: TextInputType.emailAddress,
       maxLength: maxLength,
     );
@@ -106,7 +106,7 @@ class CustomTextField extends StatelessWidget {
     return CustomTextField(
       controller: controller,
       hintText: hintText,
-      validator: CustomValidation.validateCNIC,
+      validator: MyValidation.validateCNIC,
       keyboardType: TextInputType.number,
     );
   }
@@ -122,7 +122,7 @@ class CustomTextField extends StatelessWidget {
     return CustomTextField(
       controller: controller,
       hintText: hintText,
-      validator: validator ?? CustomValidation.validatePassword,
+      validator: validator ?? MyValidation.validatePassword,
       obscureText: obscureText,
       maxLength: maxLength,
       showPasswordToggle: true,

@@ -1,3 +1,4 @@
+import '../../util/app_url.dart';
 import 'base_service.dart';
 
 /// Service for complaint-related operations
@@ -19,7 +20,7 @@ class ComplaintService extends BaseService {
     try {
       final response = await apiClient.request(
         method: 'POST',
-        endpoint: 'api/user/RegisterComplaint',
+        endpoint: ApiEndpoints.registerComplaint,
         data: data,
         isFormData: true,
       );

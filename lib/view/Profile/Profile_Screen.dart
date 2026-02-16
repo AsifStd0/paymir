@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:paymir_new_android/view/home_page/home_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../../util/Constants.dart';
-import '../../utils/app_strings.dart';
-import '../../widget/custom/custom_text.dart';
+import '../../util/Mediaquery_Constant.dart';
+import '../../util/app_strings.dart';
+import '../../widget/custom_text.dart';
 import 'CustomerSupportPageNew.dart';
 import 'EditProfilePageNew.dart';
 import 'UpdatePasswordPageNew.dart';
@@ -91,12 +92,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePageNew()),
+        );
         return false;
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => HomePageNew()),
-        // );
-        // return false;
       },
       child: Scaffold(
         body: SafeArea(
@@ -138,8 +138,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildHeader(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: Constants.getBackArrowTopPadding(context),
-        bottom: Constants.getBackArrowBottomPadding(context),
+        top: MediaQueryConstant.getBackArrowTopPadding(context),
+        bottom: MediaQueryConstant.getBackArrowBottomPadding(context),
       ),
       child: Center(
         child: CustomText.mainTitle(

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:paymir_new_android/api/NetworkApiService.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/theme/app_colors.dart';
-import '../../util/Constants.dart';
+import '../../util/Mediaquery_Constant.dart';
 import '../../util/MyValidation.dart';
-import '../../util/NetworkHelperClass.dart';
 import '../../util/SecureStorage.dart';
-import '../../utils/app_strings.dart';
-import '../../widget/custom/custom_button.dart';
-import '../../widget/custom/custom_text.dart';
+import '../../util/app_strings.dart';
+import '../../util/theme/app_colors.dart';
+import '../../widget/custom_button.dart';
+import '../../widget/custom_text.dart';
 import '../SuccessfullyChangedPasswordNew.dart';
 import 'profile_provider.dart';
 import 'profile_widget.dart';
@@ -44,24 +44,20 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
     final provider = Provider.of<ProfileProvider>(context, listen: false);
 
     // Validate old password
-    if (MyValidationClass.validateOldPassword(
-          provider.oldPasswordController.text,
-        ) !=
+    if (MyValidation.validateOldPassword(provider.oldPasswordController.text) !=
         null) {
       provider.clearPasswordFields();
       return;
     }
 
     // Validate new password
-    if (MyValidationClass.validatePassword(
-          provider.newPasswordController.text,
-        ) !=
+    if (MyValidation.validatePassword(provider.newPasswordController.text) !=
         null) {
       return;
     }
 
     // Validate confirm password
-    if (MyValidationClass.validateRePassword(
+    if (MyValidation.validateRePassword(
           provider.confirmPasswordController.text,
         ) !=
         null) {
@@ -86,7 +82,7 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
     }
 
     // Check internet connection
-    if (!await NetworkHelper.checkInternetConnection()) {
+    if (!await NetworkApiService.checkInternetConnection()) {
       _showErrorDialog(context, AppStrings.checkInternetConnection);
       return;
     }
@@ -147,9 +143,10 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                 _buildHeader(context),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: Constants.getSymmetricHorizontalPadding(
-                      context,
-                    ),
+                    horizontal:
+                        MediaQueryConstant.getSymmetricHorizontalPadding(
+                          context,
+                        ),
                   ),
                   child: Form(
                     key: _formKey,
@@ -164,7 +161,7 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                             ),
                             SizedBox(
                               height:
-                                  Constants.getVerticalGapBetweenMainAndSmallFont(
+                                  MediaQueryConstant.getVerticalGapBetweenMainAndSmallFont(
                                     context,
                                   ),
                             ),
@@ -174,7 +171,7 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                             ),
                             SizedBox(
                               height:
-                                  Constants.getVerticalGapBetweenSmallfontAndTextfield(
+                                  MediaQueryConstant.getVerticalGapBetweenSmallfontAndTextfield(
                                     context,
                                   ),
                             ),
@@ -184,11 +181,11 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                               obscureText: !provider.oldPasswordVisible,
                               onToggleVisibility:
                                   provider.toggleOldPasswordVisibility,
-                              validator: MyValidationClass.validateOldPassword,
+                              validator: MyValidation.validateOldPassword,
                             ),
                             SizedBox(
                               height:
-                                  Constants.getVerticalGapBetweenTwoTextformfields(
+                                  MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                     context,
                                   ) *
                                   30,
@@ -196,7 +193,7 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                             _buildPasswordRequirements(context),
                             SizedBox(
                               height:
-                                  Constants.getVerticalGapBetweenTwoTextformfields(
+                                  MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                     context,
                                   ) *
                                   30,
@@ -207,11 +204,11 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                               obscureText: !provider.newPasswordVisible,
                               onToggleVisibility:
                                   provider.toggleNewPasswordVisibility,
-                              validator: MyValidationClass.validatePassword,
+                              validator: MyValidation.validatePassword,
                             ),
                             SizedBox(
                               height:
-                                  Constants.getVerticalGapBetweenTwoTextformfields(
+                                  MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                     context,
                                   ),
                             ),
@@ -221,7 +218,7 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
                               obscureText: !provider.confirmPasswordVisible,
                               onToggleVisibility:
                                   provider.toggleConfirmPasswordVisibility,
-                              validator: MyValidationClass.validateRePassword,
+                              validator: MyValidation.validateRePassword,
                             ),
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.08,
@@ -251,9 +248,9 @@ class _UpdatePasswordPageNewState extends State<UpdatePasswordPageNew> {
       children: [
         Padding(
           padding: EdgeInsets.only(
-            left: Constants.getBackArrowLeftPadding(context),
-            top: Constants.getBackArrowTopPadding(context),
-            bottom: Constants.getBackArrowBottomPadding(context),
+            left: MediaQueryConstant.getBackArrowLeftPadding(context),
+            top: MediaQueryConstant.getBackArrowTopPadding(context),
+            bottom: MediaQueryConstant.getBackArrowBottomPadding(context),
           ),
           child: IconButton(
             icon: SvgPicture.asset("assets/images/back_arrow.svg"),

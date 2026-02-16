@@ -3,16 +3,16 @@ import 'dart:developer';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:paymir_new_android/utils/app_strings.dart';
+import 'package:paymir_new_android/util/app_strings.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/auth/login_provider.dart';
+import '../../providers/login_provider.dart';
 import '../../util/AlertDialogueClass.dart';
-import '../../util/Constants.dart';
+import '../../util/Mediaquery_Constant.dart';
 import '../../util/MyValidation.dart';
-import '../../widget/custom/custom_button.dart';
-import '../../widget/custom/custom_text.dart';
-import '../../widget/custom/custom_textfield.dart';
+import '../../widget/custom_button.dart';
+import '../../widget/custom_text.dart';
+import '../../widget/custom_textfield.dart';
 import '../main/main_screen.dart';
 import '../signup/signup_screen.dart';
 import 'ForgotPasswordPageNew.dart';
@@ -32,27 +32,35 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   bool _validateForm() {
-    return MyValidationClass.validateCNIC(_CNICController.text) == null &&
-        MyValidationClass.validatePassword(_passwordController.text) == null;
+    return MyValidation.validateCNIC(_CNICController.text) == null &&
+        MyValidation.validatePassword(_passwordController.text) == null;
   }
 
   Future<void> _handleLogin(BuildContext context) async {
-    log('message');
-    // if (!_formKey.currentState!.validate() || !_validateForm()) return;
+    log('Login button pressed');
+    if (!_formKey.currentState!.validate() || !_validateForm()) {
+      log('Form validation failed');
+      return;
+    }
 
     final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    log('Calling login API...');
     final success = await loginProvider.login(
       cnic: _CNICController.text,
       password: _passwordController.text,
       context: context,
     );
 
-    // if (success && mounted) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const MainScreen()),
-    );
-    // }
+    log('Login result: $success');
+    if (success && mounted) {
+      log('Navigating to MainScreen');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const MainScreen()),
+      );
+    } else {
+      log('Login failed or widget unmounted - not navigating');
+    }
   }
 
   @override
@@ -74,15 +82,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(
-                            left: Constants.getBackArrowLeftPadding(
+                            left: MediaQueryConstant.getBackArrowLeftPadding(
                               consumerContext,
                             ),
-                            top: Constants.getBackArrowTopPadding(
+                            top: MediaQueryConstant.getBackArrowTopPadding(
                               consumerContext,
                             ),
-                            bottom: Constants.getBackArrowBottomPadding(
-                              consumerContext,
-                            ),
+                            bottom:
+                                MediaQueryConstant.getBackArrowBottomPadding(
+                                  consumerContext,
+                                ),
                           ),
                           child: IconButton(
                             icon: SvgPicture.asset(
@@ -99,9 +108,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: Constants.getSymmetricHorizontalPadding(
-                          consumerContext,
-                        ),
+                        horizontal:
+                            MediaQueryConstant.getSymmetricHorizontalPadding(
+                              consumerContext,
+                            ),
                       ),
                       child: Form(
                         key: _formKey,
@@ -114,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             SizedBox(
                               height:
-                                  Constants.getVerticalGapBetweenMainAndSmallFont(
+                                  MediaQueryConstant.getVerticalGapBetweenMainAndSmallFont(
                                     consumerContext,
                                   ),
                             ),
@@ -124,14 +134,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             SizedBox(
                               height:
-                                  Constants.getVerticalGapBetweenSmallfontAndTextfield(
+                                  MediaQueryConstant.getVerticalGapBetweenSmallfontAndTextfield(
                                     consumerContext,
                                   ),
                             ),
                             CustomTextField.cnic(controller: _CNICController),
                             SizedBox(
                               height:
-                                  Constants.getVerticalGapBetweenTwoTextformfields(
+                                  MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                     consumerContext,
                                   ),
                             ),
@@ -143,9 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                               validator:
                                   (value) =>
-                                      MyValidationClass.validateEmailPassword(
-                                        value,
-                                      ),
+                                      MyValidation.validateEmailPassword(value),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
@@ -169,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             SizedBox(
                               height:
-                                  Constants.getVerticalGapBetweenForgotPasswordAndSignInButton(
+                                  MediaQueryConstant.getVerticalGapBetweenForgotPasswordAndSignInButton(
                                     consumerContext,
                                   ),
                             ),
@@ -181,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             SizedBox(
                               height:
-                                  Constants.getVerticalGapBetweenTwoTextformfields(
+                                  MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                     consumerContext,
                                   ) *
                                   20,
@@ -213,7 +221,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             SizedBox(
                               height:
-                                  Constants.getVerticalGapBetweenTwoTextformfields(
+                                  MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                     consumerContext,
                                   ) *
                                   20,
@@ -223,7 +231,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(
-                                    Constants.getTextformfieldBorderRadius(
+                                    MediaQueryConstant.getTextformfieldBorderRadius(
                                       consumerContext,
                                     ),
                                   ),
@@ -232,11 +240,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               padding: EdgeInsets.symmetric(
                                 vertical:
-                                    Constants.getLoginViaEIdentityVerticalPadding(
+                                    MediaQueryConstant.getLoginViaEIdentityVerticalPadding(
                                       consumerContext,
                                     ),
                                 horizontal:
-                                    Constants.getLoginViaEIdentityVerticalPadding(
+                                    MediaQueryConstant.getLoginViaEIdentityVerticalPadding(
                                       consumerContext,
                                     ),
                               ),
@@ -247,7 +255,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Padding(
                                     padding: EdgeInsets.only(
                                       left:
-                                          Constants.getLoginViaEIdentityLeftImagePadding(
+                                          MediaQueryConstant.getLoginViaEIdentityLeftImagePadding(
                                             consumerContext,
                                           ),
                                     ),
@@ -257,7 +265,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   SizedBox(
                                     width:
-                                        Constants.getLoginViaEIdentityHorizontalGap(
+                                        MediaQueryConstant.getLoginViaEIdentityHorizontalGap(
                                           consumerContext,
                                         ),
                                   ),
@@ -273,7 +281,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             SizedBox(
                               height:
-                                  Constants.getVerticalGapAfterLoginViaGovLogInPage(
+                                  MediaQueryConstant.getVerticalGapAfterLoginViaGovLogInPage(
                                     consumerContext,
                                   ),
                             ),

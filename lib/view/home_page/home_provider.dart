@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:paymir_new_android/core/storage/Shared_pref.dart';
+import 'package:paymir_new_android/util/Shared_pref.dart';
 
 import '../../util/AlertDialogueClass.dart';
 import '../login/login_screen.dart';

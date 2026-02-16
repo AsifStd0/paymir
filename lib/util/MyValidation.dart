@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
-
-class MyValidationClass extends ChangeNotifier {
+class MyValidation {
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Email cannot be empty!';

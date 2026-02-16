@@ -1,4 +1,4 @@
-import '../services/api_class.dart';
+import '../../api/api_client.dart';
 
 /// Base class for all services
 /// All services should extend this class to get access to ApiClient

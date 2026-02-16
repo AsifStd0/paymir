@@ -7,10 +7,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/api/NetworkApiService.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 
 import '../../util/AlertDialogueClass.dart';
-import '../../util/Constants.dart';
+import '../../util/Mediaquery_Constant.dart';
 import '../../util/MyValidation.dart';
 import '../../util/NetworkHelperClass.dart';
 import '../../util/SecureStorage.dart';
@@ -517,18 +518,21 @@ class _CFCVoucherNoPageNewState extends State<CFCVoucherNoPageNew> {
                   Padding(
                     padding: EdgeInsets.only(
                       top:
-                          Constants.getVerticalGapBetweenTwoTextformfields(
+                          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                             context,
                           ) *
                           50,
                       left:
-                          Constants.getHomePageMainTextLeftPadding(context) *
+                          MediaQueryConstant.getHomePageMainTextLeftPadding(
+                            context,
+                          ) *
                           2.3,
-                      right: Constants.getVerticalGapBetweenTwoTextformfields(
-                        context,
-                      ),
+                      right:
+                          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                            context,
+                          ),
                       bottom:
-                          Constants.getVerticalGapBetweenTwoTextformfields(
+                          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                             context,
                           ) *
                           9,
@@ -543,7 +547,9 @@ class _CFCVoucherNoPageNewState extends State<CFCVoucherNoPageNew> {
                             color: const Color(0xff3F3F3F),
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.w700,
-                            fontSize: Constants.getServiceFontSize(context),
+                            fontSize: MediaQueryConstant.getServiceFontSize(
+                              context,
+                            ),
                           ),
                         ),
                       ],
@@ -554,7 +560,9 @@ class _CFCVoucherNoPageNewState extends State<CFCVoucherNoPageNew> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SizedBox(
-                        height: Constants.getTextFormFieldHeight(context),
+                        height: MediaQueryConstant.getTextFormFieldHeight(
+                          context,
+                        ),
                         width: MediaQuery.of(context).size.width * 0.79,
                         child: TextFormField(
                           maxLength: 19,
@@ -563,9 +571,10 @@ class _CFCVoucherNoPageNewState extends State<CFCVoucherNoPageNew> {
                           decoration: InputDecoration(
                             hintText: "",
                             hintStyle: TextStyle(
-                              fontSize: Constants.getTextformfieldHintFont(
-                                context,
-                              ),
+                              fontSize:
+                                  MediaQueryConstant.getTextformfieldHintFont(
+                                    context,
+                                  ),
                               color: AppColors.secondaryColor(),
                               fontFamily: 'Visby',
                               fontWeight: FontWeight.normal,
@@ -573,7 +582,7 @@ class _CFCVoucherNoPageNewState extends State<CFCVoucherNoPageNew> {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(
-                                  Constants.getTextformfieldBorderRadius(
+                                  MediaQueryConstant.getTextformfieldBorderRadius(
                                     context,
                                   ),
                                 ),
@@ -581,29 +590,31 @@ class _CFCVoucherNoPageNewState extends State<CFCVoucherNoPageNew> {
                             ),
                             counterText: '',
                             contentPadding: EdgeInsets.only(
-                              top: Constants.getTextformfieldContentPadding(
-                                context,
-                              ),
-                              left: Constants.getTextformfieldContentPadding(
-                                context,
-                              ),
-                              bottom: Constants.getTextformfieldContentPadding(
-                                context,
-                              ),
+                              top:
+                                  MediaQueryConstant.getTextformfieldContentPadding(
+                                    context,
+                                  ),
+                              left:
+                                  MediaQueryConstant.getTextformfieldContentPadding(
+                                    context,
+                                  ),
+                              bottom:
+                                  MediaQueryConstant.getTextformfieldContentPadding(
+                                    context,
+                                  ),
                             ),
                           ),
                           controller: textController,
                           // keyboardType: TextInputType.number,
                           validator:
-                              (value) =>
-                                  MyValidationClass.validateVoucher(value),
+                              (value) => MyValidation.validateVoucher(value),
                         ),
                       ),
                     ],
                   ),
                   SizedBox(
                     height:
-                        Constants.getVerticalGapBetweenTwoTextformfields(
+                        MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                           context,
                         ) *
                         1,
@@ -614,15 +625,13 @@ class _CFCVoucherNoPageNewState extends State<CFCVoucherNoPageNew> {
                     child: TextButton(
                       onPressed: () async {
                         _submit();
-                        if (MyValidationClass.validateVoucher(
-                              textController.text,
-                            ) ==
+                        if (MyValidation.validateVoucher(textController.text) ==
                             null) {
                           //enquirePSID();
                           setState(() {
                             //_isLoading = true;
                           });
-                          if (await NetworkHelper.checkInternetConnection()) {
+                          if (await NetworkApiService.checkInternetConnection()) {
                             //loadApplicationDetails(textController.text);
                             if (textController.text == "BRCC-0001-24-100001" ||
                                 textController.text == "brcc-0001-24-100001" ||
@@ -756,13 +765,15 @@ class _CFCVoucherNoPageNewState extends State<CFCVoucherNoPageNew> {
                       child: Container(
                         alignment: Alignment.center,
                         width:
-                            Constants.getButtonHeight(context) *
+                            MediaQueryConstant.getButtonHeight(context) *
                             5, //double.infinity,
-                        height: Constants.getButtonHeight(context),
+                        height: MediaQueryConstant.getButtonHeight(context),
 
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(
-                            Radius.circular(Constants.getButtonRadius(context)),
+                            Radius.circular(
+                              MediaQueryConstant.getButtonRadius(context),
+                            ),
                           ),
 
                           gradient: LinearGradient(
@@ -785,7 +796,9 @@ class _CFCVoucherNoPageNewState extends State<CFCVoucherNoPageNew> {
                                   'Load Application',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: Constants.getButtonFont(context),
+                                    fontSize: MediaQueryConstant.getButtonFont(
+                                      context,
+                                    ),
                                     fontFamily: 'Visby',
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -1367,8 +1380,8 @@ class _CFCVoucherNoPageNewState extends State<CFCVoucherNoPageNew> {
                     Navigator.of(context).pop();
                   },
                   child: Container(
-                    height: Constants.getButtonHeight(context),
-                    width: Constants.getButtonHeight(context) * 2,
+                    height: MediaQueryConstant.getButtonHeight(context),
+                    width: MediaQueryConstant.getButtonHeight(context) * 2,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
                       color: AppColors.gradientColor1(),

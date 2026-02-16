@@ -2,17 +2,17 @@ import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
-import 'package:paymir_new_android/utils/app_strings.dart';
+import 'package:paymir_new_android/util/app_strings.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/auth/signup_provider.dart';
-import '../../util/Constants.dart';
+import '../../providers/signup_provider.dart';
+import '../../util/Mediaquery_Constant.dart';
 import '../../util/MyValidation.dart';
 import '../../widget/PrivacyPolicyPageNew.dart';
-import '../../widget/custom/custom_button.dart';
-import '../../widget/custom/custom_text.dart';
-import '../../widget/custom/custom_textfield.dart';
+import '../../widget/custom_button.dart';
+import '../../widget/custom_text.dart';
+import '../../widget/custom_textfield.dart';
 import '../login/login_screen.dart';
 import '../mobile_page_view/MobilePageNew.dart';
 
@@ -35,21 +35,11 @@ class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
 
   bool _validateForm() {
-    return MyValidationClass.validateName(_firstNameController.text) == null &&
-        MyValidationClass.validateName(_lastNameController.text) == null &&
-        MyValidationClass.validateEmail(_emailController.text) == null &&
-        MyValidationClass.validateCNIC(_cnicController.text) == null &&
-        MyValidationClass.validatePassword(_passwordController.text) == null;
-  }
-
-  Map<String, String> _prepareValues() {
-    return {
-      'fullname': "${_firstNameController.text} ${_lastNameController.text}",
-      'emailAddress': _emailController.text,
-      'cnic': _cnicController.text,
-      'password': _passwordController.text,
-      'Category': "PAYMIR",
-    };
+    return MyValidation.validateName(_firstNameController.text) == null &&
+        MyValidation.validateName(_lastNameController.text) == null &&
+        MyValidation.validateEmail(_emailController.text) == null &&
+        MyValidation.validateCNIC(_cnicController.text) == null &&
+        MyValidation.validatePassword(_passwordController.text) == null;
   }
 
   Future<void> _handleSignUp(BuildContext context) async {
@@ -100,9 +90,13 @@ class _SignUpState extends State<SignUp> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        left: Constants.getBackArrowLeftPadding(context),
-                        top: Constants.getBackArrowTopPadding(context),
-                        bottom: Constants.getBackArrowBottomPadding(context),
+                        left: MediaQueryConstant.getBackArrowLeftPadding(
+                          context,
+                        ),
+                        top: MediaQueryConstant.getBackArrowTopPadding(context),
+                        bottom: MediaQueryConstant.getBackArrowBottomPadding(
+                          context,
+                        ),
                       ),
                       child: IconButton(
                         icon: SvgPicture.asset("assets/images/back_arrow.svg"),
@@ -122,15 +116,17 @@ class _SignUpState extends State<SignUp> {
 
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: Constants.getSymmetricHorizontalPadding(
-                      context,
-                    ),
+                    horizontal:
+                        MediaQueryConstant.getSymmetricHorizontalPadding(
+                          context,
+                        ),
                   ),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // ! !!!!!!
                         CustomText.mainTitle(
                           text: AppStrings.signUpTitle,
                           context: context,
@@ -138,7 +134,7 @@ class _SignUpState extends State<SignUp> {
 
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenMainAndSmallFont(
+                              MediaQueryConstant.getVerticalGapBetweenMainAndSmallFont(
                                 context,
                               ),
                         ),
@@ -150,7 +146,7 @@ class _SignUpState extends State<SignUp> {
 
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenSmallfontAndTextfield(
+                              MediaQueryConstant.getVerticalGapBetweenSmallfontAndTextfield(
                                 context,
                               ),
                         ),
@@ -165,7 +161,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                             SizedBox(
                               width:
-                                  Constants.getHorizontalGapBetweenTwoTextformfields(
+                                  MediaQueryConstant.getHorizontalGapBetweenTwoTextformfields(
                                     context,
                                   ),
                             ),
@@ -180,7 +176,7 @@ class _SignUpState extends State<SignUp> {
 
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenTwoTextformfields(
+                              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                 context,
                               ),
                         ),
@@ -188,7 +184,7 @@ class _SignUpState extends State<SignUp> {
                         CustomTextField.cnic(controller: _cnicController),
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenTwoTextformfields(
+                              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                 context,
                               ),
                         ),
@@ -196,7 +192,7 @@ class _SignUpState extends State<SignUp> {
                         CustomTextField.email(controller: _emailController),
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenTwoTextformfields(
+                              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                 context,
                               ),
                         ),
@@ -214,7 +210,7 @@ class _SignUpState extends State<SignUp> {
 
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenTwoTextformfields(
+                              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                 context,
                               ),
                         ),
@@ -239,7 +235,7 @@ class _SignUpState extends State<SignUp> {
                                             fontFamily: 'Visby',
                                             fontWeight: FontWeight.normal,
                                             fontSize:
-                                                Constants.getTextformfieldHintFont(
+                                                MediaQueryConstant.getTextformfieldHintFont(
                                                   context,
                                                 ),
                                           ),
@@ -262,7 +258,7 @@ class _SignUpState extends State<SignUp> {
                                             fontFamily: 'Visby',
                                             fontWeight: FontWeight.normal,
                                             fontSize:
-                                                Constants.getTextformfieldHintFont(
+                                                MediaQueryConstant.getTextformfieldHintFont(
                                                   context,
                                                 ),
                                           ),
@@ -274,7 +270,7 @@ class _SignUpState extends State<SignUp> {
                                             fontFamily: 'Visby',
                                             fontWeight: FontWeight.normal,
                                             fontSize:
-                                                Constants.getTextformfieldHintFont(
+                                                MediaQueryConstant.getTextformfieldHintFont(
                                                   context,
                                                 ),
                                           ),
@@ -297,7 +293,7 @@ class _SignUpState extends State<SignUp> {
                                             fontFamily: 'Visby',
                                             fontWeight: FontWeight.normal,
                                             fontSize:
-                                                Constants.getTextformfieldHintFont(
+                                                MediaQueryConstant.getTextformfieldHintFont(
                                                   context,
                                                 ),
                                           ),
@@ -312,7 +308,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenTwoTextformfields(
+                              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                 context,
                               ),
                         ),
@@ -332,7 +328,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenTwoTextformfields(
+                              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                 context,
                               ) *
                               20,
@@ -366,7 +362,7 @@ class _SignUpState extends State<SignUp> {
 
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenTwoTextformfields(
+                              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                                 context,
                               ) *
                               20,
@@ -377,18 +373,20 @@ class _SignUpState extends State<SignUp> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(
                               Radius.circular(
-                                Constants.getTextformfieldBorderRadius(context),
+                                MediaQueryConstant.getTextformfieldBorderRadius(
+                                  context,
+                                ),
                               ),
                             ),
                             border: Border.all(color: Colors.grey.shade300),
                           ),
                           padding: EdgeInsets.symmetric(
                             vertical:
-                                Constants.getLoginViaEIdentityVerticalPadding(
+                                MediaQueryConstant.getLoginViaEIdentityVerticalPadding(
                                   context,
                                 ),
                             horizontal:
-                                Constants.getLoginViaEIdentityVerticalPadding(
+                                MediaQueryConstant.getLoginViaEIdentityVerticalPadding(
                                   context,
                                 ),
                           ),
@@ -400,7 +398,7 @@ class _SignUpState extends State<SignUp> {
                               Padding(
                                 padding: EdgeInsets.only(
                                   left:
-                                      Constants.getLoginViaEIdentityLeftImagePadding(
+                                      MediaQueryConstant.getLoginViaEIdentityLeftImagePadding(
                                         context,
                                       ),
                                 ),
@@ -410,7 +408,7 @@ class _SignUpState extends State<SignUp> {
                               ),
                               SizedBox(
                                 width:
-                                    Constants.getLoginViaEIdentityHorizontalGap(
+                                    MediaQueryConstant.getLoginViaEIdentityHorizontalGap(
                                       context,
                                     ),
                               ),
@@ -425,9 +423,10 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                         SizedBox(
-                          height: Constants.getVerticalGapAboveLastLine(
-                            context,
-                          ),
+                          height:
+                              MediaQueryConstant.getVerticalGapAboveLastLine(
+                                context,
+                              ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -453,9 +452,10 @@ class _SignUpState extends State<SignUp> {
                           ],
                         ),
                         SizedBox(
-                          height: Constants.getLoginVerticalGapBelowLastLine(
-                            context,
-                          ),
+                          height:
+                              MediaQueryConstant.getLoginVerticalGapBelowLastLine(
+                                context,
+                              ),
                         ),
                       ],
                     ),

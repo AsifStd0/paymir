@@ -6,15 +6,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 
 import '../../util/AlertDialogueClass.dart';
-import '../../util/Constants.dart';
+import '../../util/Mediaquery_Constant.dart';
 import '../../util/MyValidation.dart';
 import '../../util/NetworkHelperClass.dart';
 import '../../util/SecureStorage.dart';
-import '../SuccessfulPaymentPageNew.dart';
 import '../login/login_screen.dart';
+import 'SuccessfulPaymentPageNew.dart';
 
 class EasyPaisaPaymentPageNew extends StatefulWidget {
   final Map<String, dynamic> values;
@@ -146,9 +146,13 @@ class _EasyPaisaPaymentPageNewState extends State<EasyPaisaPaymentPageNew> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        left: Constants.getBackArrowLeftPadding(context),
-                        top: Constants.getBackArrowTopPadding(context),
-                        bottom: Constants.getBackArrowBottomPadding(context),
+                        left: MediaQueryConstant.getBackArrowLeftPadding(
+                          context,
+                        ),
+                        top: MediaQueryConstant.getBackArrowTopPadding(context),
+                        bottom: MediaQueryConstant.getBackArrowBottomPadding(
+                          context,
+                        ),
                       ),
 
                       child: IconButton(
@@ -163,9 +167,10 @@ class _EasyPaisaPaymentPageNewState extends State<EasyPaisaPaymentPageNew> {
 
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: Constants.getSymmetricHorizontalPadding(
-                      context,
-                    ),
+                    horizontal:
+                        MediaQueryConstant.getSymmetricHorizontalPadding(
+                          context,
+                        ),
                   ),
                   child: Form(
                     key: _formKey,
@@ -179,13 +184,14 @@ class _EasyPaisaPaymentPageNewState extends State<EasyPaisaPaymentPageNew> {
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.bold,
                             fontSize:
-                                Constants.getGeneralFontSize(context) * 0.025,
+                                MediaQueryConstant.getGeneralFontSize(context) *
+                                0.025,
                           ),
                         ),
 
                         SizedBox(
                           height:
-                              Constants.getVerticalGapBetweenMainAndSmallFont(
+                              MediaQueryConstant.getVerticalGapBetweenMainAndSmallFont(
                                 context,
                               ),
                         ),
@@ -196,7 +202,9 @@ class _EasyPaisaPaymentPageNewState extends State<EasyPaisaPaymentPageNew> {
                             color: AppColors.secondaryColor(),
                             fontFamily: 'Visby',
                             fontWeight: FontWeight.w500,
-                            fontSize: Constants.getSmallFontSize(context),
+                            fontSize: MediaQueryConstant.getSmallFontSize(
+                              context,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -318,7 +326,9 @@ class _EasyPaisaPaymentPageNewState extends State<EasyPaisaPaymentPageNew> {
                         ),
 
                         SizedBox(
-                          height: Constants.getTextFormFieldHeight(context),
+                          height: MediaQueryConstant.getTextFormFieldHeight(
+                            context,
+                          ),
                           width: MediaQuery.of(context).size.width * 0.79,
 
                           child: TextFormField(
@@ -328,9 +338,10 @@ class _EasyPaisaPaymentPageNewState extends State<EasyPaisaPaymentPageNew> {
                             decoration: InputDecoration(
                               hintText: "For example: 03123456789",
                               hintStyle: TextStyle(
-                                fontSize: Constants.getTextformfieldHintFont(
-                                  context,
-                                ),
+                                fontSize:
+                                    MediaQueryConstant.getTextformfieldHintFont(
+                                      context,
+                                    ),
                                 color: AppColors.secondaryColor(),
                                 fontFamily: 'Visby',
                                 fontWeight: FontWeight.normal,
@@ -338,7 +349,7 @@ class _EasyPaisaPaymentPageNewState extends State<EasyPaisaPaymentPageNew> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(
-                                    Constants.getTextformfieldBorderRadius(
+                                    MediaQueryConstant.getTextformfieldBorderRadius(
                                       context,
                                     ),
                                   ),
@@ -346,14 +357,16 @@ class _EasyPaisaPaymentPageNewState extends State<EasyPaisaPaymentPageNew> {
                               ),
                               counterText: '',
                               contentPadding: EdgeInsets.only(
-                                top: Constants.getTextformfieldContentPadding(
-                                  context,
-                                ),
-                                left: Constants.getTextformfieldContentPadding(
-                                  context,
-                                ),
+                                top:
+                                    MediaQueryConstant.getTextformfieldContentPadding(
+                                      context,
+                                    ),
+                                left:
+                                    MediaQueryConstant.getTextformfieldContentPadding(
+                                      context,
+                                    ),
                                 bottom:
-                                    Constants.getTextformfieldContentPadding(
+                                    MediaQueryConstant.getTextformfieldContentPadding(
                                       context,
                                     ),
                               ),
@@ -361,8 +374,7 @@ class _EasyPaisaPaymentPageNewState extends State<EasyPaisaPaymentPageNew> {
                             controller: _mobileNumberController,
                             keyboardType: TextInputType.number,
                             validator:
-                                (value) =>
-                                    MyValidationClass.validateMobile(value),
+                                (value) => MyValidation.validateMobile(value),
                           ),
                         ),
 
@@ -372,7 +384,7 @@ class _EasyPaisaPaymentPageNewState extends State<EasyPaisaPaymentPageNew> {
                         TextButton(
                           onPressed: () {
                             _submit();
-                            if (MyValidationClass.validateMobile(
+                            if (MyValidation.validateMobile(
                                   _mobileNumberController.text,
                                 ) ==
                                 null) {
@@ -385,12 +397,12 @@ class _EasyPaisaPaymentPageNewState extends State<EasyPaisaPaymentPageNew> {
                           child: Container(
                             alignment: Alignment.center,
                             width: double.infinity,
-                            height: Constants.getButtonHeight(context),
+                            height: MediaQueryConstant.getButtonHeight(context),
 
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(
-                                  Constants.getButtonRadius(context),
+                                  MediaQueryConstant.getButtonRadius(context),
                                 ),
                               ),
 
@@ -414,9 +426,10 @@ class _EasyPaisaPaymentPageNewState extends State<EasyPaisaPaymentPageNew> {
                                       'Confirm',
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: Constants.getButtonFont(
-                                          context,
-                                        ),
+                                        fontSize:
+                                            MediaQueryConstant.getButtonFont(
+                                              context,
+                                            ),
                                         fontFamily: 'Visby',
                                         fontWeight: FontWeight.bold,
                                       ),

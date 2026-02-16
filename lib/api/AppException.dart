@@ -1,27 +1,44 @@
-class AppException implements Exception{
-  final String? Message;
-  final String? _prefix;
+/// ============================================
+/// CUSTOM EXCEPTION CLASSES FOR API ERRORS
+/// ============================================
 
-  AppException([this.Message, this._prefix]);
+class AppException implements Exception {
+  final String? message;
+  final String? prefix;
 
- String toString(){
-    return "$Message $_prefix";
- }
+  AppException([this.message, this.prefix]);
+
+  @override
+  String toString() {
+    return "$prefix: $message";
+  }
 }
 
-class FetchDataException extends AppException{
-  FetchDataException([String? message]): super(message, 'Error During Communication');
+class FetchDataException extends AppException {
+  FetchDataException([String? message])
+    : super(message, 'Error During Communication');
 }
 
-class BadRequestException extends AppException{
-  BadRequestException([String? message]) : super(message , 'Invalid Request');
+class BadRequestException extends AppException {
+  BadRequestException([String? message]) : super(message, 'Invalid Request');
 }
 
 class UnauthorisedException extends AppException {
   UnauthorisedException([String? message])
-      : super(message, 'Unauthorised request');
+    : super(message, 'Unauthorised request');
 }
 
 class InvalidInputException extends AppException {
-  InvalidInputException([String? message]) : super(message, 'Invalid Inpit');
+  InvalidInputException([String? message]) : super(message, 'Invalid Input');
+}
+
+class NetworkException extends AppException {
+  NetworkException([String? message]) : super(message, 'Network Error');
+}
+
+class ServerException extends AppException {
+  final int? statusCode;
+
+  ServerException({String? message, this.statusCode})
+    : super(message, 'Server Error (${statusCode ?? 'Unknown'})');
 }

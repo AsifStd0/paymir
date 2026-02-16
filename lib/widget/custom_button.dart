@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../util/Constants.dart';
+import '../util/Mediaquery_Constant.dart';
+import '../util/theme/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -30,19 +30,23 @@ class CustomButton extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         width: width ?? double.infinity,
-        height: height ?? Constants.getButtonHeight(context),
+        height: height ?? MediaQueryConstant.getButtonHeight(context),
         decoration:
             canPress
                 ? BoxDecoration(
                   borderRadius: BorderRadius.all(
-                    Radius.circular(Constants.getButtonRadius(context)),
+                    Radius.circular(
+                      MediaQueryConstant.getButtonRadius(context),
+                    ),
                   ),
                   gradient: AppColors.primaryGradient,
                 )
                 : BoxDecoration(
                   color: AppColors.secondary,
                   borderRadius: BorderRadius.all(
-                    Radius.circular(Constants.getButtonRadius(context)),
+                    Radius.circular(
+                      MediaQueryConstant.getButtonRadius(context),
+                    ),
                   ),
                 ),
         child:
@@ -54,7 +58,7 @@ class CustomButton extends StatelessWidget {
                   text,
                   style: TextStyle(
                     color: AppColors.white,
-                    fontSize: Constants.getButtonFont(context),
+                    fontSize: MediaQueryConstant.getButtonFont(context),
                     fontFamily: 'Visby',
                     fontWeight: FontWeight.bold,
                   ),

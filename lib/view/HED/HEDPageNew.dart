@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../util/Constants.dart';
+import '../../util/Mediaquery_Constant.dart';
 import '../PaymentPageNew.dart';
 import 'hed_provider.dart';
 import 'hed_widget.dart';
@@ -63,7 +63,7 @@ class _HEDPageNewState extends State<HEDPageNew> {
                       ),
                       SizedBox(
                         height:
-                            Constants.getVerticalGapBetweenTwoTextformfields(
+                            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                               context,
                             ) *
                             15,
@@ -83,9 +83,15 @@ class _HEDPageNewState extends State<HEDPageNew> {
   Widget _buildTransactionTabs(BuildContext context, HedProvider provider) {
     return Padding(
       padding: EdgeInsets.only(
-        top: Constants.getVerticalGapBetweenTwoTextformfields(context) * 15,
-        left: Constants.getVerticalGapBetweenTwoTextformfields(context),
-        right: Constants.getVerticalGapBetweenTwoTextformfields(context),
+        top:
+            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) *
+            15,
+        left: MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+          context,
+        ),
+        right: MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+          context,
+        ),
       ),
       child: Container(
         color: const Color(0xffFAFCFF),
@@ -120,22 +126,29 @@ class _HEDPageNewState extends State<HEDPageNew> {
       labelPadding: const EdgeInsets.only(bottom: 0),
       indicator: UnderlineTabIndicator(
         borderSide: BorderSide(
-          width: Constants.getVerticalGapBetweenTwoTextformfields(context) * 4,
+          width:
+              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                context,
+              ) *
+              4,
           color: const Color(0xff6045FF),
         ),
         insets: EdgeInsets.symmetric(
           horizontal:
-              Constants.getVerticalGapBetweenTwoTextformfields(context) * 20,
+              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                context,
+              ) *
+              20,
         ),
       ),
       labelStyle: TextStyle(
-        fontSize: Constants.getTabSelectedFontSize(context),
+        fontSize: MediaQueryConstant.getTabSelectedFontSize(context),
         color: const Color(0xff3F3F3F).withOpacity(1),
         fontFamily: 'Metropolis',
         fontWeight: FontWeight.w800,
       ),
       unselectedLabelStyle: TextStyle(
-        fontSize: Constants.getTabUnSelectedFontSize(context),
+        fontSize: MediaQueryConstant.getTabUnSelectedFontSize(context),
         color: const Color(0xff3F3F3F).withOpacity(0.55),
         fontFamily: 'Metropolis',
         fontWeight: FontWeight.w400,

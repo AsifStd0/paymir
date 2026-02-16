@@ -2,10 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:paymir_new_android/core/theme/app_colors.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../../util/Constants.dart';
+import '../../util/Mediaquery_Constant.dart';
 
 /// ============================================
 /// COMMON WIDGETS FOR MOBILE PAGE VIEWS
@@ -23,9 +23,9 @@ class MobileBackButton extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.only(
-            left: Constants.getBackArrowLeftPadding(context),
-            top: Constants.getBackArrowTopPadding(context),
-            bottom: Constants.getBackArrowBottomPadding(context),
+            left: MediaQueryConstant.getBackArrowLeftPadding(context),
+            top: MediaQueryConstant.getBackArrowTopPadding(context),
+            bottom: MediaQueryConstant.getBackArrowBottomPadding(context),
           ),
           child: IconButton(
             icon: SvgPicture.asset("assets/images/back_arrow.svg"),
@@ -51,7 +51,7 @@ class MobileTitleText extends StatelessWidget {
         color: AppColors.primaryColor(),
         fontFamily: 'Visby',
         fontWeight: FontWeight.bold,
-        fontSize: Constants.getMainFontSize(context),
+        fontSize: MediaQueryConstant.getMainFontSize(context),
       ),
     );
   }
@@ -71,7 +71,7 @@ class MobileSubtitleText extends StatelessWidget {
         color: AppColors.secondaryColor(),
         fontFamily: 'Visby',
         fontWeight: FontWeight.w500,
-        fontSize: Constants.getSmallFontSize(context),
+        fontSize: MediaQueryConstant.getSmallFontSize(context),
       ),
     );
   }
@@ -93,7 +93,7 @@ class MobilePhoneField extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
-          Constants.getTextformfieldBorderRadius(context),
+          MediaQueryConstant.getTextformfieldBorderRadius(context),
         ),
         border: Border.all(),
       ),
@@ -110,14 +110,14 @@ class MobilePhoneField extends StatelessWidget {
           controller: controller,
           dropdownIconPosition: IconPosition.trailing,
           dropdownTextStyle: TextStyle(
-            fontSize: Constants.getGeneralFontSize(context) * 0.025,
+            fontSize: MediaQueryConstant.getGeneralFontSize(context) * 0.025,
             color: const Color(0xff03110A),
             fontFamily: 'Visby',
             fontWeight: FontWeight.w500,
           ),
           keyboardType: TextInputType.number,
           style: TextStyle(
-            fontSize: Constants.getGeneralFontSize(context) * 0.025,
+            fontSize: MediaQueryConstant.getGeneralFontSize(context) * 0.025,
             color: const Color(0xff03110A),
             fontFamily: 'Visby',
             fontWeight: FontWeight.w500,
@@ -217,12 +217,14 @@ class MobileGradientButton extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         width: double.infinity,
-        height: Constants.getButtonHeight(context),
+        height: MediaQueryConstant.getButtonHeight(context),
         decoration:
             isEnabled
                 ? BoxDecoration(
                   borderRadius: BorderRadius.all(
-                    Radius.circular(Constants.getButtonRadius(context)),
+                    Radius.circular(
+                      MediaQueryConstant.getButtonRadius(context),
+                    ),
                   ),
                   gradient: const LinearGradient(
                     begin: Alignment.centerLeft,
@@ -233,7 +235,9 @@ class MobileGradientButton extends StatelessWidget {
                 : BoxDecoration(
                   color: Colors.grey,
                   borderRadius: BorderRadius.all(
-                    Radius.circular(Constants.getButtonRadius(context)),
+                    Radius.circular(
+                      MediaQueryConstant.getButtonRadius(context),
+                    ),
                   ),
                 ),
         child:
@@ -246,7 +250,7 @@ class MobileGradientButton extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Visby',
-                    fontSize: Constants.getButtonFont(context),
+                    fontSize: MediaQueryConstant.getButtonFont(context),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -266,10 +270,12 @@ class MobileSuccessImage extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.only(
-            top: Constants.getVerticalGapBetweenTwoTextformfields(context),
+            top: MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+              context,
+            ),
           ),
           child: SizedBox(
-            height: Constants.getButtonHeight(context) * 5,
+            height: MediaQueryConstant.getButtonHeight(context) * 5,
             width: MediaQuery.of(context).size.width,
             child: Image.asset("assets/images/successfully_registered1.gif"),
           ),
@@ -292,7 +298,11 @@ class MobileSuccessTitle extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.only(
-            top: Constants.getVerticalGapBetweenTwoTextformfields(context) * 80,
+            top:
+                MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                  context,
+                ) *
+                80,
           ),
           child: Text(
             text,
@@ -300,7 +310,7 @@ class MobileSuccessTitle extends StatelessWidget {
               color: const Color(0xff03110A),
               fontFamily: 'Visby',
               fontWeight: FontWeight.bold,
-              fontSize: Constants.getMainFontSize(context),
+              fontSize: MediaQueryConstant.getMainFontSize(context),
             ),
           ),
         ),
@@ -328,7 +338,7 @@ class MobileSuccessMessage extends StatelessWidget {
               color: AppColors.secondaryColor(),
               fontFamily: 'Visby',
               fontWeight: FontWeight.normal,
-              fontSize: Constants.getSmallFontSize(context),
+              fontSize: MediaQueryConstant.getSmallFontSize(context),
             ),
           ),
         ),

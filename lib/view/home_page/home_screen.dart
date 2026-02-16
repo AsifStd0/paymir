@@ -4,10 +4,10 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../../util/AlertDialogueClass.dart';
-import '../../util/Constants.dart';
+import '../../util/Mediaquery_Constant.dart';
 import '../PaymentPageNew.dart';
 import '../Profile/Profile_Screen.dart';
-import '../QRCodePageNew.dart';
+import '../QR_Code/QRCodePageNew.dart';
 import '../Voucher/VoucherNoPageNew.dart';
 import 'home_provider.dart';
 import 'home_widget.dart';
@@ -67,7 +67,7 @@ class _HomePageNewState extends State<HomePageNew> {
                     ServicesGrid(),
                     SizedBox(
                       height:
-                          Constants.getVerticalGapBetweenTwoTextformfields(
+                          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                             context,
                           ) *
                           15,
@@ -75,7 +75,7 @@ class _HomePageNewState extends State<HomePageNew> {
                     ServicesGridRow2(),
                     SizedBox(
                       height:
-                          Constants.getVerticalGapBetweenTwoTextformfields(
+                          MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                             context,
                           ) *
                           15,
@@ -95,9 +95,15 @@ class _HomePageNewState extends State<HomePageNew> {
   Widget _buildTransactionTabs(BuildContext context, HomeProvider provider) {
     return Padding(
       padding: EdgeInsets.only(
-        top: Constants.getVerticalGapBetweenTwoTextformfields(context) * 15,
-        left: Constants.getVerticalGapBetweenTwoTextformfields(context),
-        right: Constants.getVerticalGapBetweenTwoTextformfields(context),
+        top:
+            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(context) *
+            15,
+        left: MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+          context,
+        ),
+        right: MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+          context,
+        ),
       ),
       child: Container(
         color: const Color(0xffFAFCFF),
@@ -132,22 +138,29 @@ class _HomePageNewState extends State<HomePageNew> {
       labelPadding: const EdgeInsets.only(bottom: 0),
       indicator: UnderlineTabIndicator(
         borderSide: BorderSide(
-          width: Constants.getVerticalGapBetweenTwoTextformfields(context) * 4,
+          width:
+              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                context,
+              ) *
+              4,
           color: const Color(0xff6045FF),
         ),
         insets: EdgeInsets.symmetric(
           horizontal:
-              Constants.getVerticalGapBetweenTwoTextformfields(context) * 20,
+              MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                context,
+              ) *
+              20,
         ),
       ),
       labelStyle: TextStyle(
-        fontSize: Constants.getTabSelectedFontSize(context),
+        fontSize: MediaQueryConstant.getTabSelectedFontSize(context),
         color: const Color(0xff3F3F3F).withOpacity(1),
         fontFamily: 'Metropolis',
         fontWeight: FontWeight.w800,
       ),
       unselectedLabelStyle: TextStyle(
-        fontSize: Constants.getTabUnSelectedFontSize(context),
+        fontSize: MediaQueryConstant.getTabUnSelectedFontSize(context),
         color: const Color(0xff3F3F3F).withOpacity(0.55),
         fontFamily: 'Metropolis',
         fontWeight: FontWeight.w400,
@@ -257,13 +270,13 @@ class _HomePageNewState extends State<HomePageNew> {
       selectedLabelStyle: TextStyle(
         color: const Color(0xff424242),
         fontFamily: 'Metropolis',
-        fontSize: Constants.getGeneralFontSize(context) * 0.016,
+        fontSize: MediaQueryConstant.getGeneralFontSize(context) * 0.016,
         fontWeight: FontWeight.bold,
       ),
       unselectedLabelStyle: TextStyle(
         color: const Color(0xff424242).withOpacity(0.80),
         fontFamily: 'Metropolis',
-        fontSize: Constants.getGeneralFontSize(context) * 0.014,
+        fontSize: MediaQueryConstant.getGeneralFontSize(context) * 0.014,
         fontWeight: FontWeight.w500,
       ),
       items: [
