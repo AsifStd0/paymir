@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:paymir_new_android/api/NetworkApiService.dart';
 import 'package:paymir_new_android/core/locator.dart';
+import 'package:paymir_new_android/util/SecureStorage.dart';
 
 import '../core/services/auth_service.dart';
 import '../model/login_model.dart';
 import '../util/AlertDialogueClass.dart';
-import '../util/Shared_pref.dart';
 import '../util/app_strings.dart';
 
 /// Provider for managing login state and logic
@@ -74,12 +74,10 @@ class LoginProvider extends ChangeNotifier {
           const Duration(seconds: expiresIn),
         );
 
-        await SharedPrefService.storeToken(
-          tokenValue: response.accessToken!,
-          expirationDate: expirationDate,
-          cnic: cnic,
+        await SecureStorage().storage.write(
+          key: 'token',
+          value: response.accessToken!,
         );
-
         return true;
       } else {
         _setError(response.errorDescription ?? AppStrings.loginFailed);

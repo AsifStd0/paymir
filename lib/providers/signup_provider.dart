@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:paymir_new_android/api/NetworkApiService.dart';
 import 'package:paymir_new_android/core/locator.dart';
-import 'package:paymir_new_android/util/Shared_pref.dart';
+import 'package:paymir_new_android/util/SecureStorage.dart';
 
 import '../core/services/auth_service.dart';
 import '../model/signup_model.dart';
@@ -204,10 +204,13 @@ class SignupProvider extends ChangeNotifier {
         _otp = response.otp;
 
         // ! Store signup data in SharedPreferences
-        await SharedPrefService.setUserCNIC(_cnic!);
-        await SharedPrefService.setUserEmail(_email!);
-        await SharedPrefService.setUserFullName("$_firstName $_lastName");
-        await SharedPrefService.setUserMobile(mobileNo);
+        await SecureStorage().storage.write(key: 'cnic', value: _cnic!);
+        await SecureStorage().storage.write(key: 'email', value: _email!);
+        await SecureStorage().storage.write(
+          key: 'fullName',
+          value: "$_firstName $_lastName",
+        );
+        await SecureStorage().storage.write(key: 'mobileNo', value: mobileNo);
 
         // ! Show appropriate dialog based on status code
         if (response.isRegistered) {

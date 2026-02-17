@@ -6,12 +6,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:paymir_new_android/util/SecureStorage.dart';
 
 import '../../api/api_client.dart';
 import '../../core/locator.dart';
 import '../../core/services/profile_service.dart';
 import '../../util/AlertDialogueClass.dart';
-import '../../util/Shared_pref.dart';
 import '../../util/app_strings.dart';
 import '../../view/login/login_screen.dart';
 
@@ -378,7 +378,7 @@ class ProfileProvider extends ChangeNotifier {
 
   /// Handle logout
   Future<void> handleLogout(BuildContext context) async {
-    await SharedPrefService.deleteToken();
+    await SecureStorage().deleteToken();
     if (context.mounted) {
       Navigator.pushAndRemoveUntil(
         context,

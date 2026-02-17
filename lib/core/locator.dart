@@ -5,7 +5,7 @@ import '../api/api_client.dart';
 import '../core/services/complaint_service.dart';
 import '../core/services/payment_service.dart';
 import '../core/services/profile_service.dart';
-import '../util/Shared_pref.dart';
+import '../util/SecureStorage.dart';
 import '../view/Voucher/voucher_service.dart';
 import 'services/auth_service.dart';
 
@@ -13,19 +13,7 @@ import 'services/auth_service.dart';
 final GetIt locator = GetIt.instance;
 
 // ! Setup dependency injection container
-// ! Registers all services and initializes SharedPreferences
-// ! Automatically loads and sets authentication token
 Future<void> setupLocator() async {
-  try {
-    //!  Initialize SharedPreferences first
-    await SharedPrefService.init();
-    if (kDebugMode) {
-      debugPrint('✅ SharedPreferences initialized');
-    }
-  } catch (e) {
-    debugPrint('⚠️ SharedPreferences initialization delayed: $e');
-  }
-
   // ============================================
   //!  API CLIENT REGISTRATION (Singleton)
   // ============================================
@@ -101,7 +89,7 @@ Future<void> setupLocator() async {
 // ! Loads token from SharedPreferences and sets it automatically
 Future<void> _initializeAuthToken(ApiClient apiClient) async {
   try {
-    final token = await SharedPrefService.getToken();
+    final token = await SecureStorage().getToken();
     if (token != null && token.isNotEmpty) {
       // Ensure token has 'Bearer ' prefix
       final formattedToken =
@@ -124,22 +112,8 @@ Future<void> _initializeAuthToken(ApiClient apiClient) async {
 // ! Update authentication token in ApiClient
 // ! Call this after login or token refresh
 Future<void> updateAuthToken(String token) async {
-  try {
-    // Save token to SharedPreferences
-    await SharedPrefService.setToken(token);
-
-    // Update token in ApiClient
-    final apiClient = locator<ApiClient>();
-    final formattedToken =
-        token.startsWith('Bearer ') ? token : 'Bearer $token';
-    apiClient.setAuthToken(formattedToken);
-
-    if (kDebugMode) {
-      debugPrint('✅ Auth token updated in ApiClient and SharedPreferences');
-    }
-  } catch (e) {
-    debugPrint('❌ Error updating auth token: $e');
-  }
+  // Save token to SharedPreferences
+  await SecureStorage().storage.write(key: 'token', value: token);
 }
 
 // ! Clear authentication token
@@ -147,7 +121,7 @@ Future<void> updateAuthToken(String token) async {
 Future<void> clearAuthToken() async {
   try {
     // Clear token from SharedPreferences
-    await SharedPrefService.deleteToken();
+    await SecureStorage().deleteToken();
 
     // Clear token from ApiClient
     final apiClient = locator<ApiClient>();
@@ -164,7 +138,7 @@ Future<void> clearAuthToken() async {
 // ! Get current authentication token
 Future<String?> getCurrentToken() async {
   try {
-    return await SharedPrefService.getToken();
+    return await SecureStorage().getToken();
   } catch (e) {
     debugPrint('❌ Error getting token: $e');
     return null;

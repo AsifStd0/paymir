@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paymir_new_android/api/NetworkApiService.dart';
 
 import '../../util/AlertDialogueClass.dart';
-import '../../util/Shared_pref.dart';
+import '../../util/SecureStorage.dart';
 import '../../util/app_strings.dart';
 import 'voucher_service.dart';
 
@@ -48,8 +48,8 @@ class VoucherProvider extends ChangeNotifier {
       }
 
       // Get token and CNIC from SharedPreferences
-      final token = await SharedPrefService.getToken() ?? '';
-      final cnic = await SharedPrefService.getCNIC() ?? '';
+      final token = await SecureStorage().getToken() ?? '';
+      final cnic = await SecureStorage().getCNIC() ?? '';
 
       if (token.isEmpty || cnic.isEmpty) {
         _setLoading(false);

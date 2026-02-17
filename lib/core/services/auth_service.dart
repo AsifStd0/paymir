@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
+import 'package:paymir_new_android/util/SecureStorage.dart';
 
 import '../../model/login_model.dart';
 import '../../model/signup_model.dart';
-import '../../util/Shared_pref.dart';
 import '../../util/app_url.dart';
 import 'base_service.dart';
 
@@ -36,7 +36,19 @@ class AuthService extends BaseService {
 
         // Save user data to shared preferences if registration is successful
         if (signupResponse.isSuccess) {
-          await _saveUserData(request);
+          await SecureStorage().storage.write(key: 'cnic', value: request.cnic);
+          await SecureStorage().storage.write(
+            key: 'email',
+            value: request.emailAddress,
+          );
+          await SecureStorage().storage.write(
+            key: 'fullName',
+            value: request.fullName,
+          );
+          await SecureStorage().storage.write(
+            key: 'mobileNo',
+            value: request.mobileNo.toString(),
+          );
         }
 
         return signupResponse;
@@ -153,8 +165,22 @@ class AuthService extends BaseService {
         final loginResponse = LoginResponse.fromJson(responseData);
 
         // Save login data if successful
-        if (loginResponse.isSuccess) {
-          await _saveLoginData(loginResponse, request.username);
+        if (loginResponse.isSuccess && loginResponse.accessToken != null) {
+          // Calculate expiration date: current time + expiresIn seconds
+          final DateTime now = DateTime.now();
+          final int expiresInSeconds =
+              loginResponse.expiresIn ?? 3599; // Default to 3599 if null
+          final DateTime expirationDate = now.add(
+            Duration(seconds: expiresInSeconds),
+          );
+
+          // Store token, expiration date, and CNIC using the proper method
+          // This matches the old working implementation
+          await SecureStorage().storeToken(
+            loginResponse.accessToken!,
+            expirationDate,
+            request.username, // CNIC is stored as username
+          );
         }
 
         return loginResponse;
@@ -173,35 +199,6 @@ class AuthService extends BaseService {
         error: 'Login Error',
         errorDescription: e.toString(),
       );
-    }
-  }
-
-  /// !                  Save login data to shared preferences
-  Future<void> _saveLoginData(LoginResponse response, String cnic) async {
-    try {
-      await SharedPrefService.setUserCNIC(cnic);
-      if (response.expiresIn != null) {
-        final expirationDate = DateTime.now().add(
-          Duration(seconds: response.expiresIn!),
-        );
-        await SharedPrefService.setTokenExpiration(
-          expirationDate.toIso8601String(),
-        );
-      }
-    } catch (e) {
-      log('Error saving login data: $e');
-    }
-  }
-
-  /// !                  Save user data to shared preferences
-  Future<void> _saveUserData(SignupRequest request) async {
-    try {
-      await SharedPrefService.setUserCNIC(request.cnic);
-      await SharedPrefService.setUserEmail(request.emailAddress);
-      await SharedPrefService.setUserFullName(request.fullName);
-      await SharedPrefService.setUserMobile(request.mobileNo);
-    } catch (e) {
-      log('Error saving user data: $e');
     }
   }
 }

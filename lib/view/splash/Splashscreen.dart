@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../util/Shared_pref.dart';
+import '../../util/SecureStorage.dart';
 import '../login/login_screen.dart';
 import '../main/main_screen.dart';
 
@@ -21,22 +22,52 @@ class _SplashscreenState extends State<Splashscreen> {
   @override
   void initState() {
     super.initState();
-    requestPermissions();
-    fetchSecureStorageData();
+    _initializeApp();
+  }
 
-    Future.delayed(const Duration(seconds: 3), () {
-      if (strToken.isEmpty || expirationDate.isBefore(DateTime.now())) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
-        );
-      } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const MainScreen()),
-        );
+  /// Initialize app: request permissions, fetch token, then navigate
+  Future<void> _initializeApp() async {
+    // Request permissions (non-blocking)
+    requestPermissions();
+
+    // Fetch token data from SecureStorage
+    await fetchSecureStorageData();
+
+    // Wait for splash screen display (3 seconds)
+    await Future.delayed(const Duration(seconds: 3));
+
+    // Check if widget is still mounted before navigating
+    if (!mounted) return;
+
+    // Check token validity and navigate
+    final bool isTokenValid =
+        strToken.isNotEmpty && expirationDate.isAfter(DateTime.now());
+
+    if (kDebugMode) {
+      debugPrint('🚀 Splash: Navigation decision - Token valid: $isTokenValid');
+      debugPrint('   Token empty: ${strToken.isEmpty}');
+      debugPrint('   Expired: ${expirationDate.isBefore(DateTime.now())}');
+    }
+
+    if (!isTokenValid) {
+      // Token is missing or expired - go to login
+      if (kDebugMode) {
+        debugPrint('➡️ Splash: Navigating to LoginScreen');
       }
-    });
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
+    } else {
+      // Token is valid - go to home
+      if (kDebugMode) {
+        debugPrint('➡️ Splash: Navigating to MainScreen');
+      }
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const MainScreen()),
+      );
+    }
   }
 
   Future<void> requestPermissions() async {
@@ -44,12 +75,41 @@ class _SplashscreenState extends State<Splashscreen> {
   }
 
   Future<void> fetchSecureStorageData() async {
-    strToken = await SharedPrefService.getToken() ?? '';
-    strTokenExpiry = await SharedPrefService.getTokenExpiry() ?? '';
-    expirationDate =
-        (strTokenExpiry.isEmpty)
-            ? DateTime.now()
-            : DateTime.parse(strTokenExpiry);
+    try {
+      strToken = await SecureStorage().getToken() ?? '';
+      strTokenExpiry = await SecureStorage().getTokenExpiry() ?? '';
+
+      if (kDebugMode) {
+        debugPrint(
+          '🔑 Splash: Token loaded: ${strToken.isNotEmpty ? "✅ Found" : "❌ Empty"}',
+        );
+        debugPrint('📅 Splash: Expiry loaded: $strTokenExpiry');
+      }
+
+      if (strTokenExpiry.isNotEmpty) {
+        expirationDate = DateTime.parse(strTokenExpiry);
+
+        if (kDebugMode) {
+          debugPrint('📅 Splash: Parsed expiration: $expirationDate');
+          debugPrint('⏰ Splash: Current time: ${DateTime.now()}');
+          debugPrint(
+            '✅ Splash: Token valid: ${expirationDate.isAfter(DateTime.now())}',
+          );
+        }
+      } else {
+        expirationDate = DateTime.now(); // Expired if no expiry date
+        if (kDebugMode) {
+          debugPrint('⚠️ Splash: No expiry date found, treating as expired');
+        }
+      }
+    } catch (e) {
+      // If there's an error parsing, treat as expired
+      strToken = '';
+      expirationDate = DateTime.now();
+      if (kDebugMode) {
+        debugPrint('❌ Splash: Error fetching token data: $e');
+      }
+    }
   }
 
   @override

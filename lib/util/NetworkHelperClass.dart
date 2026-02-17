@@ -38,6 +38,7 @@ class NetworkHelper {
     _client ??= _createHttpClient();
     return _client!;
   }
+
   static Future<String?> signUp(Map<String, dynamic> data) async {
     final url = Uri.parse(ApiEndpoints.getFullUrl(ApiEndpoints.registerUser));
     final encoding = Encoding.getByName('utf-8');
@@ -141,7 +142,11 @@ class NetworkHelper {
       ApiEndpoints.getFullUrl(ApiEndpoints.verifyUserForResettingPassword),
     );
     final encoding = Encoding.getByName('utf-8');
-    final response = await _httpClient.post(url, body: data, encoding: encoding);
+    final response = await _httpClient.post(
+      url,
+      body: data,
+      encoding: encoding,
+    );
     return response.body;
   }
 
@@ -363,7 +368,11 @@ class NetworkHelper {
     final url = Uri.parse('$_baseUrl/$endPoint');
     final encoding = Encoding.getByName('utf-8');
 
-    Response response = await _httpClient.post(url, body: data, encoding: encoding);
+    Response response = await _httpClient.post(
+      url,
+      body: data,
+      encoding: encoding,
+    );
 
     return response.body;
   }
@@ -373,7 +382,11 @@ class NetworkHelper {
 
     final encoding = Encoding.getByName('utf-8');
 
-    Response response = await _httpClient.post(url, body: data, encoding: encoding);
+    Response response = await _httpClient.post(
+      url,
+      body: data,
+      encoding: encoding,
+    );
 
     return response.body;
   }
@@ -384,7 +397,11 @@ class NetworkHelper {
   ) async {
     final url = Uri.parse(ApiEndpoints.getFullUrl(ApiEndpoints.getOldPassword));
     final headers = {'Accept': 'application/json', 'Authorization': auth};
-    Response response = await _httpClient.post(url, headers: headers, body: data);
+    Response response = await _httpClient.post(
+      url,
+      headers: headers,
+      body: data,
+    );
     return response.body;
   }
 
@@ -397,7 +414,11 @@ class NetworkHelper {
     );
     final headers = {'Accept': 'application/json', 'Authorization': auth};
 
-    Response response = await _httpClient.post(url, headers: headers, body: data);
+    Response response = await _httpClient.post(
+      url,
+      headers: headers,
+      body: data,
+    );
     return response.body;
   }
 
@@ -410,7 +431,11 @@ class NetworkHelper {
     );
     final headers = {'Accept': 'application/json', 'Authorization': auth};
 
-    Response response = await _httpClient.post(url, headers: headers, body: data);
+    Response response = await _httpClient.post(
+      url,
+      headers: headers,
+      body: data,
+    );
     return response.body;
   }
 }

@@ -350,7 +350,7 @@ class _PaymentPageNewState extends State<PaymentPageNew> {
                                   SizedBox(
                                     height:
                                         MediaQuery.of(context).size.height *
-                                        0.035,
+                                        0.045,
                                     width:
                                         MediaQuery.of(context).size.width *
                                         0.28,

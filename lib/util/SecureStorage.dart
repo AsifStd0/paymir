@@ -46,44 +46,43 @@ class SecureStorage {
     );
   }
 
-  // Future<void> storeToken(
-  //   String tokenValue,
-  //   DateTime expirationDate,
-  //   String strCNIC,
-  // ) async {
-  //   // Unique key for token
-  //   final keyToken = 'token';
-  //   final keyExpiry = 'expiry';
-  //   final keyCNIC = 'cnic';
+  /// Store token, expiration date, and CNIC
+  /// This matches the old working implementation
+  Future<void> storeToken(
+    String tokenValue,
+    DateTime expirationDate,
+    String strCNIC,
+  ) async {
+    String expiryString = expirationDate.toString();
 
-  //   String ExpiryString = expirationDate.toString();
+    // Delete previous keys first
+    await storage.deleteAll(
+      iOptions: _getIOSOptions(),
+      aOptions: _getAndroidOptions(),
+    );
 
-  //   // Delete previous keys
-  //   await storage.deleteAll(
-  //     iOptions: _getIOSOptions(),
-  //     aOptions: _getAndroidOptions(),
-  //   );
+    // Write token value
+    await storage.write(
+      key: _keyToken,
+      value: tokenValue,
+      iOptions: _getIOSOptions(),
+      aOptions: _getAndroidOptions(),
+    );
 
-  // // Write token value
-  // await storage.write(
-  //   key: keyToken,
-  //   value: tokenValue,
-  //   iOptions: _getIOSOptions(),
-  //   aOptions: _getAndroidOptions(),
-  // );
-  // await storage.write(
-  //   key: keyExpiry,
-  //   value: ExpiryString,
-  //   iOptions: _getIOSOptions(),
-  //   aOptions: _getAndroidOptions(),
-  // );
-  // await storage.write(
-  //   key: keyCNIC,
-  //   value: strCNIC,
-  //   iOptions: _getIOSOptions(),
-  //   aOptions: _getAndroidOptions(),
-  // );
+    // Write expiration date
+    await storage.write(
+      key: _keyTokenExpiry,
+      value: expiryString,
+      iOptions: _getIOSOptions(),
+      aOptions: _getAndroidOptions(),
+    );
 
-  //   print("Values stored to secure storage");
-  // }
+    // Write CNIC
+    await storage.write(
+      key: _keyCNIC,
+      value: strCNIC,
+      iOptions: _getIOSOptions(),
+      aOptions: _getAndroidOptions(),
+    );
+  }
 }

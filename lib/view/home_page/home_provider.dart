@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:paymir_new_android/util/Shared_pref.dart';
+import 'package:paymir_new_android/util/SecureStorage.dart';
 
 import '../../util/AlertDialogueClass.dart';
 import '../login/login_screen.dart';
@@ -81,13 +81,13 @@ class HomeProvider extends ChangeNotifier {
 
   /// Get CNIC from storage
   Future<String> getCNIC() async {
-    return await SharedPrefService.getCNIC() ?? '';
+    return await SecureStorage().getCNIC() ?? '';
   }
 
   /// Load all home data
   Future<void> loadAllData() async {
-    final token = await SharedPrefService.getToken() ?? '';
-    final cnic = await SharedPrefService.getCNIC() ?? '';
+    final token = await SecureStorage().getToken() ?? '';
+    final cnic = await SecureStorage().getCNIC() ?? '';
 
     if (token.isEmpty || cnic.isEmpty) {
       return;
@@ -332,7 +332,7 @@ class HomeProvider extends ChangeNotifier {
   /// Handle logout
   Future<void> handleLogout(BuildContext context) async {
     try {
-      await SharedPrefService.deleteToken();
+      await SecureStorage().deleteToken();
       if (context.mounted) {
         Navigator.pushAndRemoveUntil(
           context,
@@ -383,7 +383,7 @@ class HomeProvider extends ChangeNotifier {
 
   /// Handle session expired
   void handleSessionExpired(BuildContext context, {String? message}) {
-    SharedPrefService.deleteToken();
+    SecureStorage().deleteToken();
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (_) => const LoginScreen()),
