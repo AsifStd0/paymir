@@ -1,0 +1,206 @@
+import 'package:flutter/material.dart';
+
+import '../util/Mediaquery_Constant.dart';
+import '../util/theme/app_colors.dart';
+
+enum CustomTextType {
+  mainTitle,
+  subtitle,
+  body,
+  hint,
+  button,
+  link,
+  error,
+  forgotPassword,
+  divider,
+}
+
+class CustomText extends StatelessWidget {
+  final String text;
+  final CustomTextType type;
+  final Color? color;
+  final double? fontSize;
+  final FontWeight? fontWeight;
+  final TextAlign? textAlign;
+  final int? maxLines;
+  final TextOverflow? overflow;
+
+  const CustomText({
+    super.key,
+    required this.text,
+    required this.type,
+    this.color,
+    this.fontSize,
+    this.fontWeight,
+    this.textAlign,
+    this.maxLines,
+    this.overflow,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: textAlign,
+      maxLines: maxLines,
+      overflow: overflow,
+      style: _getTextStyle(context),
+    );
+  }
+
+  TextStyle _getTextStyle(BuildContext context) {
+    final baseStyle = TextStyle(
+      fontFamily: 'Visby',
+      color: color ?? _getDefaultColor(context),
+      fontSize: fontSize ?? _getDefaultFontSize(context),
+      fontWeight: fontWeight ?? _getDefaultFontWeight(),
+    );
+
+    return baseStyle;
+  }
+
+  Color _getDefaultColor(BuildContext context) {
+    switch (type) {
+      case CustomTextType.mainTitle:
+        return AppColors.primary;
+      case CustomTextType.subtitle:
+      case CustomTextType.body:
+      case CustomTextType.hint:
+      case CustomTextType.divider:
+        return AppColors.secondary;
+      case CustomTextType.button:
+        return AppColors.white;
+      case CustomTextType.link:
+        return AppColors.link;
+      case CustomTextType.error:
+        return AppColors.error;
+      case CustomTextType.forgotPassword:
+        return AppColors.forgotPassword;
+    }
+  }
+
+  double _getDefaultFontSize(BuildContext context) {
+    switch (type) {
+      case CustomTextType.mainTitle:
+        return MediaQueryConstant.getMainFontSize(context);
+      case CustomTextType.subtitle:
+        return MediaQueryConstant.getSmallFontSize(context);
+      case CustomTextType.body:
+      case CustomTextType.hint:
+      case CustomTextType.link:
+      case CustomTextType.divider:
+        return MediaQueryConstant.getTextformfieldHintFont(context);
+      case CustomTextType.button:
+        return MediaQueryConstant.getButtonFont(context);
+      case CustomTextType.error:
+        return MediaQueryConstant.getTextformfieldHintFont(context);
+      case CustomTextType.forgotPassword:
+        return MediaQueryConstant.getForgotPasswordFontSize(context);
+    }
+  }
+
+  FontWeight _getDefaultFontWeight() {
+    switch (type) {
+      case CustomTextType.mainTitle:
+      case CustomTextType.button:
+        return FontWeight.bold;
+      case CustomTextType.subtitle:
+        return FontWeight.w500;
+      case CustomTextType.body:
+      case CustomTextType.hint:
+      case CustomTextType.link:
+      case CustomTextType.divider:
+      case CustomTextType.error:
+      case CustomTextType.forgotPassword:
+        return FontWeight.normal;
+    }
+  }
+
+  // Factory constructors for common text types
+  factory CustomText.mainTitle({
+    required String text,
+    BuildContext? context,
+    Color? color,
+    TextAlign? textAlign,
+  }) {
+    return CustomText(
+      text: text,
+      type: CustomTextType.mainTitle,
+      color: color,
+      textAlign: textAlign,
+    );
+  }
+
+  factory CustomText.subtitle({
+    required String text,
+    BuildContext? context,
+    Color? color,
+    TextAlign? textAlign,
+  }) {
+    return CustomText(
+      text: text,
+      type: CustomTextType.subtitle,
+      color: color,
+      textAlign: textAlign,
+    );
+  }
+
+  factory CustomText.body({
+    required String text,
+    BuildContext? context,
+    Color? color,
+    FontWeight? fontWeight,
+    TextAlign? textAlign,
+  }) {
+    return CustomText(
+      text: text,
+      type: CustomTextType.body,
+      color: color,
+      fontWeight: fontWeight,
+      textAlign: textAlign,
+    );
+  }
+
+  factory CustomText.link({
+    required String text,
+    BuildContext? context,
+    Color? color,
+    VoidCallback? onTap,
+    TextAlign? textAlign,
+  }) {
+    return CustomText(
+      text: text,
+      type: CustomTextType.link,
+      color: color,
+      textAlign: textAlign,
+    );
+  }
+
+  factory CustomText.divider({
+    required String text,
+    BuildContext? context,
+    Color? color,
+    TextAlign? textAlign,
+  }) {
+    return CustomText(
+      text: text,
+      type: CustomTextType.divider,
+      color: color,
+      textAlign: textAlign,
+    );
+  }
+
+  factory CustomText.forgotPassword({
+    required String text,
+    BuildContext? context,
+    Color? color,
+    TextAlign? textAlign,
+  }) {
+    return CustomText(
+      text: text,
+      type: CustomTextType.forgotPassword,
+      color: color,
+      textAlign: textAlign,
+    );
+  }
+}

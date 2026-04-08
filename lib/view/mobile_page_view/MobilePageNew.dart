@@ -1,43 +1,61 @@
-import 'dart:convert';
-
-import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:provider/provider.dart';
 
-import '../../util/AlertDialogueClass.dart';
-import '../../util/Constants.dart';
-import '../../util/MyValidation.dart';
-import '../../util/NetworkHelperClass.dart';
+import '../../providers/signup_provider.dart';
+import '../../util/Mediaquery_Constant.dart';
+import 'mobile_page_view_widgets.dart';
 
+/// Mobile number entry screen for signup
+/// Step 2 in the signup flow (after CNIC verification)
 class MobilePageNew extends StatefulWidget {
-  final dynamic values; //if you have multiple values add here
-  const MobilePageNew(this.values);
+  final Map<String, dynamic>? values; // Optional for backward compatibility
+
+  const MobilePageNew({super.key, this.values});
 
   @override
-  _MobilePageNewState createState() => _MobilePageNewState(values);
+  _MobilePageNewState createState() => _MobilePageNewState();
 }
 
 class _MobilePageNewState extends State<MobilePageNew> {
-  dynamic values;
-
-  _MobilePageNewState(this.values);
-
-  bool _isLoading = false;
-
-  final TextEditingController _mobileNumberController = MaskedTextController(
-    mask: '0000000000',
-  );
-
+  final TextEditingController _mobileNumberController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
-  String cnicString = "";
   String phoneNumber = '';
 
   @override
-  void initState() {
-    super.initState();
+  void dispose() {
+    _mobileNumberController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleContinue() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    if (phoneNumber.isEmpty ||
+        !RegExp(r'^\+923[0-9]{9}$').hasMatch(phoneNumber)) {
+      MobileErrorDialog.show(
+        context: context,
+        title: 'Error',
+        message: 'Invalid phone number. Valid format is +923XXXXXXXXX',
+      );
+      return;
+    }
+
+    final signupProvider = Provider.of<SignupProvider>(context, listen: false);
+
+    final success = await signupProvider.registerUserWithMobile(
+      mobileNo: phoneNumber,
+      context: context,
+    );
+
+    if (success && mounted) {
+      // Navigation is handled by the provider via alert dialog
+      if (kDebugMode) {
+        print('Registration successful, OTP: ${signupProvider.otp}');
+      }
+    }
   }
 
   @override
@@ -47,250 +65,55 @@ class _MobilePageNewState extends State<MobilePageNew> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: Constants.getBackArrowLeftPadding(context),
-                      top: Constants.getBackArrowTopPadding(context),
-                      bottom: Constants.getBackArrowBottomPadding(context),
-                    ),
-                    child: //MediaQuery.of(context).size.width * 0.2,
-                        IconButton(
-                      icon: SvgPicture.asset("assets/images/back_arrow.svg"),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ),
-                ],
-              ),
-
+              const MobileBackButton(),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: Constants.getSymmetricHorizontalPadding(context),
+                  horizontal: MediaQueryConstant.getSymmetricHorizontalPadding(
+                    context,
+                  ),
                 ),
-
                 child: Form(
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Set up 2-step verification',
-                        style: TextStyle(
-                          color: Constants.primaryColor(),
-                          fontFamily: 'Visby',
-                          fontWeight: FontWeight.bold,
-                          fontSize: Constants.getMainFontSize(context),
-                        ),
-                      ),
-
-                      SizedBox(
-                        height: Constants.getVerticalGapBetweenMainAndSmallFont(
-                          context,
-                        ),
-                      ),
-
-                      Text(
-                        'Enter your phone number so that we can send you verification code',
-                        style: TextStyle(
-                          color: Constants.secondaryColor(),
-                          fontFamily: 'Visby',
-                          fontWeight: FontWeight.w500,
-                          fontSize: Constants.getSmallFontSize(context),
-                        ),
-                      ),
-
+                      const MobileTitleText(text: 'Set up 2-step verification'),
                       SizedBox(
                         height:
-                            Constants.getVerticalGapBetweenSmallfontAndTextfield(
+                            MediaQueryConstant.getVerticalGapBetweenMainAndSmallFont(
                               context,
                             ),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            Constants.getTextformfieldBorderRadius(context),
-                          ),
-                          border: Border.all(),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(
-                            MediaQuery.of(context).size.width * 0.05,
-                          ),
-                          child: IntlPhoneField(
-                            decoration: InputDecoration(
-                              hintText: '3123456789',
-                              hintStyle: TextStyle(color: Colors.grey),
-                            ),
-                            autovalidateMode: AutovalidateMode.disabled,
-                            showCountryFlag: false,
-
-                            showDropdownIcon: true,
-                            controller: _mobileNumberController,
-                            validator:
-                                (value) => MyValidationClass.validateMobile(
-                                  value as String?,
-                                ),
-                            dropdownIconPosition: IconPosition.trailing,
-                            dropdownTextStyle: TextStyle(
-                              fontSize:
-                                  Constants.getGeneralFontSize(context) * 0.025,
-                              color: const Color(0xff03110A),
-                              fontFamily: 'Visby',
-                              fontWeight: FontWeight.w500,
-                            ),
-                            keyboardType: TextInputType.number,
-                            style: TextStyle(
-                              fontSize:
-                                  Constants.getGeneralFontSize(context) * 0.025,
-                              color: const Color(0xff03110A),
-                              fontFamily: 'Visby',
-                              fontWeight: FontWeight.w500,
-                            ),
-                            initialCountryCode: 'PK',
-                            onChanged: (phone) {
-                              if (kDebugMode) {
-                                print(phone.completeNumber);
-                              }
-                              setState(() {
-                                phoneNumber = phone.completeNumber;
-                              });
-                            },
-                          ),
-                        ),
+                      const MobileSubtitleText(
+                        text:
+                            'Enter your phone number so that we can send you verification code',
                       ),
-
+                      SizedBox(
+                        height:
+                            MediaQueryConstant.getVerticalGapBetweenSmallfontAndTextfield(
+                              context,
+                            ),
+                      ),
+                      MobilePhoneField(
+                        controller: _mobileNumberController,
+                        onChanged: (value) {
+                          setState(() {
+                            phoneNumber = value;
+                          });
+                        },
+                      ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.41,
                       ),
-
-                      TextButton(
-                        onPressed: () async {
-                          if (phoneNumber.isNotEmpty &&
-                              RegExp(
-                                r'^\+923[0-9]{9}$',
-                              ).hasMatch(phoneNumber)) {
-                            setState(() {});
-                            values['mobileNo'] = phoneNumber;
-                            if (kDebugMode) {
-                              print(values.toString());
-                            }
-                            setState(() {
-                              _isLoading = true;
-                            });
-                            try {
-                              if (await NetworkHelper.checkInternetConnection()) {
-                                registerUser();
-                              } else {
-                                setState(() {
-                                  _isLoading = false;
-                                });
-                                ShowAlertDialogueClass.showAlertDialogue(
-                                  context: context,
-                                  title: "No Internet",
-                                  message: "Check your internet connection!",
-                                  buttonText: "OK",
-                                  iconData: Icons.error,
-                                );
-                              }
-                            } catch (error) {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.error_outline_rounded,
-                                          color: Colors.red,
-                                        ),
-                                        SizedBox(width: 8),
-                                        Text('Error'),
-                                      ],
-                                    ),
-                                    content: Text(error.toString()),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        child: Text('OK'),
-                                        onPressed:
-                                            () => Navigator.of(context).pop(),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            }
-                          } else {
-                            setState(() {});
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  title: const Row(
-                                    children: [
-                                      Icon(Icons.error, color: Colors.red),
-                                      SizedBox(width: 8),
-                                      Text('Error'),
-                                    ],
-                                  ),
-                                  content: const Text(
-                                    'Invalid phone number. Valid format is 3123456789',
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      child: const Text('OK'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          }
+                      Consumer<SignupProvider>(
+                        builder: (context, signupProvider, _) {
+                          return MobileGradientButton(
+                            text: 'Continue',
+                            onPressed: _handleContinue,
+                            isLoading: signupProvider.isLoadingRegistration,
+                            isEnabled: !signupProvider.isLoadingRegistration,
+                          );
                         },
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: double.infinity,
-                          height: Constants.getButtonHeight(context),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(
-                                Constants.getButtonRadius(context),
-                              ),
-                            ),
-                            gradient: const LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [Color(0xff08A1A7), Color(0xff4B2A7A)],
-                            ),
-                          ),
-
-                          child:
-                              _isLoading
-                                  ? const CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white,
-                                    ),
-                                  )
-                                  : Text(
-                                    'Continue',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Visby',
-                                      fontSize: Constants.getButtonFont(
-                                        context,
-                                      ),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                        ),
                       ),
                     ],
                   ),
@@ -301,95 +124,5 @@ class _MobilePageNewState extends State<MobilePageNew> {
         ),
       ),
     );
-  }
-
-  Future<void> registerUser() async {
-    var data = values;
-
-    print("data for registration: " + values.toString());
-
-    try {
-      final responseBody = await NetworkHelper.signUp(data);
-
-      var decodedResponseBody = json.decode(responseBody!);
-
-      if (kDebugMode) {
-        print("Response Body: $responseBody");
-      }
-
-      setState(() {
-        _isLoading = false;
-      });
-
-      if (decodedResponseBody["responseStatus"] == true) {
-        String otp = decodedResponseBody["otp"];
-        if (kDebugMode) {
-          print("OTP here: $otp");
-        }
-        values['otp'] = otp;
-        if (decodedResponseBody["statusCode"].toString() ==
-            "201") //201 is for user Registered successfully
-        {
-          ShowAlertDialogueClass.showAlertDialogSendtoVerificationPage(
-            context: context,
-            title: "Response",
-            message: decodedResponseBody["responseMessage"].toString(),
-            buttonText: "Okay!",
-            values: values,
-            iconData: Icons.offline_pin_rounded,
-          );
-        } else if (decodedResponseBody["statusCode"].toString() ==
-            "202") //202 is for user Registered but unverified
-        {
-          ShowAlertDialogueClass.showAlertDialogMobileVerificationPage(
-            context: context,
-            title: "Response",
-            message: decodedResponseBody["responseMessage"].toString(),
-            buttonText: "Okay!",
-            values: values,
-            iconData: Icons.offline_pin_rounded,
-          );
-        }
-      } else {
-        ShowAlertDialogueClass.showAlertDialogue(
-          context: context,
-          title: "Response",
-          message: decodedResponseBody["responseMessage"],
-          buttonText: "Okay!",
-          iconData: Icons.warning_sharp,
-        );
-      }
-    } //try
-    catch (error) {
-      setState(() {
-        _isLoading = false;
-      });
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            title: Row(
-              children: [
-                Icon(Icons.error_outline, color: Colors.red),
-                SizedBox(width: 10.0),
-                Text("Error"),
-              ],
-            ),
-            content: Text(error.toString()),
-            actions: [
-              TextButton(
-                child: Text("OK"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
   }
 }

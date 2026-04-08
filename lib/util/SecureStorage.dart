@@ -1,11 +1,8 @@
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorage {
-
-  IOSOptions _getIOSOptions() => const IOSOptions(
-    accountName: "paymentgateway",
-  );
+  IOSOptions _getIOSOptions() =>
+      const IOSOptions(accountName: "paymentgateway");
 
   AndroidOptions _getAndroidOptions() => const AndroidOptions(
     encryptedSharedPreferences: true,
@@ -20,41 +17,45 @@ class SecureStorage {
   final String _keyTokenExpiry = 'expiry';
   final String _keyCNIC = 'cnic';
 
-
   Future deleteToken() async {
-
     //Delete prvious key
     storage.deleteAll();
-
   }
 
   Future<String?> getToken() async {
     return await storage.read(
-        key: _keyToken,
-        iOptions: _getIOSOptions(),
-        aOptions: _getAndroidOptions()
+      key: _keyToken,
+      iOptions: _getIOSOptions(),
+      aOptions: _getAndroidOptions(),
     );
   }
 
   Future<String?> getTokenExpiry() async {
-    return await storage.read(key: _keyTokenExpiry, iOptions: _getIOSOptions(),
-        aOptions: _getAndroidOptions());
+    return await storage.read(
+      key: _keyTokenExpiry,
+      iOptions: _getIOSOptions(),
+      aOptions: _getAndroidOptions(),
+    );
   }
 
   Future<String?> getCNIC() async {
-    return await storage.read(key: _keyCNIC, iOptions: _getIOSOptions(),
-        aOptions: _getAndroidOptions());
+    return await storage.read(
+      key: _keyCNIC,
+      iOptions: _getIOSOptions(),
+      aOptions: _getAndroidOptions(),
+    );
   }
 
-  Future<void> storeToken(String tokenValue, DateTime expirationDate, String strCNIC) async {
-    // Unique key for token
-    final keyToken = 'token';
-    final keyExpiry = 'expiry';
-    final keyCNIC = 'cnic';
+  /// Store token, expiration date, and CNIC
+  /// This matches the old working implementation
+  Future<void> storeToken(
+    String tokenValue,
+    DateTime expirationDate,
+    String strCNIC,
+  ) async {
+    String expiryString = expirationDate.toString();
 
-    String ExpiryString = expirationDate.toString();
-
-    // Delete previous keys
+    // Delete previous keys first
     await storage.deleteAll(
       iOptions: _getIOSOptions(),
       aOptions: _getAndroidOptions(),
@@ -62,25 +63,26 @@ class SecureStorage {
 
     // Write token value
     await storage.write(
-      key: keyToken,
+      key: _keyToken,
       value: tokenValue,
       iOptions: _getIOSOptions(),
       aOptions: _getAndroidOptions(),
     );
+
+    // Write expiration date
     await storage.write(
-      key: keyExpiry,
-      value: ExpiryString,
+      key: _keyTokenExpiry,
+      value: expiryString,
       iOptions: _getIOSOptions(),
       aOptions: _getAndroidOptions(),
     );
+
+    // Write CNIC
     await storage.write(
-      key: keyCNIC,
+      key: _keyCNIC,
       value: strCNIC,
       iOptions: _getIOSOptions(),
       aOptions: _getAndroidOptions(),
     );
-
-    print("Values stored to secure storage");
   }
-
 }

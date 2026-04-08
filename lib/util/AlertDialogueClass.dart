@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../view/MobileVerificationPageNew.dart';
+
+import '../view/mobile_page_view/MobileVerificationPageNew.dart';
 
 class ShowAlertDialogueClass {
   static Future<void> showAlertDialogue({
@@ -38,7 +39,7 @@ class ShowAlertDialogueClass {
     );
   }
 
-  static Future<void>  showAlertDialogSendtoVerificationPage({
+  static Future<void> showAlertDialogSendtoVerificationPage({
     required BuildContext context,
     required String title,
     required String message,
@@ -46,23 +47,23 @@ class ShowAlertDialogueClass {
     required Map<String, dynamic> values,
     required iconData,
   }) async {
-
     // set up the button
     Widget okButton = TextButton(
       child: const Text("OK"),
       onPressed: () {
-
         Navigator.of(context, rootNavigator: true).pop();
-        Navigator.push(context, MaterialPageRoute(builder: (_)=>MobileVerificationPageNew(values)));
-
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => MobileVerificationPageNew(values: values),
+          ),
+        );
       },
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       title: Row(
         children: [
           Text(title),
@@ -71,9 +72,7 @@ class ShowAlertDialogueClass {
         ],
       ),
       content: Text(message),
-      actions: [
-        okButton,
-      ],
+      actions: [okButton],
     );
 
     // show the dialog
@@ -88,29 +87,30 @@ class ShowAlertDialogueClass {
   static Future<bool> exitAppDialog(BuildContext context) async {
     final result = await showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        title: const Row(
-          children: [
-            Text('Are you sure?'),
-            Spacer(),
-            Icon(Icons.help_outline_rounded, color: Colors.orange),
-          ],
-        ),
-        content: const Text('You want to exit the App'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('No'),
+      builder:
+          (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            title: const Row(
+              children: [
+                Text('Are you sure?'),
+                Spacer(),
+                Icon(Icons.help_outline_rounded, color: Colors.orange),
+              ],
+            ),
+            content: const Text('You want to exit the App'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text('No'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text('Yes'),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Yes'),
-          ),
-        ],
-      ),
     );
     if (result == true) {
       SystemNavigator.pop();
@@ -118,8 +118,7 @@ class ShowAlertDialogueClass {
     return result ?? false;
   }
 
-
-  static Future<void>  showAlertDialogMobileVerificationPage({
+  static Future<void> showAlertDialogMobileVerificationPage({
     required BuildContext context,
     required String title,
     required String message,
@@ -132,14 +131,17 @@ class ShowAlertDialogueClass {
       child: const Text("OK"),
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop();
-        Navigator.push(context, MaterialPageRoute(builder: (_)=>MobileVerificationPageNew(values)));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => MobileVerificationPageNew(values: values),
+          ),
+        );
       },
     );
 
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       title: Row(
         children: [
           Text(title),
@@ -148,9 +150,7 @@ class ShowAlertDialogueClass {
         ],
       ),
       content: Text(message),
-      actions: [
-        okButton,
-      ],
+      actions: [okButton],
     );
 
     // show the dialog
@@ -162,7 +162,7 @@ class ShowAlertDialogueClass {
     );
   }
 
-  static Future<void>  showAlertDialogCodeVerificationPage({
+  static Future<void> showAlertDialogCodeVerificationPage({
     required BuildContext context,
     required String title,
     required String message,
@@ -170,15 +170,17 @@ class ShowAlertDialogueClass {
     required Map<String, dynamic> values,
     required iconData,
   }) async {
-
     // set up the button
     Widget okButton = TextButton(
       child: const Text("OK"),
       onPressed: () {
-
         Navigator.of(context, rootNavigator: true).pop();
-        Navigator.push(context, MaterialPageRoute(builder: (_)=>MobileVerificationPageNew(values)));
-
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => MobileVerificationPageNew(values: values),
+          ),
+        );
       },
     );
 
@@ -186,11 +188,7 @@ class ShowAlertDialogueClass {
     AlertDialog alert = AlertDialog(
       title: Text(title),
       content: Text(message),
-      actions: [
-        okButton,
-
-      ],
-
+      actions: [okButton],
     );
 
     // show the dialog

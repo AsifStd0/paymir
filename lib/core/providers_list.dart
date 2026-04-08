@@ -1,11 +1,20 @@
+// providers_list.dart
+import 'package:paymir_new_android/providers/login_provider.dart';
+import 'package:paymir_new_android/view/Voucher/Voucher_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../view/login/login_provider.dart';
-import '../view/signup/signup_provider.dart';
-import '../viewmodel/LoginViewModel.dart';
+import '../providers/signup_provider.dart';
+import '../view/HED/hed_provider.dart';
+import '../view/Profile/profile_provider.dart';
+import '../view/home_page/home_provider.dart';
+import '../view/main/main_provider.dart';
 
-final providersList = [
-  ChangeNotifierProvider(create: (_) => LoginViewModel()),
-  ChangeNotifierProvider(create: (_) => SignupProvider()),
-  ChangeNotifierProvider(create: (_) => LoginProvider()),
+List<ChangeNotifierProvider> providersListData = [
+  ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
+  ChangeNotifierProvider<SignupProvider>(create: (_) => SignupProvider()),
+  ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider()),
+  ChangeNotifierProvider<HedProvider>(create: (_) => HedProvider()),
+  ChangeNotifierProvider<ProfileProvider>(create: (_) => ProfileProvider()),
+  ChangeNotifierProvider<MainProvider>(create: (_) => MainProvider()),
+  ChangeNotifierProvider<VoucherProvider>(create: (_) => VoucherProvider()),
 ];

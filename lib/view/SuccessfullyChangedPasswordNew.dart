@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:paymir_new_android/util/theme/app_colors.dart';
 
-import '../util/Constants.dart';
-import 'login/LoginPageNew.dart';
+import '../util/Mediaquery_Constant.dart';
+import 'login/login_screen.dart';
 
 class SuccessfullyPasswordChangedPageNew extends StatefulWidget {
   const SuccessfullyPasswordChangedPageNew({super.key});
@@ -32,7 +33,7 @@ class _SuccessfullyPasswordChangedPageNewState
       onWillPop: () async {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const LoginPageNew()),
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
         );
         return false;
       },
@@ -46,9 +47,13 @@ class _SuccessfullyPasswordChangedPageNewState
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        left: Constants.getBackArrowLeftPadding(context),
-                        top: Constants.getBackArrowTopPadding(context),
-                        bottom: Constants.getBackArrowBottomPadding(context),
+                        left: MediaQueryConstant.getBackArrowLeftPadding(
+                          context,
+                        ),
+                        top: MediaQueryConstant.getBackArrowTopPadding(context),
+                        bottom: MediaQueryConstant.getBackArrowBottomPadding(
+                          context,
+                        ),
                       ),
 
                       child: IconButton(
@@ -57,7 +62,7 @@ class _SuccessfullyPasswordChangedPageNewState
                             () => Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const LoginPageNew(),
+                                builder: (_) => const LoginScreen(),
                               ),
                             ),
                       ),
@@ -70,13 +75,14 @@ class _SuccessfullyPasswordChangedPageNewState
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        top: Constants.getVerticalGapBetweenTwoTextformfields(
-                          context,
-                        ),
+                        top:
+                            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
+                              context,
+                            ),
                       ),
 
                       child: SizedBox(
-                        height: Constants.getButtonHeight(context) * 5,
+                        height: MediaQueryConstant.getButtonHeight(context) * 5,
                         width: MediaQuery.of(context).size.width,
                         child: Image.asset(
                           "assets/images/successfully_registered.gif",
@@ -92,7 +98,7 @@ class _SuccessfullyPasswordChangedPageNewState
                     Padding(
                       padding: EdgeInsets.only(
                         top:
-                            Constants.getVerticalGapBetweenTwoTextformfields(
+                            MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                               context,
                             ) *
                             80,
@@ -102,10 +108,10 @@ class _SuccessfullyPasswordChangedPageNewState
                         style: TextStyle(
                           color: const Color(
                             0xff03110A,
-                          ), //Constants.primaryColor(),
+                          ), //AppColors.primaryColor(),
                           fontFamily: 'Visby',
                           fontWeight: FontWeight.bold,
-                          fontSize: Constants.getMainFontSize(context),
+                          fontSize: MediaQueryConstant.getMainFontSize(context),
                         ),
                       ),
                     ),
@@ -113,9 +119,10 @@ class _SuccessfullyPasswordChangedPageNewState
                 ),
 
                 SizedBox(
-                  height: Constants.getVerticalGapBetweenMainAndSmallFont(
-                    context,
-                  ),
+                  height:
+                      MediaQueryConstant.getVerticalGapBetweenMainAndSmallFont(
+                        context,
+                      ),
                 ),
 
                 Row(
@@ -126,10 +133,12 @@ class _SuccessfullyPasswordChangedPageNewState
                       child: Text(
                         'You have successfully changed\n              the password',
                         style: TextStyle(
-                          color: Constants.secondaryColor(),
+                          color: AppColors.secondaryColor(),
                           fontFamily: 'Visby',
                           fontWeight: FontWeight.normal,
-                          fontSize: Constants.getSmallFontSize(context),
+                          fontSize: MediaQueryConstant.getSmallFontSize(
+                            context,
+                          ),
                         ),
                       ),
                     ),
@@ -138,7 +147,7 @@ class _SuccessfullyPasswordChangedPageNewState
 
                 SizedBox(
                   height:
-                      Constants.getVerticalGapBetweenTwoTextformfields(
+                      MediaQueryConstant.getVerticalGapBetweenTwoTextformfields(
                         context,
                       ) *
                       60,
@@ -146,9 +155,10 @@ class _SuccessfullyPasswordChangedPageNewState
 
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: Constants.getSymmetricHorizontalPadding(
-                      context,
-                    ),
+                    horizontal:
+                        MediaQueryConstant.getSymmetricHorizontalPadding(
+                          context,
+                        ),
                   ),
                   child: Align(
                     alignment: Alignment.bottomCenter,
@@ -162,27 +172,27 @@ class _SuccessfullyPasswordChangedPageNewState
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => const LoginPageNew(),
+                              builder: (_) => const LoginScreen(),
                             ),
                           );
                         },
                         child: Container(
                           alignment: Alignment.center,
                           width: double.infinity,
-                          height: Constants.getButtonHeight(context),
+                          height: MediaQueryConstant.getButtonHeight(context),
 
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(
                               Radius.circular(
-                                Constants.getButtonRadius(context),
+                                MediaQueryConstant.getButtonRadius(context),
                               ),
                             ),
                             gradient: LinearGradient(
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
                               colors: [
-                                Constants.gradientColor1(),
-                                Constants.gradientColor2(),
+                                AppColors.gradientColor1(),
+                                AppColors.gradientColor2(),
                               ],
                             ),
                           ),
@@ -191,7 +201,9 @@ class _SuccessfullyPasswordChangedPageNewState
                             'Done',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: Constants.getButtonFont(context),
+                              fontSize: MediaQueryConstant.getButtonFont(
+                                context,
+                              ),
                               fontFamily: 'Visby',
                               fontWeight: FontWeight.bold,
                             ),

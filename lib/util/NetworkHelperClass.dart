@@ -1,92 +1,99 @@
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:http/io_client.dart';
+
+import 'app_url.dart';
 
 class NetworkHelper {
-  static const String _baseUrl = 'https://apipaymir.kp.gov.pk/';
-  static Future<String?> signUp(Map<String, dynamic> data) async {
-    final url = Uri.parse('$_baseUrl/api/user/registerUser');
-    final encoding = Encoding.getByName('utf-8');
-    final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-    final response = await http.post(
-      url,
-      headers: headers,
-      body: data,
-      encoding: encoding,
-    );
+  static const String _baseUrl = ApiEndpoints.baseUrl;
 
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      return null;
+  /// Create HTTP client with SSL certificate bypass for testing
+  /// WARNING: This is for development/testing only. Use proper certificates in production.
+  static http.Client _createHttpClient() {
+    final httpClient = HttpClient();
+    if (kDebugMode) {
+      httpClient.badCertificateCallback = (
+        X509Certificate cert,
+        String host,
+        int port,
+      ) {
+        debugPrint(
+          '⚠️ NetworkHelper: Bypassing SSL certificate verification for $host:$port',
+        );
+        return true; // Accept all certificates in development
+      };
     }
+    return IOClient(httpClient);
   }
 
-  static Future<String?> signIn(Map<String, dynamic> data) async {
-    final url = Uri.parse('$_baseUrl/api/token');
-    final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-    final encoding = Encoding.getByName('utf-8');
-    final response = await http.post(
-      url,
-      headers: headers,
-      body: data,
-      encoding: encoding,
-    );
-    print(response.body);
-    print(response.statusCode);
-    return response.body;
+  // Static client instance to reuse across requests
+  static http.Client? _client;
+
+  static http.Client get _httpClient {
+    _client ??= _createHttpClient();
+    return _client!;
   }
 
-  static Future<bool> checkInternetConnection() async {
-    bool isConnected = await InternetConnectionChecker().hasConnection;
-    return isConnected;
-  }
+  // static Future<String?> signUp(Map<String, dynamic> data) async {
+  //   final url = Uri.parse(ApiEndpoints.getFullUrl(ApiEndpoints.registerUser));
+  //   final encoding = Encoding.getByName('utf-8');
+  //   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+  //   final response = await _httpClient.post(
+  //     url,
+  //     headers: headers,
+  //     body: data,
+  //     encoding: encoding,
+  //   );
 
-  static Future<String?> checkUser(Map<String, dynamic> data) async {
-    log('checking user *** 1111 $data');
-    final url = Uri.parse('$_baseUrl/api/user/CheckVerifiedCNIC');
-    log('url: $url');
-    final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-    final encoding = Encoding.getByName('utf-8');
-    final response = await http.post(
-      url,
-      headers: headers,
-      body: data,
-      encoding: encoding,
-    );
-    return response.body;
-  }
+  //   if (response.statusCode == 200) {
+  //     return response.body;
+  //   } else {
+  //     return null;
+  //   }
+  // }
+
+  // static Future<String?> signIn(Map<String, dynamic> data) async {
+  //   final url = Uri.parse(ApiEndpoints.getFullUrl(ApiEndpoints.login));
+  //   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+  //   final encoding = Encoding.getByName('utf-8');
+  //   final response = await _httpClient.post(
+  //     url,
+  //     headers: headers,
+  //     body: data,
+  //     encoding: encoding,
+  //   );
+  //   print(response.body);
+  //   print(response.statusCode);
+  //   return response.body;
+  // }
+
+  // static Future<String?> checkUser(Map<String, dynamic> data) async {
+  //   log('checking user *** 1111 $data');
+  //   final url = Uri.parse(
+  //     ApiEndpoints.getFullUrl(ApiEndpoints.checkVerifiedCNIC),
+  //   );
+  //   log('url: $url');
+  //   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+  //   final encoding = Encoding.getByName('utf-8');
+  //   final response = await _httpClient.post(
+  //     url,
+  //     headers: headers,
+  //     body: data,
+  //     encoding: encoding,
+  //   );
+  //   return response.body;
+  // }
 
   static Future<String?> editProfile(
     Map<String, dynamic> data,
     String auth,
   ) async {
-    final url = Uri.parse('$_baseUrl/api/user/AttemptforEditProfile');
-
-    final headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': auth,
-    };
-
-    Response response = await post(
-      url,
-      headers: headers,
-      body: jsonEncode(data),
-    );
-
-    return response.body;
-  }
-
-  static Future<String?> sendOTPEditProfile(
-    Map<String, dynamic> data,
-    String auth,
-  ) async {
     final url = Uri.parse(
-      '$_baseUrl/api/user/SendOTPtoMobileandEmail_AttemptforEditProfile',
+      ApiEndpoints.getFullUrl(ApiEndpoints.attemptForEditProfile),
     );
 
     final headers = {
@@ -95,7 +102,7 @@ class NetworkHelper {
       'Authorization': auth,
     };
 
-    Response response = await post(
+    Response response = await _httpClient.post(
       url,
       headers: headers,
       body: jsonEncode(data),
@@ -103,13 +110,42 @@ class NetworkHelper {
 
     return response.body;
   }
+
+  // static Future<String?> sendOTPEditProfile(
+  //   Map<String, dynamic> data,
+  //   String auth,
+  // ) async {
+  //   final url = Uri.parse(
+  //     ApiEndpoints.getFullUrl(ApiEndpoints.sendOTPEditProfile),
+  //   );
+
+  //   final headers = {
+  //     'Content-Type': 'application/json',
+  //     'Accept': 'application/json',
+  //     'Authorization': auth,
+  //   };
+
+  //   Response response = await _httpClient.post(
+  //     url,
+  //     headers: headers,
+  //     body: jsonEncode(data),
+  //   );
+
+  //   return response.body;
+  // }
 
   static Future<String?> verifyUserforResettingPassword(
     Map<String, dynamic> data,
   ) async {
-    final url = Uri.parse('$_baseUrl/api/User/VerifyUserForResettingPassword');
+    final url = Uri.parse(
+      ApiEndpoints.getFullUrl(ApiEndpoints.verifyUserForResettingPassword),
+    );
     final encoding = Encoding.getByName('utf-8');
-    final response = await post(url, body: data, encoding: encoding);
+    final response = await _httpClient.post(
+      url,
+      body: data,
+      encoding: encoding,
+    );
     return response.body;
   }
 
@@ -117,13 +153,13 @@ class NetworkHelper {
     Map<String, dynamic> data,
     String auth,
   ) async {
-    final url = Uri.parse('$_baseUrl/api/service/BillPayment');
+    final url = Uri.parse(ApiEndpoints.getFullUrl(ApiEndpoints.billPayment));
     final headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': auth,
     };
-    Response response = await post(
+    Response response = await _httpClient.post(
       url,
       headers: headers,
       body: jsonEncode(data),
@@ -135,7 +171,7 @@ class NetworkHelper {
     Map<String, dynamic> data,
     String auth,
   ) async {
-    final url = Uri.parse('$_baseUrl/api/user/GetCardDetail');
+    final url = Uri.parse(ApiEndpoints.getFullUrl(ApiEndpoints.getCardDetail));
 
     final headers = {
       'Content-Type': 'application/json',
@@ -143,7 +179,7 @@ class NetworkHelper {
       'Authorization': auth,
     };
 
-    Response response = await post(
+    Response response = await _httpClient.post(
       url,
       headers: headers,
       body: jsonEncode(data),
@@ -156,7 +192,9 @@ class NetworkHelper {
     Map<String, dynamic> data,
     String auth,
   ) async {
-    final url = Uri.parse('$_baseUrl/api/user/RequestforEditProfile');
+    final url = Uri.parse(
+      ApiEndpoints.getFullUrl(ApiEndpoints.requestForEditProfile),
+    );
 
     final headers = {
       'Content-Type': 'application/json',
@@ -164,7 +202,7 @@ class NetworkHelper {
       'Authorization': auth,
     };
 
-    Response response = await post(
+    Response response = await _httpClient.post(
       url,
       headers: headers,
       body: jsonEncode(data),
@@ -177,7 +215,7 @@ class NetworkHelper {
     Map<String, dynamic> data,
     String auth,
   ) async {
-    final url = Uri.parse('$_baseUrl/api/service/GeneratePSID');
+    final url = Uri.parse(ApiEndpoints.getFullUrl(ApiEndpoints.generatePSID));
 
     final headers = {
       'Content-Type': 'application/json',
@@ -185,7 +223,7 @@ class NetworkHelper {
       'Authorization': auth,
     };
 
-    Response response = await post(
+    Response response = await _httpClient.post(
       url,
       headers: headers,
       body: jsonEncode(data),
@@ -198,7 +236,9 @@ class NetworkHelper {
     Map<String, dynamic> data,
     String auth,
   ) async {
-    final url = Uri.parse('$_baseUrl/api/service/ConfirmPSIDStatus');
+    final url = Uri.parse(
+      ApiEndpoints.getFullUrl(ApiEndpoints.confirmPSIDStatus),
+    );
 
     final headers = {
       'Content-Type': 'application/json',
@@ -206,7 +246,7 @@ class NetworkHelper {
       'Authorization': auth,
     };
 
-    Response response = await post(
+    Response response = await _httpClient.post(
       url,
       headers: headers,
       body: jsonEncode(data),
@@ -219,7 +259,9 @@ class NetworkHelper {
     Map<String, dynamic> data,
     String auth,
   ) async {
-    final url = Uri.parse('$_baseUrl/api/user/UploadProfileImg');
+    final url = Uri.parse(
+      ApiEndpoints.getFullUrl(ApiEndpoints.uploadProfileImg),
+    );
 
     final headers = {
       'Content-Type': 'application/json',
@@ -227,7 +269,7 @@ class NetworkHelper {
       'Authorization': auth,
     };
 
-    Response response = await post(
+    Response response = await _httpClient.post(
       url,
       headers: headers,
       body: jsonEncode(data),
@@ -240,7 +282,9 @@ class NetworkHelper {
     Map<String, dynamic> data,
     String auth,
   ) async {
-    final url = Uri.parse('$_baseUrl/api/user/DownloadProfileImg');
+    final url = Uri.parse(
+      ApiEndpoints.getFullUrl(ApiEndpoints.downloadProfileImg),
+    );
 
     final headers = {
       'Content-Type': 'application/json',
@@ -248,7 +292,7 @@ class NetworkHelper {
       'Authorization': auth,
     };
 
-    Response response = await post(
+    Response response = await _httpClient.post(
       url,
       headers: headers,
       body: jsonEncode(data),
@@ -261,13 +305,15 @@ class NetworkHelper {
     Map<String, dynamic> data,
     String auth,
   ) async {
-    final url = Uri.parse('$_baseUrl/api/service/getPendingTransactions');
+    final url = Uri.parse(
+      ApiEndpoints.getFullUrl(ApiEndpoints.getPendingTransactions),
+    );
     final headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': auth,
     };
-    Response response = await post(
+    Response response = await _httpClient.post(
       url,
       headers: headers,
       body: jsonEncode(data),
@@ -279,13 +325,13 @@ class NetworkHelper {
     Map<String, dynamic> data,
     String auth,
   ) async {
-    final url = Uri.parse('$_baseUrl/api/service/GetPSID');
+    final url = Uri.parse(ApiEndpoints.getFullUrl(ApiEndpoints.getPSID));
     final headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': auth,
     };
-    Response response = await post(
+    Response response = await _httpClient.post(
       url,
       headers: headers,
       body: jsonEncode(data),
@@ -297,14 +343,16 @@ class NetworkHelper {
     Map<String, dynamic> data,
     String auth,
   ) async {
-    final url = Uri.parse('$_baseUrl/api/service/getReceivedTransactions');
+    final url = Uri.parse(
+      ApiEndpoints.getFullUrl(ApiEndpoints.getReceivedTransactions),
+    );
     final headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': auth,
     };
 
-    Response response = await post(
+    Response response = await _httpClient.post(
       url,
       headers: headers,
       body: jsonEncode(data),
@@ -319,17 +367,25 @@ class NetworkHelper {
     final url = Uri.parse('$_baseUrl/$endPoint');
     final encoding = Encoding.getByName('utf-8');
 
-    Response response = await post(url, body: data, encoding: encoding);
+    Response response = await _httpClient.post(
+      url,
+      body: data,
+      encoding: encoding,
+    );
 
     return response.body;
   }
 
   static Future<String?> resetPassword(Map<String, dynamic> data) async {
-    final url = Uri.parse('$_baseUrl/api/User/ResetPassword');
+    final url = Uri.parse(ApiEndpoints.getFullUrl(ApiEndpoints.resetPassword));
 
     final encoding = Encoding.getByName('utf-8');
 
-    Response response = await post(url, body: data, encoding: encoding);
+    Response response = await _httpClient.post(
+      url,
+      body: data,
+      encoding: encoding,
+    );
 
     return response.body;
   }
@@ -338,9 +394,13 @@ class NetworkHelper {
     Map<String, dynamic> data,
     String auth,
   ) async {
-    final url = Uri.parse('$_baseUrl/api/user/GetOldPassword');
+    final url = Uri.parse(ApiEndpoints.getFullUrl(ApiEndpoints.getOldPassword));
     final headers = {'Accept': 'application/json', 'Authorization': auth};
-    Response response = await post(url, headers: headers, body: data);
+    Response response = await _httpClient.post(
+      url,
+      headers: headers,
+      body: data,
+    );
     return response.body;
   }
 
@@ -348,10 +408,16 @@ class NetworkHelper {
     Map<String, dynamic> data,
     String auth,
   ) async {
-    final url = Uri.parse('$_baseUrl/api/user/UpdateOldPassword');
+    final url = Uri.parse(
+      ApiEndpoints.getFullUrl(ApiEndpoints.updateOldPassword),
+    );
     final headers = {'Accept': 'application/json', 'Authorization': auth};
 
-    Response response = await post(url, headers: headers, body: data);
+    Response response = await _httpClient.post(
+      url,
+      headers: headers,
+      body: data,
+    );
     return response.body;
   }
 
@@ -359,10 +425,16 @@ class NetworkHelper {
     Map<String, dynamic> data,
     String auth,
   ) async {
-    final url = Uri.parse('$_baseUrl/api/user/RegisterComplaint');
+    final url = Uri.parse(
+      ApiEndpoints.getFullUrl(ApiEndpoints.registerComplaint),
+    );
     final headers = {'Accept': 'application/json', 'Authorization': auth};
 
-    Response response = await post(url, headers: headers, body: data);
+    Response response = await _httpClient.post(
+      url,
+      headers: headers,
+      body: data,
+    );
     return response.body;
   }
 }

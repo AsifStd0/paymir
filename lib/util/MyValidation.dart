@@ -1,7 +1,4 @@
-import 'package:flutter/foundation.dart';
-
-class MyValidationClass extends ChangeNotifier {
-
+class MyValidation {
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Email cannot be empty!';
@@ -19,7 +16,7 @@ class MyValidationClass extends ChangeNotifier {
     if (value == null || value.isEmpty) {
       return 'Code cannot be empty!';
     }
-    if (value!.length<4)
+    if (value!.length < 4)
       return 'Code must be of 4 digits!';
     else
       return null;
@@ -59,6 +56,19 @@ class MyValidationClass extends ChangeNotifier {
     }
   }
 
+  /// Validate phone number with international format (+923XXXXXXXXX)
+  static String? validatePhoneNumberWithCountryCode(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Phone number cannot be empty!';
+    }
+    // Validate format: +923 followed by 9 digits
+    final regex = RegExp(r'^\+923[0-9]{9}$');
+    if (!regex.hasMatch(value)) {
+      return 'Invalid phone number. Valid format is +923XXXXXXXXX';
+    }
+    return null;
+  }
+
   static String? validatePSID(String? value) {
     if (value == null || value.isEmpty) {
       return 'PSID cannot be empty!';
@@ -68,6 +78,7 @@ class MyValidationClass extends ChangeNotifier {
       return null;
     }
   }
+
   static String? validateVoucher(String? value) {
     if (value == null || value.isEmpty) {
       return 'Voucher cannot be empty!';
@@ -78,13 +89,11 @@ class MyValidationClass extends ChangeNotifier {
     }
   }
 
-
   static String? validateFirstName(String? value) {
     if (value == null || value.isEmpty) {
       return 'Empty name!';
     }
-    String pattern =
-        r'^([a-zA-Z. ]{3,})+$';
+    String pattern = r'^([a-zA-Z. ]{3,})+$';
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(value))
       return 'Invalid name!';
@@ -96,14 +105,11 @@ class MyValidationClass extends ChangeNotifier {
       return null;
   }
 
-
-
   static String? validateName(String? value) {
     if (value == null || value.isEmpty) {
       return 'Name cannot be empty!';
     }
-    String pattern =
-        r'^([a-zA-Z ]{3,})+$';
+    String pattern = r'^([a-zA-Z ]{3,})+$';
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(value))
       return 'Invalid name!';
@@ -116,7 +122,6 @@ class MyValidationClass extends ChangeNotifier {
   }
 
   static String? validatePassword(String? password) {
-
     if (password == null || password.isEmpty) {
       return 'Password cannot be empty!';
     }
@@ -145,7 +150,6 @@ class MyValidationClass extends ChangeNotifier {
   }
 
   static String? validateOldPassword(String? password) {
-
     if (password == null || password.isEmpty) {
       return 'Enter old password!';
     }
@@ -163,7 +167,6 @@ class MyValidationClass extends ChangeNotifier {
     }
     if (!password.contains(RegExp(r'[!@#\$%\^&\*(),\.\?":{}|<>]'))) {
       return 'Incorrect old password!';
-
     }
     if (password.contains(RegExp(r'\s'))) {
       return 'Incorrect old password!';
@@ -172,7 +175,6 @@ class MyValidationClass extends ChangeNotifier {
   }
 
   static String? validateEmailPassword(String? password) {
-
     if (password == null || password.isEmpty) {
       return 'Enter password!';
     }
@@ -190,7 +192,6 @@ class MyValidationClass extends ChangeNotifier {
     }
     if (!password.contains(RegExp(r'[!@#\$%\^&\*(),\.\?":{}|<>]'))) {
       return 'Incorrect password!';
-
     }
     if (password.contains(RegExp(r'\s'))) {
       return 'Incorrect password!';
@@ -199,14 +200,9 @@ class MyValidationClass extends ChangeNotifier {
   }
 
   static String? validateRePassword(String? password) {
-
     if (password == null || password.isEmpty) {
       return 'Enter password again!';
-    }
-    else
+    } else
       return null;
   }
-
-
-
 }
