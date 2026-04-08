@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -39,55 +38,55 @@ class NetworkHelper {
     return _client!;
   }
 
-  static Future<String?> signUp(Map<String, dynamic> data) async {
-    final url = Uri.parse(ApiEndpoints.getFullUrl(ApiEndpoints.registerUser));
-    final encoding = Encoding.getByName('utf-8');
-    final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-    final response = await _httpClient.post(
-      url,
-      headers: headers,
-      body: data,
-      encoding: encoding,
-    );
+  // static Future<String?> signUp(Map<String, dynamic> data) async {
+  //   final url = Uri.parse(ApiEndpoints.getFullUrl(ApiEndpoints.registerUser));
+  //   final encoding = Encoding.getByName('utf-8');
+  //   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+  //   final response = await _httpClient.post(
+  //     url,
+  //     headers: headers,
+  //     body: data,
+  //     encoding: encoding,
+  //   );
 
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      return null;
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     return response.body;
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
-  static Future<String?> signIn(Map<String, dynamic> data) async {
-    final url = Uri.parse(ApiEndpoints.getFullUrl(ApiEndpoints.login));
-    final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-    final encoding = Encoding.getByName('utf-8');
-    final response = await _httpClient.post(
-      url,
-      headers: headers,
-      body: data,
-      encoding: encoding,
-    );
-    print(response.body);
-    print(response.statusCode);
-    return response.body;
-  }
+  // static Future<String?> signIn(Map<String, dynamic> data) async {
+  //   final url = Uri.parse(ApiEndpoints.getFullUrl(ApiEndpoints.login));
+  //   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+  //   final encoding = Encoding.getByName('utf-8');
+  //   final response = await _httpClient.post(
+  //     url,
+  //     headers: headers,
+  //     body: data,
+  //     encoding: encoding,
+  //   );
+  //   print(response.body);
+  //   print(response.statusCode);
+  //   return response.body;
+  // }
 
-  static Future<String?> checkUser(Map<String, dynamic> data) async {
-    log('checking user *** 1111 $data');
-    final url = Uri.parse(
-      ApiEndpoints.getFullUrl(ApiEndpoints.checkVerifiedCNIC),
-    );
-    log('url: $url');
-    final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-    final encoding = Encoding.getByName('utf-8');
-    final response = await _httpClient.post(
-      url,
-      headers: headers,
-      body: data,
-      encoding: encoding,
-    );
-    return response.body;
-  }
+  // static Future<String?> checkUser(Map<String, dynamic> data) async {
+  //   log('checking user *** 1111 $data');
+  //   final url = Uri.parse(
+  //     ApiEndpoints.getFullUrl(ApiEndpoints.checkVerifiedCNIC),
+  //   );
+  //   log('url: $url');
+  //   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+  //   final encoding = Encoding.getByName('utf-8');
+  //   final response = await _httpClient.post(
+  //     url,
+  //     headers: headers,
+  //     body: data,
+  //     encoding: encoding,
+  //   );
+  //   return response.body;
+  // }
 
   static Future<String?> editProfile(
     Map<String, dynamic> data,
@@ -112,28 +111,28 @@ class NetworkHelper {
     return response.body;
   }
 
-  static Future<String?> sendOTPEditProfile(
-    Map<String, dynamic> data,
-    String auth,
-  ) async {
-    final url = Uri.parse(
-      ApiEndpoints.getFullUrl(ApiEndpoints.sendOTPEditProfile),
-    );
+  // static Future<String?> sendOTPEditProfile(
+  //   Map<String, dynamic> data,
+  //   String auth,
+  // ) async {
+  //   final url = Uri.parse(
+  //     ApiEndpoints.getFullUrl(ApiEndpoints.sendOTPEditProfile),
+  //   );
 
-    final headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': auth,
-    };
+  //   final headers = {
+  //     'Content-Type': 'application/json',
+  //     'Accept': 'application/json',
+  //     'Authorization': auth,
+  //   };
 
-    Response response = await _httpClient.post(
-      url,
-      headers: headers,
-      body: jsonEncode(data),
-    );
+  //   Response response = await _httpClient.post(
+  //     url,
+  //     headers: headers,
+  //     body: jsonEncode(data),
+  //   );
 
-    return response.body;
-  }
+  //   return response.body;
+  // }
 
   static Future<String?> verifyUserforResettingPassword(
     Map<String, dynamic> data,

@@ -5,7 +5,6 @@ import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:paymir_new_android/util/theme/app_colors.dart';
 
 import '../../util/AlertDialogueClass.dart';
@@ -597,10 +596,5 @@ class _EasyPaisaPaymentPageNewState extends State<EasyPaisaPaymentPageNew> {
       );
     }
     return false;
-  }
-
-  Future<bool> checkInternetConnection() async {
-    bool isConnected = await InternetConnectionChecker().hasConnection;
-    return isConnected;
   }
 }

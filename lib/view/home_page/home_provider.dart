@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -148,12 +149,18 @@ class HomeProvider extends ChangeNotifier {
         token: token,
       );
       final jsonString = response.toString();
-
       if (jsonString.contains("404")) {
         _pendingDues = [];
       } else {
+        // print('response:   --------------------------------$response');
         _pendingDues = response['pendingDues'] ?? [];
+        // print(
+        //   '-----------------pendingDues:   --------------------------------${_pendingDues}',
+        // );
         _serviceCharges = response['serviceProviderTaxesConfigurations'] ?? [];
+        // print(
+        //   'serviceCharges:   --------------------------------${_serviceCharges}',
+        // );
       }
     } catch (e) {
       _pendingDues = [];
@@ -178,6 +185,10 @@ class HomeProvider extends ChangeNotifier {
       final response = await _homeService.getDoneTransactions(
         cnic: cnic,
         token: token,
+      );
+      print('response:   --------------------------------$response');
+      log(
+        '******** 11111  ======================================${response['receivedData']}',
       );
       _doneTransactions = response['receivedData'] ?? [];
     } catch (e) {

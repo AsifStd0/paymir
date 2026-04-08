@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:paymir_new_android/api/NetworkApiService.dart';
 import 'package:paymir_new_android/core/locator.dart';
-import 'package:paymir_new_android/util/SecureStorage.dart';
 
 import '../core/services/auth_service.dart';
 import '../model/login_model.dart';
@@ -67,17 +66,8 @@ class LoginProvider extends ChangeNotifier {
       _setLoading(false);
 
       if (response.isSuccess && response.accessToken != null) {
-        // Store token in secure storage
-        const int expiresIn = 86399;
-        final DateTime now = DateTime.now();
-        final DateTime expirationDate = now.add(
-          const Duration(seconds: expiresIn),
-        );
-
-        await SecureStorage().storage.write(
-          key: 'token',
-          value: response.accessToken!,
-        );
+        // Token, expiry, and CNIC are already stored by AuthService.login()
+        // No need to store again here - AuthService handles it correctly
         return true;
       } else {
         _setError(response.errorDescription ?? AppStrings.loginFailed);
